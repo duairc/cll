@@ -1,0 +1,2600 @@
+\chap{Formal Grammars}
+The following two listings constitute the formal grammar of
+    Lojban. The first version is written in the YACC language,
+    which is used to describe parsers, and has been used to create
+    a parser for Lojban texts. This parser is available from the
+    Logical Language Group. The second listing is in Extended
+    Backus-Naur Form (EBNF) and represents the same grammar in a
+    more human-readable form. (In case of discrepancies, the YACC
+    version is official.) There is a cross-reference listing for
+    the EBNF format that shows, for each selma'o and rule, which
+    rules refer to it.
+
+
+
+\sect{YACC Grammar of Lojban}
+<div class="c2">
+      /* LOJBAN MACHINE GRAMMAR, 3RD BASELINE AS OF 10 JANUARY
+      1997<br />
+       WHICH IS ORIGINAL BASELINE 20 JULY 1990 INCORPORATING JC'S
+      TECH FIXES 1-28<br />
+       THIS DRAFT ALSO INCORPORATES CHANGE PROPOSALS 1-47 DATED 29
+      DECEMBER 1996<br />
+      <br />
+       THIS DOCUMENT IS EXPLICITLY DEDICATED TO THE PUBLIC
+      DOMAIN<br />
+       BY ITS AUTHOR, THE LOGICAL LANGUAGE GROUP INC.<br />
+       CONTACT THAT ORGANIZATION AT 2904 BEAU LANE, FAIRFAX VA
+      22031 USA<br />
+       U.S. PHONE: 703-385-0273<br />
+       INTL PHONE: +1 703 385-0273<br />
+    </div>
+    <br />
+    <br />
+     grammar.300 */ 
+
+/* The Lojban machine parsing algorithm is a multi-step
+    process. The YACC machine grammar presented here is an amalgam
+    of those steps, concatenated so as to allow YACC to verify the
+    syntactic ambiguity of the grammar. YACC is used to generate a
+    parser for a portion of the grammar, which is LALR1 (the type
+    of grammar that YACC is designed to identify and process
+    successfully), but most of the rest of the grammar must be
+    parsed using some language-coded processing.
+
+<h4>Step 1 - Lexing</h4>
+
+From phonemes, stress, and pause, it is possible to resolve
+    Lojban unambiguously into a stream of words. Any machine
+    processing of speech will have to have some way to deal with
+    'non-Lojban' failures of fluent speech, of course. The resolved
+    words can be expressed as a text file, using Lojban's phonetic
+    spelling rules.
+
+The following steps, assume that there is the possibility of
+    non-Lojban text within the Lojban text (delimited
+    appropriately). Such non-Lojban text may not be reducible from
+    speech phonetically. However, step 2 allows the filtering of a
+    phonetically transcribed text stream, to recognize such
+    portions of non-Lojban text where properly delimited, without
+    interference with the parsing algorithm.
+
+<h4>Step 2 - Filtering</h4>
+
+From start to end, performing the following filtering and
+    lexing tasks using the given order of precedence in case of
+    conflict:
+
+a. If the Lojban word \q{zoi} (selma'o ZOI) is identified,
+    take the following Lojban word (which should be end delimited
+    with a pause for separation from the following non-Lojban text)
+    as an opening delimiter. Treat all text following that
+    delimiter, until that delimiter recurs *after a pause*, as
+    grammatically a single token (labelled '\hyperref[html:y699]{anything\_699}' in this grammar). There is no
+    need for processing within this text except as necessary to
+    find the closing delimiter.
+
+b. If the Lojban word \q{zo} (selma'o ZO) is identified,
+    treat the following Lojban word as a token labelled '\hyperref[html:y698]{any\_word\_698}', instead of lexing it by its
+    normal grammatical function.
+
+c. If the Lojban word \q{lo'u} (selma'o LOhU) is identified,
+    search for the closing delimiter \q{le'u} (selma'o LEhU),
+    ignoring any such closing delimiters absorbed by the previous
+    two steps. The text between the delimiters should be treated as
+    the single token '\hyperref[html:y697]{any\_words\_697}'.
+
+d. Categorize all remaining words into their Lojban selma'o
+    category, including the various delimiters mentioned in the
+    previous steps. In all steps after step 2, only the selma'o
+    token type is significant for each word.
+
+e. If the word \q{si} (selma'o SI) is identified, erase it
+    and the previous word (or token, if the previous text has been
+    condensed into a single token by one of the above rules).
+
+f. If the word \q{sa} (selma'o SA) is identified, erase it
+    and all preceding text as far back as necessary to make what
+    follows attach to what precedes. (This rule is hard to
+    formalize and may receive further definition later.)
+
+g. If the word 'su' (selma'o SU) is identified, erase it and
+    all preceding text back to and including the first preceding
+    token word which is in one of the selma'o: NIhO, LU, TUhE, and
+    TO. However, if speaker identification is available, a SU shall
+    only erase to the beginning of a speaker's discourse, unless it
+    occurs at the beginning of a speaker's discourse. (Thus, if the
+    speaker has said something, two \q{su}'s are required to erase
+    the entire conversation.
+
+<h4>Step 3 - Termination</h4>
+
+If the text contains a FAhO, treat that as the end-of-text
+    and ignore everything that follows it.
+
+<h4>Step 4 - Absorption of Grammar-Free Tokens</h4>
+
+In a new pass, perform the following absorptions (absorption
+    means that the token is removed from the grammar for processing
+    in following steps, and optionally reinserted, grouped with the
+    absorbing token after parsing is completed).
+
+a. Token sequences of the form any - (ZEI - any) ..., where
+    there may be any number of ZEIs, are merged into a single token
+    of selma'o BRIVLA.
+
+b. Absorb all selma'o BAhE tokens into the following token.
+    If they occur at the end of text, leave them alone (they are
+    errors).
+
+c. Absorb all selma'o BU tokens into the previous token.
+    Relabel the previous token as selma'o BY.
+
+d. If selma'o NAI occurs immediately following any of tokens
+    UI or CAI, absorb the NAI into the previous token.
+
+e. Absorb all members of selma'o DAhO, FUhO, FUhE, UI, Y,
+    and CAI into the previous token. All of these null grammar
+    tokens are permitted following any word of the grammar, without
+    interfering with that word's grammatical function, or causing
+    any effect on the grammatical interpretation of any other token
+    in the text. Indicators at the beginning of text are explicitly
+    handled by the grammar.
+
+<h4>Step 5 - Insertion of Lexer Lexemes</h4>
+
+Lojban is not in itself LALR1. There are words whose
+    grammatical function is determined by following tokens. As a
+    result, parsing of the YACC grammar must take place in two
+    steps. In the first step, certain strings of tokens with
+    defined grammars are identified, and either
+
+a. are replaced by a single specified 'lexer token' for step
+    6, or
+
+b. the lexer token is inserted in front of the token string
+    to identify it uniquely.
+
+The YACC grammar included herein is written to make YACC
+    generation of a step 6 parser easy regardless of whether a. or
+    b. is used. The strings of tokens to be labelled with lexer
+    tokens are found in rule terminals labelled with numbers
+    between 900 and 1099. These rules are defined with the lexer
+    tokens inserted, with the result that it can be verified that
+    the language is LALR1 under option b. after steps 1 through 4
+    have been performed. Alternatively, if option a. is to be used,
+    these rules are commented out, and the rule terminals labelled
+    from 800 to 900 refer to the lexer tokens *without* the strings
+    of defining tokens. Two sets of lexer tokens are defined in the
+    token set so as to be compatible with either option.
+
+In this step, the strings must be labelled with the
+    appropriate lexer tokens. Order of inserting lexer tokens *IS*
+    significant, since some shorter strings that would be marked
+    with a lexer token may be found inside longer strings. If the
+    tokens are inserted before or in place of the shorter strings,
+    the longer strings cannot be identified.
+
+If option a. is chosen, the following order of insertion
+    works correctly (it is not the only possible order): A, C, D,
+    B, U, E, H, I, J, K, M ,N, G, O, V, W, F, P, R, T, S, Y, L, Q.
+    This ensures that the longest rules will be processed first; a
+    PA+MAI will not be seen as a PA with a dangling MAI at the end,
+    for example.
+
+<h4>Step 6 - YACC Parsing</h4>
+
+YACC should now be able to parse the Lojban text in
+    accordance with the rule terminals labelled from 1 to 899 under
+    option 5a, or 1 to 1099 under option 5b. Comment out the rules
+    beyond 900 if option 5a is used, and comment out the 700-series
+    of lexer-tokens, while restoring the series of lexer tokens
+    numbered from 900 up.
+
+*/
+
+%token \phantomsection\label{html:y501}
+A_501            /*        eks; basic afterthought logical connectives */
+%token \phantomsection\label{html:y502}
+BAI_502          /*        modal operators */
+%token \phantomsection\label{html:y503}
+BAhE_503         /*        next word intensifier */
+%token \phantomsection\label{html:y504}
+BE_504           /*        sumti link to attach sumti to a selbri */
+%token \phantomsection\label{html:y505}
+BEI_505          /*        multiple sumti separator between BE, BEI */
+%token \phantomsection\label{html:y506}
+BEhO_506         /*        terminates BE/BEI specified descriptors */
+%token \phantomsection\label{html:y507}
+BIhI_507         /*        interval component of JOI */
+%token \phantomsection\label{html:y508}
+BO_508           /*        joins two units with shortest scope */
+%token \phantomsection\label{html:y509}
+BRIVLA_509       /*        any brivla */
+%token \phantomsection\label{html:y511}
+BU_511           /*        turns any word into a BY lerfu word */
+%token \phantomsection\label{html:y513}
+BY_513           /*        individual lerfu words */
+%token \phantomsection\label{html:y514}
+CAhA_514         /*        specifies actuality/potentiality of tense */
+%token \phantomsection\label{html:y515}
+CAI_515          /*        afterthought intensity marker */
+%token \phantomsection\label{html:y516}
+CEI_516          /*        pro-bridi assignment operator */
+%token \phantomsection\label{html:y517}
+CEhE_517         /*        afterthought term list connective */
+%token \phantomsection\label{html:y518}
+CMENE_518        /*        names; require consonant end, then pause no
+                                   LA or DOI selma'o embedded, pause before if
+                                   vowel initial and preceded by a vowel */
+%token \phantomsection\label{html:y519}
+CO_519           /*        tanru inversion  */
+%token \phantomsection\label{html:y520}
+COI_520          /*        vocative marker permitted inside names; must
+                                   always be followed by pause or DOI */
+%token \phantomsection\label{html:y521}
+CU_521           /*        separator between head sumti and selbri */
+%token \phantomsection\label{html:y522}
+CUhE_522         /*        tense/modal question */
+%token \phantomsection\label{html:y524}
+DAhO_524         /*        cancel anaphora/cataphora assignments */
+%token \phantomsection\label{html:y525}
+DOI_525          /*        vocative marker */
+%token \phantomsection\label{html:y526}
+DOhU_526         /*        terminator for DOI-marked vocatives */
+%token \phantomsection\label{html:y527}
+FA_527           /*        modifier head generic case tag */
+%token \phantomsection\label{html:y528}
+FAhA_528         /*        superdirections in space */
+%token \phantomsection\label{html:y529}
+FAhO_529         /*        normally elided 'done pause' to indicate end
+                                   of utterance string */
+%token \phantomsection\label{html:y530}
+FEhE_530         /*        space interval mod flag */
+%token \phantomsection\label{html:y531}
+FEhU_531         /*        ends bridi to modal conversion */
+%token \phantomsection\label{html:y532}
+FIhO_532         /*        marks bridi to modal conversion */
+%token \phantomsection\label{html:y533}
+FOI_533          /*        end compound lerfu */
+%token \phantomsection\label{html:y535}
+FUhE_535         /*        open long scope for indicator */
+%token \phantomsection\label{html:y536}
+FUhO_536         /*        close long scope for indicator */
+%token \phantomsection\label{html:y537}
+GA_537           /*        geks; forethought logical connectives */
+%token \phantomsection\label{html:y538}
+GEhU_538         /*        marker ending GOI relative clauses */
+%token \phantomsection\label{html:y539}
+GI_539           /*        forethought medial marker */
+%token \phantomsection\label{html:y541}
+GIhA_541         /*        logical connectives for bridi-tails */
+%token \phantomsection\label{html:y542}
+GOI_542          /*        attaches a sumti modifier to a sumti */
+%token \phantomsection\label{html:y543}
+GOhA_543         /*        pro-bridi */
+%token \phantomsection\label{html:y544}
+GUhA_544         /*        GEK for tanru units, corresponds to JEKs */
+%token \phantomsection\label{html:y545}
+I_545            /*        sentence link */
+%token \phantomsection\label{html:y546}
+JA_546           /*        jeks; logical connectives within tanru */
+%token \phantomsection\label{html:y547}
+JAI_547          /*        modal conversion flag */
+%token \phantomsection\label{html:y548}
+JOI_548          /*        non-logical connectives */
+%token \phantomsection\label{html:y550}
+KEhE_550         /*        right terminator for KE groups */
+%token \phantomsection\label{html:y551}
+KE_551           /*        left long scope marker */
+%token \phantomsection\label{html:y552}
+KEI_552          /*        right terminator, NU abstractions */
+%token \phantomsection\label{html:y554}
+KI_554           /*        multiple utterance scope for tenses */
+%token \phantomsection\label{html:y555}
+KOhA_555         /*        sumti anaphora */
+%token \phantomsection\label{html:y556}
+KU_556           /*        right terminator for descriptions, etc. */
+%token \phantomsection\label{html:y557}
+KUhO_557         /*        right terminator, NOI relative clauses */
+%token \phantomsection\label{html:y558}
+LA_558           /*        name descriptors */
+%token \phantomsection\label{html:y559}
+LAU_559          /*        lerfu prefixes */
+%token \phantomsection\label{html:y561}
+LAhE_561         /*        sumti qualifiers */
+%token \phantomsection\label{html:y562}
+LE_562           /*        sumti descriptors */
+%token \phantomsection\label{html:y565}
+LEhU_565         /*        possibly ungrammatical text right quote */
+%token \phantomsection\label{html:y566}
+LI_566           /*        convert number to sumti */
+%token \phantomsection\label{html:y567}
+LIhU_567         /*        grammatical text right quote */
+%token \phantomsection\label{html:y568}
+LOhO_568         /*        elidable terminator for LI */
+%token \phantomsection\label{html:y569}
+LOhU_569         /*        possibly ungrammatical text left quote */
+%token \phantomsection\label{html:y571}
+LU_571           /*        grammatical text left quote */
+%token \phantomsection\label{html:y573}
+LUhU_573         /*        LAhE close delimiter */
+%token \phantomsection\label{html:y574}
+ME_574           /*        converts a sumti into a tanru_unit */
+%token \phantomsection\label{html:y575}
+MEhU_575         /*        terminator for ME */
+%token \phantomsection\label{html:y577}
+MOhI_577         /*        motion tense marker */
+%token \phantomsection\label{html:y578}
+NA_578           /*        bridi negation  */
+%token \phantomsection\label{html:y581}
+NAI_581          /*        attached to words to negate them */
+%token \phantomsection\label{html:y583}
+NAhE_583         /*        scalar negation  */
+%token \phantomsection\label{html:y584}
+NIhO_584         /*        new paragraph; change of subject */
+%token \phantomsection\label{html:y585}
+NOI_585          /*        attaches a subordinate clause to a sumti */
+%token \phantomsection\label{html:y586}
+NU_586           /*        abstraction  */
+%token \phantomsection\label{html:y587}
+NUhI_587         /*        marks the start of a termset */
+%token \phantomsection\label{html:y588}
+NUhU_588         /*        marks the middle and end of a termset */
+%token \phantomsection\label{html:y591}
+PEhE_591         /*        afterthought termset connective prefix */
+%token \phantomsection\label{html:y592}
+PU_592           /*        directions in time */
+%token \phantomsection\label{html:y593}
+RAhO_593         /*        flag for modified interpretation of GOhI */
+%token \phantomsection\label{html:y594}
+ROI_594          /*        converts number to extensional tense */
+%token \phantomsection\label{html:y595}
+SA_595           /*        metalinguistic eraser to the beginning of
+                                   the current utterance */
+%token \phantomsection\label{html:y596}
+SE_596           /*        conversions */
+%token \phantomsection\label{html:y597}
+SEI_597          /*        metalinguistic bridi insert marker */
+%token \phantomsection\label{html:y598}
+SEhU_598         /*        metalinguistic bridi end marker */
+%token \phantomsection\label{html:y601}
+SI_601           /*        metalinguistic single word eraser */
+%token \phantomsection\label{html:y602}
+SOI_602          /*        reciprocal sumti marker */
+%token \phantomsection\label{html:y603}
+SU_603           /*        metalinguistic eraser of the entire text */
+%token \phantomsection\label{html:y604}
+TAhE_604         /*        tense interval properties */
+%token \phantomsection\label{html:y605}
+TEI_605          /*        start compound lerfu */
+%token \phantomsection\label{html:y606}
+TO_606           /*        left discursive parenthesis */
+%token \phantomsection\label{html:y607}
+TOI_607          /*        right discursive parenthesis */
+%token \phantomsection\label{html:y610}
+TUhE_610         /*        multiple utterance scope mark */
+%token \phantomsection\label{html:y611}
+TUhU_611         /*        multiple utterance end scope mark */
+%token \phantomsection\label{html:y612}
+UI_612           /*        attitudinals, observationals, discursives */
+%token \phantomsection\label{html:y613}
+VA_613           /*        distance in space-time */
+%token \phantomsection\label{html:y614}
+VAU_614          /*        end simple bridi or bridi-tail */
+%token \phantomsection\label{html:y615}
+VEhA_615         /*        space-time interval size */
+%token \phantomsection\label{html:y616}
+VIhA_616         /*        space-time dimensionality marker */
+%token \phantomsection\label{html:y617}
+VUhO_617         /*        glue between logically connected sumti
+                                    and relative clauses */
+%token \phantomsection\label{html:y618}
+XI_618           /*        subscripting operator */
+%token \phantomsection\label{html:y619}
+Y_619            /*        hesitation */
+%token \phantomsection\label{html:y621}
+ZAhO_621         /*        event properties - inchoative, etc. */
+%token \phantomsection\label{html:y622}
+ZEhA_622         /*        time interval size tense */
+%token \phantomsection\label{html:y623}
+ZEI_623          /*        lujvo glue */
+%token \phantomsection\label{html:y624}
+ZI_624           /*        time distance tense */
+%token \phantomsection\label{html:y625}
+ZIhE_625         /*        conjoins relative clauses */
+%token \phantomsection\label{html:y626}
+ZO_626           /*        single word metalinguistic quote marker */
+%token \phantomsection\label{html:y627}
+ZOI_627          /*        delimited quote marker */
+%token \phantomsection\label{html:y628}
+ZOhU_628         /*        prenex terminator (not elidable) */
+
+%token \phantomsection\label{html:y650}
+BIhE_650         /*        prefix for high-priority MEX operator */
+%token \phantomsection\label{html:y651}
+BOI_651          /*        number or lerfu-string terminator */
+%token \phantomsection\label{html:y655}
+FUhA_655         /*        reverse Polish flag */
+%token \phantomsection\label{html:y656}
+GAhO_656         /*        open/closed interval markers for BIhI */
+%token \phantomsection\label{html:y657}
+JOhI_657         /*        flags an array operand */
+%token \phantomsection\label{html:y658}
+KUhE_658         /*        MEX forethought delimiter */
+%token \phantomsection\label{html:y661}
+MAI_661          /*        change numbers to utterance ordinals */
+%token \phantomsection\label{html:y662}
+MAhO_662         /*        change MEX expressions to MEX operators */
+%token \phantomsection\label{html:y663}
+MOI_663          /*        change number to selbri */
+%token \phantomsection\label{html:y664}
+MOhE_664         /*        change sumti to operand, inverse of LI */
+%token \phantomsection\label{html:y665}
+NAhU_665         /*        change a selbri into an operator */
+%token \phantomsection\label{html:y666}
+NIhE_666         /*        change selbri to operand; inverse of MOI */
+%token \phantomsection\label{html:y667}
+NUhA_667         /*        change operator to selbri; inverse of MOhE */
+%token \phantomsection\label{html:y672}
+PA_672           /*        numbers and numeric punctuation */
+%token \phantomsection\label{html:y673}
+PEhO_673         /*        forethought (Polish) flag */
+%token \phantomsection\label{html:y675}
+TEhU_675         /*        closing gap for MEX constructs */
+%token \phantomsection\label{html:y677}
+VEI_677          /*        left MEX bracket */
+%token \phantomsection\label{html:y678}
+VEhO_678         /*        right MEX bracket */
+%token \phantomsection\label{html:y679}
+VUhU_679         /*        MEX operator */
+
+%token any_words_697    /*        a string of lexable Lojban words */
+%token any_word_698     /*        any single lexable Lojban words */
+%token anything_699     /*        a possibly unlexable phoneme string */
+
+/* The following tokens are the actual lexer tokens.  The _900 series
+tokens are duplicates that allow limited testing of lexer rules in the
+context of the total grammar.  They are used in the actual parser, where
+the 900 series rules are found in the lexer.  */
+
+%token lexer_\phantomsection\label{html:y701}
+A_701      /*        flags a MAI utterance ordinal */
+%token lexer_\phantomsection\label{html:y702}
+B_702      /*        flags an EK unless EK_BO, EK_KE */
+%token lexer_\phantomsection\label{html:y703}
+C_703      /*        flags an EK_BO */
+%token lexer_\phantomsection\label{html:y704}
+D_704      /*        flags an EK_KE */
+%token lexer_\phantomsection\label{html:y705}
+E_705      /*        flags a JEK */
+%token lexer_\phantomsection\label{html:y706}
+F_706      /*        flags a JOIK */
+%token lexer_\phantomsection\label{html:y707}
+G_707      /*        flags a GEK */
+%token lexer_\phantomsection\label{html:y708}
+H_708      /*        flags a GUhEK */
+%token lexer_\phantomsection\label{html:y709}
+I_709      /*        flags a NAhE_BO */
+%token lexer_\phantomsection\label{html:y710}
+J_710      /*        flags a NA_KU */
+%token lexer_\phantomsection\label{html:y711}
+K_711      /*        flags an I_BO (option. JOIK/JEK lexer tags)*/
+%token lexer_\phantomsection\label{html:y712}
+L_712      /*        flags a PA, unless MAI (then lexer A) */
+%token lexer_\phantomsection\label{html:y713}
+M_713      /*        flags a GIhEK_BO */
+%token lexer_\phantomsection\label{html:y714}
+N_714      /*        flags a GIhEK_KE */
+%token lexer_\phantomsection\label{html:y715}
+O_715      /*        flags a modal operator BAI or compound */
+%token lexer_\phantomsection\label{html:y716}
+P_716      /*        flags a GIK */
+%token lexer_\phantomsection\label{html:y717}
+Q_717      /*        flags a lerfu_string unless MAI (then lexer_A)*/
+%token lexer_\phantomsection\label{html:y718}
+R_718      /*        flags a GIhEK, not BO or KE */
+%token lexer_\phantomsection\label{html:y719}
+S_719      /*        flags simple I */
+%token lexer_\phantomsection\label{html:y720}
+T_720      /*        flags I_JEK */
+%token lexer_\phantomsection\label{html:y721}
+U_721      /*        flags a JEK_BO */
+%token lexer_\phantomsection\label{html:y722}
+V_722      /*        flags a JOIK_BO */
+%token lexer_\phantomsection\label{html:y723}
+W_723      /*        flags a JOIK_KE */
+/* %token lexer_\phantomsection\label{html:y724}
+X_724   /* null */
+%token lexer_\phantomsection\label{html:y725}
+Y_725      /*        flags a PA_MOI */
+
+/*%token lexer_A_905    /*        :  lexer_A_701  utt_ordinal_root_906 */
+/*%token lexer_B_910    /*        :  lexer_B_702  EK_root_911 */
+/*%token lexer_C_915    /*        :  lexer_C_703  EK_root_911  BO_508 */
+/*%token lexer_D_916    /*        :  lexer_D_704  EK_root_911  KE_551 */
+/*%token lexer_E_925    /*        :  lexer_E_705  JEK_root_926 */
+/*%token lexer_F_930    /*        :  lexer_F_706  JOIK_root_931 */
+/*%token lexer_G_935    /*        :  lexer_G_707  GA_537 */
+/*%token lexer_H_940    /*        :  lexer_H_708  GUhA_544 */
+/*%token lexer_I_945    /*        :  lexer_I_709  NAhE_583  BO_508 */
+/*%token lexer_J_950    /*        :  lexer_J_710  NA_578  KU_556 */
+/*%token lexer_K_955    /*        :  lexer_K_711  I_432  BO_508 */
+/*%token lexer_L_960    /*        :  lexer_L_712  number_root_961 */
+/*%token lexer_M_965    /*        :  lexer_M_713  GIhEK_root_991  BO_508 */
+/*%token lexer_N_966    /*        :  lexer_N_714  GIhEK_root_991  KE_551 */
+/*%token lexer_O_970    /*        :  lexer_O_715  simple_tense_modal_972 */
+/*%token lexer_P_980    /*        :  lexer_P_716  GIK_root_981 */
+/*%token lexer_Q_985    /*        :  lexer_Q_717  lerfu_string_root_986 */
+/*%token lexer_R_990    /*        :  lexer_R_718  GIhEK_root_991 */
+/*%token lexer_S_995    /*        :  lexer_S_719  I_545 */
+/*%token  lexer_T_1000  /*        :  lexer_T_720  I_545  simple_JOIK_JEK_957 */
+/*%token lexer_U_1005   /*        :  lexer_U_721  JEK_root_926  BO_508 */
+/*%token lexer_V_1010   /*        :  lexer_V_722  JOIK_root_931  BO_508 */
+/*%token lexer_W_1015   /*        :  lexer_W_723  JOIK_root_931  KE_551 */
+/*%token lexer_X_1020   /* null */
+/*%token lexer_Y_1025   /*        :  lexer_Y_725  number_root_961  MOI_663 */
+
+%start \hyperref[html:y0]{text_0}
+
+%%
+
+\phantomsection\label{html:y0}
+text_0                  :  \hyperref[html:y1]{text_A_1}
+                        |  \hyperref[html:y411]{indicators_411}  \hyperref[html:y1]{text_A_1}
+                        |  \hyperref[html:y32]{free_modifier_32}  \hyperref[html:y1]{text_A_1}
+                        |  \hyperref[html:y404]{cmene_404}  \hyperref[html:y1]{text_A_1}
+                        |  \hyperref[html:y411]{indicators_411}  \hyperref[html:y32]{free_modifier_32}  \hyperref[html:y1]{text_A_1}
+                        |  \hyperref[html:y581]{NAI_581}  \hyperref[html:y0]{text_0}
+                        ;
+
+\phantomsection\label{html:y1}
+text_A_1                :  \hyperref[html:y422]{JOIK_JEK_422}  \hyperref[html:y2]{text_B_2}
+                        /* incomplete JOIK_JEK  without preceding I */
+                        /* compare note on \hyperref[html:y10]{paragraph_10} */
+                        |  \hyperref[html:y2]{text_B_2}
+                        ;
+
+\phantomsection\label{html:y2}
+text_B_2                :  \hyperref[html:y819]{I_819}  \hyperref[html:y2]{text_B_2}
+                        |  \hyperref[html:y820]{I_JEK_820}  \hyperref[html:y2]{text_B_2}
+                        |  \hyperref[html:y811]{I_BO_811}  \hyperref[html:y2]{text_B_2}
+                        |  \hyperref[html:y410]{para_mark_410}  \hyperref[html:y3]{text_C_3}
+                        |  \hyperref[html:y3]{text_C_3}
+                        ;
+
+\phantomsection\label{html:y3}
+text_C_3                :  \hyperref[html:y4]{paragraphs_4}
+   /* Only indicators which follow certain selma'o:
+    cmene, \hyperref[html:y607]{TOI_607}, \hyperref[html:y571]{LU_571}, and the lexer_K and lexer_S I_roots and compounds,
+    and at the start of text(_0), will survive the lexer; all other valid ones
+    will be absorbed.  The only strings for which indicators generate a
+    potential ambiguity are those which contain NAI.  An indicator cannot be
+    inserted in between a token and its negating NAI, else you can't tell
+    whether it is the indicator or the original token being negated. */
+                        |  /* empty */
+  /* An empty text is legal; formerly this was handled by the explicit
+   appearance of \hyperref[html:y529]{FAhO_529}, but this is now absorbed by the preparser. */
+                        ;
+
+\phantomsection\label{html:y4}
+paragraphs_4            :  \hyperref[html:y10]{paragraph_10}
+                        |  \hyperref[html:y10]{paragraph_10}  \hyperref[html:y410]{para_mark_410}  \hyperref[html:y4]{paragraphs_4}
+                        ;
+
+\phantomsection\label{html:y10}
+paragraph_10            :  \hyperref[html:y11]{statement_11}
+                        |  \hyperref[html:y20]{fragment_20}
+                        |  \hyperref[html:y10]{paragraph_10}  \hyperref[html:y819]{I_819}  \hyperref[html:y11]{statement_11}
+                        |  \hyperref[html:y10]{paragraph_10}  \hyperref[html:y819]{I_819}  \hyperref[html:y20]{fragment_20}
+                        |  \hyperref[html:y10]{paragraph_10}  \hyperref[html:y819]{I_819}
+                        /* this last fixes an erroneous start to a sentence,
+                           and permits incomplete JOIK_JEK after I, as well
+                           in answer to questions on those connectives  */
+                        ;
+
+\phantomsection\label{html:y11}
+statement_11            :  \hyperref[html:y12]{statement_A_12}
+                        |  \hyperref[html:y30]{prenex_30}  \hyperref[html:y11]{statement_11}
+                        ;
+
+\phantomsection\label{html:y12}
+statement_A_12          :  \hyperref[html:y13]{statement_B_13}
+                        |  \hyperref[html:y12]{statement_A_12}  \hyperref[html:y820]{I_JEK_820}  \hyperref[html:y13]{statement_B_13}
+                        |  \hyperref[html:y12]{statement_A_12}  \hyperref[html:y820]{I_JEK_820} 
+                        ;
+
+\phantomsection\label{html:y13}
+statement_B_13          :  \hyperref[html:y14]{statement_C_14}
+                        |  \hyperref[html:y14]{statement_C_14}  \hyperref[html:y811]{I_BO_811}  \hyperref[html:y13]{statement_B_13}
+                        |  \hyperref[html:y14]{statement_C_14}  \hyperref[html:y811]{I_BO_811} 
+                        ;
+
+\phantomsection\label{html:y14}
+statement_C_14          :  \hyperref[html:y40]{sentence_40}
+                        |  \hyperref[html:y447]{TUhE_447}  \hyperref[html:y2]{text_B_2}  \hyperref[html:y454]{TUhU_gap_454}
+                        |  \hyperref[html:y491]{tag_491}  \hyperref[html:y447]{TUhE_447}  \hyperref[html:y2]{text_B_2}  \hyperref[html:y454]{TUhU_gap_454}
+                        ;
+
+\phantomsection\label{html:y20}
+fragment_20             :  \hyperref[html:y802]{EK_802}
+                        |  \hyperref[html:y445]{NA_445}
+                        |  \hyperref[html:y818]{GIhEK_818}
+                        |  \hyperref[html:y300]{quantifier_300}
+                        |  \hyperref[html:y80]{terms_80}  \hyperref[html:y456]{VAU_gap_456}        /* answer to ma */
+                        /* \hyperref[html:y490]{mod_head_490} requires both \hyperref[html:y450]{gap_450} and \hyperref[html:y456]{VAU_gap_456}
+                           but needs no extra rule to accomplish this */
+                        |  \hyperref[html:y121]{relative_clauses_121}
+                        |  \hyperref[html:y161]{links_161}
+                        |  \hyperref[html:y160]{linkargs_160}
+                        |  \hyperref[html:y30]{prenex_30}
+                        ;
+
+\phantomsection\label{html:y30}
+prenex_30               :  \hyperref[html:y80]{terms_80}  \hyperref[html:y492]{ZOhU_492}
+                        ;
+
+\phantomsection\label{html:y32}
+free_modifier_32        :  \hyperref[html:y33]{free_modifier_A_33}
+                        |  \hyperref[html:y33]{free_modifier_A_33}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y33}
+free_modifier_A_33      :  \hyperref[html:y35]{vocative_35}
+                        |  \hyperref[html:y36]{parenthetical_36}
+                        |  \hyperref[html:y34]{discursive_bridi_34}
+                        |  \hyperref[html:y486]{subscript_486}
+                        |  \hyperref[html:y801]{utterance_ordinal_801}
+                        ;
+
+\phantomsection\label{html:y34}
+discursive_bridi_34     :  \hyperref[html:y440]{SEI_440}  \hyperref[html:y130]{selbri_130}  \hyperref[html:y459]{SEhU_gap_459}
+                        |  \hyperref[html:y498]{SOI_498}  \hyperref[html:y90]{sumti_90}  \hyperref[html:y459]{SEhU_gap_459}
+                        |  \hyperref[html:y498]{SOI_498}  \hyperref[html:y90]{sumti_90}  \hyperref[html:y90]{sumti_90}  \hyperref[html:y459]{SEhU_gap_459}
+                        |  \hyperref[html:y440]{SEI_440}  \hyperref[html:y80]{terms_80}  \hyperref[html:y451]{front_gap_451}
+                                  \hyperref[html:y130]{selbri_130}  \hyperref[html:y459]{SEhU_gap_459}
+                        |  \hyperref[html:y440]{SEI_440}  \hyperref[html:y80]{terms_80}  \hyperref[html:y130]{selbri_130}  \hyperref[html:y459]{SEhU_gap_459}
+                        ;
+
+\phantomsection\label{html:y35}
+vocative_35             :  \hyperref[html:y415]{DOI_415}  \hyperref[html:y130]{selbri_130}  \hyperref[html:y457]{DOhU_gap_457}
+                        |  \hyperref[html:y415]{DOI_415}  \hyperref[html:y130]{selbri_130}
+                                  \hyperref[html:y121]{relative_clauses_121}  \hyperref[html:y457]{DOhU_gap_457}
+                        |  \hyperref[html:y415]{DOI_415}  \hyperref[html:y121]{relative_clauses_121}
+                                  \hyperref[html:y130]{selbri_130}  \hyperref[html:y457]{DOhU_gap_457}
+                        |  \hyperref[html:y415]{DOI_415}  \hyperref[html:y121]{relative_clauses_121}
+                                  \hyperref[html:y130]{selbri_130}  \hyperref[html:y121]{relative_clauses_121}  \hyperref[html:y457]{DOhU_gap_457}
+                        |  \hyperref[html:y415]{DOI_415}  \hyperref[html:y404]{cmene_404}  \hyperref[html:y457]{DOhU_gap_457}
+                        |  \hyperref[html:y415]{DOI_415}  \hyperref[html:y404]{cmene_404}
+                                  \hyperref[html:y121]{relative_clauses_121}  \hyperref[html:y457]{DOhU_gap_457}
+                        |  \hyperref[html:y415]{DOI_415}  \hyperref[html:y121]{relative_clauses_121}  \hyperref[html:y404]{cmene_404}
+                                 \hyperref[html:y457]{DOhU_gap_457}
+                        |  \hyperref[html:y415]{DOI_415}  \hyperref[html:y121]{relative_clauses_121}  \hyperref[html:y404]{cmene_404}
+                                  \hyperref[html:y121]{relative_clauses_121}  \hyperref[html:y457]{DOhU_gap_457}
+                        |  \hyperref[html:y415]{DOI_415}  \hyperref[html:y90]{sumti_90}  \hyperref[html:y457]{DOhU_gap_457}
+                        |  \hyperref[html:y415]{DOI_415}  \hyperref[html:y457]{DOhU_gap_457}
+                        ;
+
+\phantomsection\label{html:y36}
+parenthetical_36        :  \hyperref[html:y606]{TO_606}  \hyperref[html:y0]{text_0}  \hyperref[html:y468]{TOI_gap_468}
+                        ;
+
+\phantomsection\label{html:y40}
+sentence_40             :  \hyperref[html:y50]{bridi_tail_50}  /* bare observative or mo answer */
+                        |  \hyperref[html:y80]{terms_80}  \hyperref[html:y451]{front_gap_451}  \hyperref[html:y50]{bridi_tail_50}
+                        |  \hyperref[html:y80]{terms_80}  \hyperref[html:y50]{bridi_tail_50}
+                        ;
+
+\phantomsection\label{html:y41}
+subsentence_41          :  \hyperref[html:y40]{sentence_40}
+                        |  \hyperref[html:y30]{prenex_30}  \hyperref[html:y41]{subsentence_41}
+                        ;
+
+\phantomsection\label{html:y50}
+bridi_tail_50           :  \hyperref[html:y51]{bridi_tail_A_51}
+                        |  \hyperref[html:y51]{bridi_tail_A_51}  \hyperref[html:y814]{GIhEK_KE_814}  \hyperref[html:y50]{bridi_tail_50}
+                                  \hyperref[html:y466]{KEhE_gap_466}  \hyperref[html:y71]{tail_terms_71}
+                        ;
+
+\phantomsection\label{html:y51}
+bridi_tail_A_51         :  \hyperref[html:y52]{bridi_tail_B_52}
+                        |  \hyperref[html:y51]{bridi_tail_A_51}  \hyperref[html:y818]{GIhEK_818}  \hyperref[html:y52]{bridi_tail_B_52}
+                           \hyperref[html:y71]{tail_terms_71}
+                        ;
+
+\phantomsection\label{html:y52}
+bridi_tail_B_52         :  \hyperref[html:y53]{bridi_tail_C_53}
+                        |  \hyperref[html:y53]{bridi_tail_C_53}  \hyperref[html:y813]{GIhEK_BO_813}  \hyperref[html:y52]{bridi_tail_B_52}
+                           \hyperref[html:y71]{tail_terms_71}
+                        ;
+
+\phantomsection\label{html:y53}
+bridi_tail_C_53         :  \hyperref[html:y54]{gek_sentence_54}
+                        |  \hyperref[html:y130]{selbri_130}  \hyperref[html:y71]{tail_terms_71}
+                        ;
+
+\phantomsection\label{html:y54}
+gek_sentence_54         :  \hyperref[html:y807]{GEK_807}  \hyperref[html:y41]{subsentence_41}
+                                \hyperref[html:y816]{GIK_816}  \hyperref[html:y41]{subsentence_41}  \hyperref[html:y71]{tail_terms_71}
+                        |  \hyperref[html:y491]{tag_491}  \hyperref[html:y493]{KE_493}  \hyperref[html:y54]{gek_sentence_54}  \hyperref[html:y466]{KEhE_gap_466}
+                        |  \hyperref[html:y445]{NA_445}  \hyperref[html:y54]{gek_sentence_54}
+                        ;
+
+\phantomsection\label{html:y71}
+tail_terms_71           :  \hyperref[html:y80]{terms_80}  \hyperref[html:y456]{VAU_gap_456}
+                        |  \hyperref[html:y456]{VAU_gap_456}
+                        ;
+
+\phantomsection\label{html:y80}
+terms_80                :  \hyperref[html:y81]{terms_A_81}
+                        |  \hyperref[html:y80]{terms_80}  \hyperref[html:y81]{terms_A_81}
+                        ;
+
+\phantomsection\label{html:y81}
+terms_A_81              :  \hyperref[html:y82]{terms_B_82}
+                        |  \hyperref[html:y81]{terms_A_81}  \hyperref[html:y494]{PEhE_494}  \hyperref[html:y422]{JOIK_JEK_422}  \hyperref[html:y82]{terms_B_82}
+                        ;
+
+\phantomsection\label{html:y82}
+terms_B_82              :  \hyperref[html:y83]{term_83}
+                        |  \hyperref[html:y82]{terms_B_82}  \hyperref[html:y495]{CEhE_495}  \hyperref[html:y83]{term_83}
+                        ;
+
+\phantomsection\label{html:y83}
+term_83                 :  \hyperref[html:y90]{sumti_90}
+                        |  \hyperref[html:y84]{modifier_84}
+                        |  \hyperref[html:y85]{term_set_85}
+                        |  \hyperref[html:y810]{NA_KU_810}
+                        ;
+
+\phantomsection\label{html:y84}
+modifier_84             :  \hyperref[html:y490]{mod_head_490}  \hyperref[html:y450]{gap_450}
+                        |  \hyperref[html:y490]{mod_head_490}  \hyperref[html:y90]{sumti_90}
+                        ;
+
+\phantomsection\label{html:y85}
+term_set_85             :  \hyperref[html:y496]{NUhI_496}  \hyperref[html:y80]{terms_80}  \hyperref[html:y460]{NUhU_gap_460}
+                        |  \hyperref[html:y496]{NUhI_496}  \hyperref[html:y807]{GEK_807}  \hyperref[html:y80]{terms_80}  \hyperref[html:y460]{NUhU_gap_460}
+                                \hyperref[html:y816]{GIK_816}  \hyperref[html:y80]{terms_80}  \hyperref[html:y460]{NUhU_gap_460}
+                        ;
+
+\phantomsection\label{html:y90}
+sumti_90                :  \hyperref[html:y91]{sumti_A_91}
+                        |  \hyperref[html:y91]{sumti_A_91}  \hyperref[html:y497]{VUhO_497}  \hyperref[html:y121]{relative_clauses_121}
+                        ;
+
+\phantomsection\label{html:y91}
+sumti_A_91              :  \hyperref[html:y92]{sumti_B_92}
+                        |  \hyperref[html:y92]{sumti_B_92}  \hyperref[html:y804]{EK_KE_804}  \hyperref[html:y90]{sumti_90}  \hyperref[html:y466]{KEhE_gap_466}
+                        |  \hyperref[html:y92]{sumti_B_92}  \hyperref[html:y823]{JOIK_KE_823}  \hyperref[html:y90]{sumti_90}  \hyperref[html:y466]{KEhE_gap_466}
+                        ;
+
+\phantomsection\label{html:y92}
+sumti_B_92              :  \hyperref[html:y93]{sumti_C_93}
+                        |  \hyperref[html:y92]{sumti_B_92}  \hyperref[html:y421]{JOIK_EK_421}  \hyperref[html:y93]{sumti_C_93}  
+                        ;
+
+\phantomsection\label{html:y93}
+sumti_C_93              :  \hyperref[html:y94]{sumti_D_94}
+                        |  \hyperref[html:y94]{sumti_D_94}  \hyperref[html:y803]{EK_BO_803}  \hyperref[html:y93]{sumti_C_93}
+                        |  \hyperref[html:y94]{sumti_D_94}  \hyperref[html:y822]{JOIK_BO_822}  \hyperref[html:y93]{sumti_C_93}
+                        ;
+
+\phantomsection\label{html:y94}
+sumti_D_94              :  \hyperref[html:y95]{sumti_E_95}
+                        |  \hyperref[html:y807]{GEK_807}  \hyperref[html:y90]{sumti_90}  \hyperref[html:y816]{GIK_816}  \hyperref[html:y94]{sumti_D_94}
+                        ;
+
+\phantomsection\label{html:y95}
+sumti_E_95              :  \hyperref[html:y96]{sumti_F_96}
+                        |  \hyperref[html:y96]{sumti_F_96}  \hyperref[html:y121]{relative_clauses_121}
+                           /* indefinite sumti */
+                        |  \hyperref[html:y300]{quantifier_300}  \hyperref[html:y130]{selbri_130}  \hyperref[html:y450]{gap_450}
+                        |  \hyperref[html:y300]{quantifier_300}  \hyperref[html:y130]{selbri_130}
+                                \hyperref[html:y450]{gap_450}  \hyperref[html:y121]{relative_clauses_121}
+                        ;
+
+\phantomsection\label{html:y96}
+sumti_F_96              :  \hyperref[html:y97]{sumti_G_97}
+                           /* outer-quantified sumti */
+                        |  \hyperref[html:y300]{quantifier_300}  \hyperref[html:y97]{sumti_G_97}
+                        ;
+
+\phantomsection\label{html:y97}
+sumti_G_97              :  \hyperref[html:y483]{qualifier_483}  \hyperref[html:y90]{sumti_90}  \hyperref[html:y463]{LUhU_gap_463}
+                        |  \hyperref[html:y483]{qualifier_483}  \hyperref[html:y121]{relative_clauses_121}
+                                \hyperref[html:y90]{sumti_90}  \hyperref[html:y463]{LUhU_gap_463}
+                           /*sumti grouping, set/mass/individual conversion */
+                           /*also sumti scalar negation */
+                        |  \hyperref[html:y400]{anaphora_400}
+                        |  \hyperref[html:y499]{LA_499}  \hyperref[html:y404]{cmene_404}
+                        |  \hyperref[html:y499]{LA_499}  \hyperref[html:y121]{relative_clauses_121}  \hyperref[html:y404]{cmene_404}
+                        |  \hyperref[html:y489]{LI_489}  \hyperref[html:y310]{MEX_310}  \hyperref[html:y472]{LOhO_gap_472}
+                        |  \hyperref[html:y110]{description_110}
+                        |  \hyperref[html:y432]{quote_arg_432}
+                        ;
+
+\phantomsection\label{html:y110}
+description_110         :  \hyperref[html:y499]{LA_499}  \hyperref[html:y111]{sumti_tail_111}  \hyperref[html:y450]{gap_450}
+                        |  \hyperref[html:y488]{LE_488}  \hyperref[html:y111]{sumti_tail_111}  \hyperref[html:y450]{gap_450}
+                        ;
+
+\phantomsection\label{html:y111}
+sumti_tail_111          :  \hyperref[html:y112]{sumti_tail_A_112}
+                           /* inner-quantified sumti relative clause */
+                        |  \hyperref[html:y121]{relative_clauses_121}  \hyperref[html:y112]{sumti_tail_A_112}
+                           /* pseudo-possessive
+                              (an abbreviated inner restriction);
+                              note that sumti cannot be quantified */
+                        |  \hyperref[html:y97]{sumti_G_97}  \hyperref[html:y112]{sumti_tail_A_112}
+                           /* pseudo-possessive with outer restriction */
+                        |  \hyperref[html:y97]{sumti_G_97}  \hyperref[html:y121]{relative_clauses_121}  \hyperref[html:y112]{sumti_tail_A_112}
+                        ;
+
+\phantomsection\label{html:y112}
+sumti_tail_A_112        :  \hyperref[html:y130]{selbri_130}
+                        |  \hyperref[html:y130]{selbri_130}  \hyperref[html:y121]{relative_clauses_121}
+                           /* explicit inner quantifier */
+                        |  \hyperref[html:y300]{quantifier_300}  \hyperref[html:y130]{selbri_130}
+                           /* quantifier both internal to a description,
+                              and external to a sumti thereby made specific */
+                        |  \hyperref[html:y300]{quantifier_300}  \hyperref[html:y130]{selbri_130}  \hyperref[html:y121]{relative_clauses_121}
+                        |  \hyperref[html:y300]{quantifier_300}  \hyperref[html:y90]{sumti_90}
+                        ;
+
+\phantomsection\label{html:y121}
+relative_clauses_121    :  \hyperref[html:y122]{relative_clause_122}
+                        |  \hyperref[html:y121]{relative_clauses_121}  \hyperref[html:y487]{ZIhE_487}  \hyperref[html:y122]{relative_clause_122}
+                        ;
+
+\phantomsection\label{html:y122}
+relative_clause_122     :  \hyperref[html:y485]{GOI_485}  \hyperref[html:y83]{term_83}  \hyperref[html:y464]{GEhU_gap_464}
+                        |  \hyperref[html:y484]{NOI_484}  \hyperref[html:y41]{subsentence_41}  \hyperref[html:y469]{KUhO_gap_469}
+                        ;
+
+\phantomsection\label{html:y130}
+selbri_130              :  \hyperref[html:y491]{tag_491}  \hyperref[html:y131]{selbri_A_131}
+                        |  \hyperref[html:y131]{selbri_A_131}
+                        ;
+
+\phantomsection\label{html:y131}
+selbri_A_131            :  \hyperref[html:y132]{selbri_B_132}
+                        |  \hyperref[html:y445]{NA_445}  \hyperref[html:y130]{selbri_130}
+                        ;
+
+\phantomsection\label{html:y132}
+selbri_B_132            :  \hyperref[html:y133]{selbri_C_133}
+                        |  \hyperref[html:y133]{selbri_C_133}  \hyperref[html:y443]{CO_443}  \hyperref[html:y132]{selbri_B_132}
+                        ;
+
+\phantomsection\label{html:y133}
+selbri_C_133            :  \hyperref[html:y134]{selbri_D_134}
+                        |  \hyperref[html:y133]{selbri_C_133}  \hyperref[html:y134]{selbri_D_134}
+                        ;
+
+\phantomsection\label{html:y134}
+selbri_D_134            :  \hyperref[html:y135]{selbri_E_135}
+                        |  \hyperref[html:y134]{selbri_D_134}  \hyperref[html:y422]{JOIK_JEK_422}  \hyperref[html:y135]{selbri_E_135}
+                        |  \hyperref[html:y134]{selbri_D_134}  \hyperref[html:y823]{JOIK_KE_823}  \hyperref[html:y133]{selbri_C_133}
+                                \hyperref[html:y466]{KEhE_gap_466}
+                        ;
+
+\phantomsection\label{html:y135}
+selbri_E_135            :  \hyperref[html:y136]{selbri_F_136}
+                        |  \hyperref[html:y136]{selbri_F_136}  \hyperref[html:y821]{JEK_BO_821}  \hyperref[html:y135]{selbri_E_135}
+                        |  \hyperref[html:y136]{selbri_F_136}  \hyperref[html:y822]{JOIK_BO_822}  \hyperref[html:y135]{selbri_E_135}
+                        ;
+
+\phantomsection\label{html:y136}
+selbri_F_136            :  \hyperref[html:y150]{tanru_unit_150}
+                        |  \hyperref[html:y150]{tanru_unit_150}  \hyperref[html:y479]{BO_479}  \hyperref[html:y136]{selbri_F_136}
+                        |  \hyperref[html:y137]{GUhEK_selbri_137}
+                        |  \hyperref[html:y482]{NAhE_482}  \hyperref[html:y137]{GUhEK_selbri_137}
+                        ;
+
+\phantomsection\label{html:y137}
+GUhEK_selbri_137        :  \hyperref[html:y808]{GUhEK_808}  \hyperref[html:y130]{selbri_130}  \hyperref[html:y816]{GIK_816}  \hyperref[html:y136]{selbri_F_136}
+                        ;
+
+\phantomsection\label{html:y150}
+tanru_unit_150          :  \hyperref[html:y151]{tanru_unit_A_151}
+                        |  \hyperref[html:y150]{tanru_unit_150}  \hyperref[html:y444]{CEI_444}  \hyperref[html:y151]{tanru_unit_A_151}
+                        ;
+
+\phantomsection\label{html:y151}
+tanru_unit_A_151        :  \hyperref[html:y152]{tanru_unit_B_152}
+                        |  \hyperref[html:y152]{tanru_unit_B_152}  \hyperref[html:y160]{linkargs_160}
+                        ;
+
+\phantomsection\label{html:y152}
+tanru_unit_B_152        :  \hyperref[html:y407]{bridi_valsi_407}
+                        |  \hyperref[html:y493]{KE_493}  \hyperref[html:y133]{selbri_C_133}  \hyperref[html:y466]{KEhE_gap_466}
+                        |  \hyperref[html:y480]{SE_480}  \hyperref[html:y152]{tanru_unit_B_152}
+                        |  \hyperref[html:y478]{JAI_478}  \hyperref[html:y491]{tag_491}  \hyperref[html:y152]{tanru_unit_B_152}
+                        |  \hyperref[html:y478]{JAI_478}  \hyperref[html:y152]{tanru_unit_B_152}
+                        |  \hyperref[html:y477]{ME_477}  \hyperref[html:y90]{sumti_90}  \hyperref[html:y465]{MEhU_gap_465}
+                        |  \hyperref[html:y477]{ME_477}  \hyperref[html:y90]{sumti_90}  \hyperref[html:y465]{MEhU_gap_465}  \hyperref[html:y476]{MOI_476}
+                        |  \hyperref[html:y475]{NUhA_475}  \hyperref[html:y374]{MEX_operator_374}
+                        |  \hyperref[html:y482]{NAhE_482}  \hyperref[html:y152]{tanru_unit_B_152}
+                        |  \hyperref[html:y425]{NU_425}  \hyperref[html:y41]{subsentence_41}  \hyperref[html:y453]{KEI_gap_453}
+                        ;
+
+\phantomsection\label{html:y160}
+linkargs_160            :  \hyperref[html:y446]{BE_446}  \hyperref[html:y83]{term_83}  \hyperref[html:y467]{BEhO_gap_467}
+                        |  \hyperref[html:y446]{BE_446}  \hyperref[html:y83]{term_83}  \hyperref[html:y161]{links_161}  \hyperref[html:y467]{BEhO_gap_467}
+                        ;
+
+\phantomsection\label{html:y161}
+links_161               :  \hyperref[html:y442]{BEI_442}  \hyperref[html:y83]{term_83}
+                        |  \hyperref[html:y442]{BEI_442}  \hyperref[html:y83]{term_83}  \hyperref[html:y161]{links_161}
+                        ;
+
+/*  Main entry point for MEX; everything but a number must be in parens.   */
+
+\phantomsection\label{html:y300}
+quantifier_300          :  \hyperref[html:y812]{number_812}  \hyperref[html:y461]{BOI_gap_461}
+                        |  \hyperref[html:y470]{left_bracket_470}  \hyperref[html:y310]{MEX_310}  \hyperref[html:y471]{right_bracket_gap_471}
+                        ;
+
+/*  Entry point for MEX used after LI; no parens needed, but LI now has an
+    elidable terminator. (This allows us to express the difference between
+    \q{the expression a + b} and \q{the expression (a + b)}_)   */
+
+/*  This rule supports left-grouping infix expressions and reverse Polish
+    expressions. To handle infix monadic, use a null operand; to handle
+    infix with more than two operands (whatever that means) use an extra
+    operator or an array operand.   */
+
+\phantomsection\label{html:y310}
+MEX_310                 :  \hyperref[html:y311]{MEX_A_311}
+                        |  \hyperref[html:y310]{MEX_310}  \hyperref[html:y370]{operator_370}  \hyperref[html:y311]{MEX_A_311}
+                        |  \hyperref[html:y441]{FUhA_441}  \hyperref[html:y330]{rp_expression_330}
+                        ;
+
+/*  Support for right-grouping (short scope) infix expressions with BIhE.  */
+
+\phantomsection\label{html:y311}
+MEX_A_311               :  \hyperref[html:y312]{MEX_B_312}
+                        |  \hyperref[html:y312]{MEX_B_312}  \hyperref[html:y439]{BIhE_439}  \hyperref[html:y370]{operator_370}  \hyperref[html:y311]{MEX_A_311}
+                        ;
+
+/*  Support for forethought (Polish) expressions. These begin with a
+    forethought flag, then the operator and then the argument(s).  */
+
+\phantomsection\label{html:y312}
+MEX_B_312               :  \hyperref[html:y381]{operand_381}
+                        |  \hyperref[html:y370]{operator_370}  \hyperref[html:y313]{MEX_C_313}  \hyperref[html:y452]{MEX_gap_452}
+                        |  \hyperref[html:y438]{PEhO_438}  \hyperref[html:y370]{operator_370}  \hyperref[html:y313]{MEX_C_313}  \hyperref[html:y452]{MEX_gap_452}
+                        ;
+
+\phantomsection\label{html:y313}
+MEX_C_313               :  \hyperref[html:y312]{MEX_B_312}
+                        |  \hyperref[html:y313]{MEX_C_313}  \hyperref[html:y312]{MEX_B_312}
+                        ;
+
+/*  Reverse Polish expressions always have exactly two operands.
+    To handle one operand, use a null operand;
+    to handle more than two operands, use a null operator.  */
+
+\phantomsection\label{html:y330}
+rp_expression_330       :  \hyperref[html:y332]{rp_operand_332}  \hyperref[html:y332]{rp_operand_332}  \hyperref[html:y370]{operator_370}
+                        ;
+
+\phantomsection\label{html:y332}
+rp_operand_332          :  \hyperref[html:y381]{operand_381}
+                        |  \hyperref[html:y330]{rp_expression_330}
+                        ;
+
+/*  Operators may be joined by logical connectives. */
+
+\phantomsection\label{html:y370}
+operator_370            :  \hyperref[html:y371]{operator_A_371}
+                        |  \hyperref[html:y370]{operator_370}  \hyperref[html:y422]{JOIK_JEK_422}  \hyperref[html:y371]{operator_A_371}
+                        |  \hyperref[html:y370]{operator_370}  \hyperref[html:y823]{JOIK_KE_823}  \hyperref[html:y370]{operator_370}
+                                \hyperref[html:y466]{KEhE_gap_466}
+                        ;
+
+\phantomsection\label{html:y371}
+operator_A_371          :  \hyperref[html:y372]{operator_B_372}
+                        |  \hyperref[html:y808]{GUhEK_808}  \hyperref[html:y371]{operator_A_371}  \hyperref[html:y816]{GIK_816}  \hyperref[html:y372]{operator_B_372}
+                        |  \hyperref[html:y372]{operator_B_372}  \hyperref[html:y822]{JOIK_BO_822}  \hyperref[html:y371]{operator_A_371}
+                        |  \hyperref[html:y372]{operator_B_372}  \hyperref[html:y821]{JEK_BO_821}  \hyperref[html:y371]{operator_A_371}
+                        ;
+
+\phantomsection\label{html:y372}
+operator_B_372          :  \hyperref[html:y374]{MEX_operator_374}
+                        |  \hyperref[html:y493]{KE_493}  \hyperref[html:y370]{operator_370}  \hyperref[html:y466]{KEhE_gap_466}
+                        ;
+
+\phantomsection\label{html:y374}
+MEX_operator_374        :  \hyperref[html:y679]{VUhU_679}
+                        |  \hyperref[html:y679]{VUhU_679}  \hyperref[html:y32]{free_modifier_32}
+                        |  \hyperref[html:y480]{SE_480}  \hyperref[html:y374]{MEX_operator_374}
+   /* changes argument order */
+                        |  \hyperref[html:y482]{NAhE_482}  \hyperref[html:y374]{MEX_operator_374}
+   /* scalar negation */
+                        |  \hyperref[html:y430]{MAhO_430}  \hyperref[html:y310]{MEX_310}  \hyperref[html:y473]{TEhU_gap_473}
+                        |  \hyperref[html:y429]{NAhU_429}  \hyperref[html:y130]{selbri_130}  \hyperref[html:y473]{TEhU_gap_473}
+                        ;
+
+\phantomsection\label{html:y381}
+operand_381             :  \hyperref[html:y382]{operand_A_382}
+                        |  \hyperref[html:y382]{operand_A_382}  \hyperref[html:y804]{EK_KE_804}  \hyperref[html:y381]{operand_381}  \hyperref[html:y466]{KEhE_gap_466}
+                        |  \hyperref[html:y382]{operand_A_382}  \hyperref[html:y823]{JOIK_KE_823}  \hyperref[html:y381]{operand_381}  \hyperref[html:y466]{KEhE_gap_466}
+                        ;
+
+\phantomsection\label{html:y382}
+operand_A_382           :  \hyperref[html:y383]{operand_B_383}
+                        |  \hyperref[html:y382]{operand_A_382}  \hyperref[html:y421]{JOIK_EK_421}  \hyperref[html:y383]{operand_B_383}
+                        ;
+
+\phantomsection\label{html:y383}
+operand_B_383           :  \hyperref[html:y385]{operand_C_385}
+                        |  \hyperref[html:y385]{operand_C_385}  \hyperref[html:y803]{EK_BO_803}  \hyperref[html:y383]{operand_B_383}
+                        |  \hyperref[html:y385]{operand_C_385}  \hyperref[html:y822]{JOIK_BO_822}  \hyperref[html:y383]{operand_B_383}
+                        ;
+
+\phantomsection\label{html:y385}
+operand_C_385           :  \hyperref[html:y300]{quantifier_300}
+                        |  \hyperref[html:y817]{lerfu_string_817}  \hyperref[html:y461]{BOI_gap_461}
+   /* lerfu string as operand - classic math variable */
+                        |  \hyperref[html:y428]{NIhE_428}  \hyperref[html:y130]{selbri_130}  \hyperref[html:y473]{TEhU_gap_473}
+   /* quantifies a bridi - inverse of -MOI */
+                        |  \hyperref[html:y427]{MOhE_427}  \hyperref[html:y90]{sumti_90}  \hyperref[html:y473]{TEhU_gap_473}
+   /* quantifies a sumti - inverse of LI */
+                        |  \hyperref[html:y431]{JOhI_431}  \hyperref[html:y313]{MEX_C_313}  \hyperref[html:y473]{TEhU_gap_473}
+                        |  \hyperref[html:y807]{GEK_807}  \hyperref[html:y381]{operand_381}  \hyperref[html:y816]{GIK_816}  \hyperref[html:y385]{operand_C_385}
+                        |  \hyperref[html:y483]{qualifier_483}  \hyperref[html:y381]{operand_381}  \hyperref[html:y463]{LUhU_gap_463}
+                        ;
+
+/* _400 series constructs are mostly specific strings, some of which may
+   also be used by the lexer; the lexer should not use any reference to
+   terminals numbered less than _400, as they have grammars composed on
+   non-deterministic strings of selma'o.  Some above _400 also are this
+   way, so care should be taken; this is especially true for those that
+   reference \hyperref[html:y32]{free_modifier_32}.  */
+
+\phantomsection\label{html:y400}
+anaphora_400            :  \hyperref[html:y555]{KOhA_555}
+                        |  \hyperref[html:y555]{KOhA_555}  \hyperref[html:y32]{free_modifier_32}
+                        |  \hyperref[html:y817]{lerfu_string_817}  \hyperref[html:y461]{BOI_gap_461}
+                        ;
+
+\phantomsection\label{html:y404}
+cmene_404               :  \hyperref[html:y405]{cmene_A_405}
+                        |  \hyperref[html:y405]{cmene_A_405}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y405}
+cmene_A_405             :  \hyperref[html:y518]{CMENE_518}  /* pause */
+                        |  \hyperref[html:y405]{cmene_A_405}  \hyperref[html:y518]{CMENE_518}  /* pause*/
+/* multiple CMENE are identified morphologically (by the lexer) -- separated by
+   consonant \&pause */
+                        ;
+
+\phantomsection\label{html:y407}
+bridi_valsi_407         :  \hyperref[html:y408]{bridi_valsi_A_408}
+                        |  \hyperref[html:y408]{bridi_valsi_A_408}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y408}
+bridi_valsi_A_408       :  \hyperref[html:y509]{BRIVLA_509}
+                        |  \hyperref[html:y824]{PA_MOI_824}
+                        |  \hyperref[html:y543]{GOhA_543}
+                        |  \hyperref[html:y543]{GOhA_543}  \hyperref[html:y593]{RAhO_593}
+                        ;
+
+\phantomsection\label{html:y410}
+para_mark_410           :  \hyperref[html:y584]{NIhO_584}
+                        |  \hyperref[html:y584]{NIhO_584}  \hyperref[html:y32]{free_modifier_32}
+                        |  \hyperref[html:y584]{NIhO_584}  \hyperref[html:y410]{para_mark_410}
+                        ;
+
+\phantomsection\label{html:y411}
+indicators_411          :  \hyperref[html:y412]{indicators_A_412}
+                        |  \hyperref[html:y535]{FUhE_535}  \hyperref[html:y412]{indicators_A_412}
+                        ;
+
+\phantomsection\label{html:y412}
+indicators_A_412        :  \hyperref[html:y413]{indicator_413}
+                        |  \hyperref[html:y412]{indicators_A_412}  \hyperref[html:y413]{indicator_413}
+                        ;
+
+\phantomsection\label{html:y413}
+indicator_413           :  \hyperref[html:y612]{UI_612}
+                        |  \hyperref[html:y515]{CAI_515}
+                        |  \hyperref[html:y612]{UI_612}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y515]{CAI_515}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y619]{Y_619}
+                        |  \hyperref[html:y524]{DAhO_524}
+                        |  \hyperref[html:y536]{FUhO_536}
+                        ;
+
+\phantomsection\label{html:y415}
+DOI_415                 :  \hyperref[html:y525]{DOI_525}
+                        |  \hyperref[html:y416]{COI_416}
+                        |  \hyperref[html:y416]{COI_416}  \hyperref[html:y525]{DOI_525}
+                        ;
+
+\phantomsection\label{html:y416}
+COI_416                 :  \hyperref[html:y417]{COI_A_417}
+                        |  \hyperref[html:y416]{COI_416}  \hyperref[html:y417]{COI_A_417}
+                        ;
+
+\phantomsection\label{html:y417}
+COI_A_417               :  \hyperref[html:y520]{COI_520}
+                        |  \hyperref[html:y520]{COI_520}  \hyperref[html:y581]{NAI_581}
+                        ;
+
+\phantomsection\label{html:y421}
+JOIK_EK_421             :  \hyperref[html:y802]{EK_802}
+                        |  \hyperref[html:y806]{JOIK_806}
+                        |  \hyperref[html:y806]{JOIK_806}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y422}
+JOIK_JEK_422            :  \hyperref[html:y806]{JOIK_806}
+                        |  \hyperref[html:y806]{JOIK_806}  \hyperref[html:y32]{free_modifier_32}
+                        |  \hyperref[html:y805]{JEK_805}
+                        |  \hyperref[html:y805]{JEK_805}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y424}
+XI_424                  :  \hyperref[html:y618]{XI_618}
+                        |  \hyperref[html:y618]{XI_618}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y425}
+NU_425                  :  \hyperref[html:y426]{NU_A_426}
+                        |  \hyperref[html:y425]{NU_425}  \hyperref[html:y422]{JOIK_JEK_422}  \hyperref[html:y426]{NU_A_426}
+                        ;
+
+\phantomsection\label{html:y426}
+NU_A_426                :  \hyperref[html:y586]{NU_586}
+                        |  \hyperref[html:y586]{NU_586}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y586]{NU_586}  \hyperref[html:y32]{free_modifier_32}
+                        |  \hyperref[html:y586]{NU_586}  \hyperref[html:y581]{NAI_581}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y427}
+MOhE_427                :  \hyperref[html:y664]{MOhE_664}
+                        |  \hyperref[html:y664]{MOhE_664}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y428}
+NIhE_428                :  \hyperref[html:y666]{NIhE_666}
+                        |  \hyperref[html:y666]{NIhE_666}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y429}
+NAhU_429                :  \hyperref[html:y665]{NAhU_665}
+                        |  \hyperref[html:y665]{NAhU_665}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y430}
+MAhO_430                :  \hyperref[html:y662]{MAhO_662}
+                        |  \hyperref[html:y662]{MAhO_662}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y431}
+JOhI_431                :  \hyperref[html:y657]{JOhI_657}
+                        |  \hyperref[html:y657]{JOhI_657}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y432}
+quote_arg_432           :  \hyperref[html:y433]{quote_arg_A_433}
+                        |  \hyperref[html:y433]{quote_arg_A_433}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y433}
+quote_arg_A_433         :  \hyperref[html:y434]{ZOI_quote_434}
+                        |  \hyperref[html:y435]{ZO_quote_435}
+                        |  \hyperref[html:y436]{LOhU_quote_436}
+                        |  \hyperref[html:y571]{LU_571}  \hyperref[html:y0]{text_0}  \hyperref[html:y448]{LIhU_gap_448}
+                        ;
+
+/* The quoted material in the following three terminals must be identified by
+   the lexer, but no additional lexer processing is needed. */
+
+\phantomsection\label{html:y434}
+ZOI_quote_434           :  \hyperref[html:y627]{ZOI_627}  \hyperref[html:y698]{any_word_698}
+                                  /*pause*/  \hyperref[html:y699]{anything_699}  /*pause*/  \hyperref[html:y698]{any_word_698}
+                        ;
+
+/* 'pause' is morphemic, represented by '.' The lexer assembles \hyperref[html:y699]{anything_699} */
+
+\phantomsection\label{html:y435}
+ZO_quote_435            :  \hyperref[html:y626]{ZO_626}  \hyperref[html:y698]{any_word_698}
+                        ;
+
+/* 'word' may not be a compound; but it can be any valid Lojban selma'o value,
+   including ZO, ZOI, SI, SA, SU. The preparser will not lex the word per its
+   normal selma'o. */
+
+\phantomsection\label{html:y436}
+LOhU_quote_436          :  \hyperref[html:y569]{LOhU_569}  \hyperref[html:y697]{any_words_697}  \hyperref[html:y565]{LEhU_565}
+                        ;
+
+/* 'words' may be any Lojban words, with no claim of grammaticality; the
+   preparser will not lex the individual words per their normal selma'o;
+   used to quote ungrammatical Lojban, equivalent to the * or ? writing
+   convention for such text.  */
+
+/* The preparser needs one bit of sophistication for this rule.  A
+   quoted string should be able to contain other quoted strings - this is
+   only a problem for a LOhU quote itself, since the LEhU clossing this
+   quote would otherwise close the outer quotes, which is incorrect.  For
+   this purpose, we will cheat on the use of ZO in such a quote (since this
+   is ungrammatical text, it is a sign ignored by the parser).  Use ZO to
+   mark any nested quotation LOhU.  The preparser then will absorb it by
+   the ZO rule, before testing for LOhU.  This is obviously not the
+   standard usage for ZO, which would otherwise cause the result to be a
+   sumti.  But, since the result will be part of an unparsed string anyway,
+   it doesn't matter.  */
+
+/* It may be seen that any of the ZO/ZOI/LOhU trio of quotation markers
+   may contain the powerful metalinguistic erasers.  Since these quotations
+   are not parsed internally, these operators are ignored within the quote.
+   To erase a ZO, then, two SI's are needed after giving a quoted word of
+   any type.  ZOI takes four SI's, with the ENTIRE BODY OF THE QUOTE
+   treated as a single 'word' since it is one selma'o.  Thus one for the
+   quote body, two for the single word delimiters, and one for the ZOI.  In
+   LOhU, the entire body is treated as a single word, so three SI's can
+   erase it.  */
+
+/* All rule terminator names with 'gap' in them are potentially
+   elidable, where such elision does not cause an ambiguity.  This is
+   implemented through use of the YACC 'error' token, which effectively
+   recovers from an elision.  */
+
+\phantomsection\label{html:y437}
+FIhO_437                :  \hyperref[html:y532]{FIhO_532}
+                        |  \hyperref[html:y532]{FIhO_532}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y438}
+PEhO_438                :  \hyperref[html:y673]{PEhO_673}
+                        |  \hyperref[html:y673]{PEhO_673}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y439}
+BIhE_439                :  \hyperref[html:y650]{BIhE_650}
+                        |  \hyperref[html:y650]{BIhE_650}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y440}
+SEI_440                 :  \hyperref[html:y597]{SEI_597}
+                        |  \hyperref[html:y597]{SEI_597}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y441}
+FUhA_441                :  \hyperref[html:y655]{FUhA_655}
+                        |  \hyperref[html:y655]{FUhA_655}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y442}
+BEI_442                 :  \hyperref[html:y505]{BEI_505}
+                        |  \hyperref[html:y505]{BEI_505}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y443}
+CO_443                  :  \hyperref[html:y519]{CO_519}
+                        |  \hyperref[html:y519]{CO_519}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y444}
+CEI_444                 :  \hyperref[html:y516]{CEI_516}
+                        |  \hyperref[html:y516]{CEI_516}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y445}
+NA_445                  :  \hyperref[html:y578]{NA_578}
+                        |  \hyperref[html:y578]{NA_578}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y446}
+BE_446                  :  \hyperref[html:y504]{BE_504}
+                        |  \hyperref[html:y504]{BE_504}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y447}
+TUhE_447                :  \hyperref[html:y610]{TUhE_610}
+                        |  \hyperref[html:y610]{TUhE_610}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y448}
+LIhU_gap_448            :  \hyperref[html:y567]{LIhU_567}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y450}
+gap_450                 :  \hyperref[html:y556]{KU_556}
+                        |  \hyperref[html:y556]{KU_556}  \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y451}
+front_gap_451           :  \hyperref[html:y521]{CU_521}
+                        |  \hyperref[html:y521]{CU_521}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y452}
+MEX_gap_452             :  \hyperref[html:y658]{KUhE_658}
+                        |  \hyperref[html:y658]{KUhE_658}  \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y453}
+KEI_gap_453             :  \hyperref[html:y552]{KEI_552}
+                        |  \hyperref[html:y552]{KEI_552}  \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y454}
+TUhU_gap_454            :  \hyperref[html:y611]{TUhU_611}
+                        |  \hyperref[html:y611]{TUhU_611}  \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y456}
+VAU_gap_456             :  \hyperref[html:y614]{VAU_614}
+                        |  \hyperref[html:y614]{VAU_614}  \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+/* redundant to attach a free modifier on the following */
+
+\phantomsection\label{html:y457}
+DOhU_gap_457            :  \hyperref[html:y526]{DOhU_526}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y458}
+FEhU_gap_458            :  \hyperref[html:y531]{FEhU_531}
+                        |  \hyperref[html:y531]{FEhU_531}  \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y459}
+SEhU_gap_459            :  \hyperref[html:y598]{SEhU_598}
+                        |  error
+/* a free modifier on a discursive should be somewhere within the discursive.
+   See \hyperref[html:y440]{SEI_440} */
+                        ;
+
+\phantomsection\label{html:y460}
+NUhU_gap_460            :  \hyperref[html:y588]{NUhU_588}
+                        |  \hyperref[html:y588]{NUhU_588}  \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y461}
+BOI_gap_461             :  \hyperref[html:y651]{BOI_651}
+                        |  \hyperref[html:y651]{BOI_651}  \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y462}
+sub_gap_462             :  \hyperref[html:y651]{BOI_651}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y463}
+LUhU_gap_463            :  \hyperref[html:y573]{LUhU_573}
+                        |  \hyperref[html:y573]{LUhU_573}  \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y464}
+GEhU_gap_464            :  \hyperref[html:y538]{GEhU_538}
+                        |  \hyperref[html:y538]{GEhU_538}  \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y465}
+MEhU_gap_465            :  \hyperref[html:y575]{MEhU_575}
+                        |  \hyperref[html:y575]{MEhU_575}   \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y466}
+KEhE_gap_466            :  \hyperref[html:y550]{KEhE_550}
+                        |  \hyperref[html:y550]{KEhE_550}  \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y467}
+BEhO_gap_467            :  \hyperref[html:y506]{BEhO_506}
+                        |  \hyperref[html:y506]{BEhO_506}  \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y468}
+TOI_gap_468             :  \hyperref[html:y607]{TOI_607}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y469}
+KUhO_gap_469            :  \hyperref[html:y557]{KUhO_557}
+                        |  \hyperref[html:y557]{KUhO_557}  \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y470}
+left_bracket_470        :  \hyperref[html:y677]{VEI_677}
+                        |  \hyperref[html:y677]{VEI_677}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y471}
+right_bracket_gap_471   :  \hyperref[html:y678]{VEhO_678}
+                        |  \hyperref[html:y678]{VEhO_678}  \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y472}
+LOhO_gap_472            :  \hyperref[html:y568]{LOhO_568}
+                        |  \hyperref[html:y568]{LOhO_568}  \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y473}
+TEhU_gap_473            :  \hyperref[html:y675]{TEhU_675}
+                        |  \hyperref[html:y675]{TEhU_675}  \hyperref[html:y32]{free_modifier_32}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y474}
+right_br_no_free_474    :  \hyperref[html:y678]{VEhO_678}
+                        |  error
+                        ;
+
+\phantomsection\label{html:y475}
+NUhA_475                :  \hyperref[html:y667]{NUhA_667}
+                        |  \hyperref[html:y667]{NUhA_667}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y476}
+MOI_476                 :  \hyperref[html:y663]{MOI_663}
+                        |  \hyperref[html:y663]{MOI_663}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y477}
+ME_477                  :  \hyperref[html:y574]{ME_574}
+                        |  \hyperref[html:y574]{ME_574}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y478}
+JAI_478                 :  \hyperref[html:y547]{JAI_547}
+                        |  \hyperref[html:y547]{JAI_547}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y479}
+BO_479                  :  \hyperref[html:y508]{BO_508}
+                        |  \hyperref[html:y508]{BO_508}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y480}
+SE_480                  :  \hyperref[html:y596]{SE_596}
+                        |  \hyperref[html:y596]{SE_596}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y481}
+FA_481                  :  \hyperref[html:y527]{FA_527}
+                        |  \hyperref[html:y527]{FA_527}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y482}
+NAhE_482                :  \hyperref[html:y583]{NAhE_583}
+                        |  \hyperref[html:y583]{NAhE_583}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y483}
+qualifier_483           :  \hyperref[html:y561]{LAhE_561}
+                        |  \hyperref[html:y561]{LAhE_561}  \hyperref[html:y32]{free_modifier_32}
+                        |  \hyperref[html:y809]{NAhE_BO_809}
+                        ;
+
+\phantomsection\label{html:y484}
+NOI_484                 :  \hyperref[html:y585]{NOI_585}
+                        |  \hyperref[html:y585]{NOI_585}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y485}
+GOI_485                 :  \hyperref[html:y542]{GOI_542}
+                        |  \hyperref[html:y542]{GOI_542}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y486}
+subscript_486           :  \hyperref[html:y424]{XI_424}  \hyperref[html:y812]{number_812}  \hyperref[html:y462]{sub_gap_462}
+                        |  \hyperref[html:y424]{XI_424}  \hyperref[html:y470]{left_bracket_470}  \hyperref[html:y310]{MEX_310}
+                                \hyperref[html:y474]{right_br_no_free_474}
+                        |  \hyperref[html:y424]{XI_424}  \hyperref[html:y817]{lerfu_string_817}  \hyperref[html:y462]{sub_gap_462}
+                        ;
+
+\phantomsection\label{html:y487}
+ZIhE_487                :  \hyperref[html:y625]{ZIhE_625}
+                        |  \hyperref[html:y625]{ZIhE_625}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y488}
+LE_488                  :  \hyperref[html:y562]{LE_562}
+                        |  \hyperref[html:y562]{LE_562}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y489}
+LI_489                  :  \hyperref[html:y566]{LI_566}
+                        |  \hyperref[html:y566]{LI_566}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y490}
+mod_head_490            :  \hyperref[html:y491]{tag_491}
+                        |  \hyperref[html:y481]{FA_481}
+                        ;
+
+\phantomsection\label{html:y491}
+tag_491                 :  \hyperref[html:y815]{tense_modal_815}
+                        |  \hyperref[html:y491]{tag_491}  \hyperref[html:y422]{JOIK_JEK_422}  \hyperref[html:y815]{tense_modal_815}
+                        ;
+
+\phantomsection\label{html:y492}
+ZOhU_492                :  \hyperref[html:y628]{ZOhU_628}
+                        |  \hyperref[html:y628]{ZOhU_628}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y493}
+KE_493                  :  \hyperref[html:y551]{KE_551}
+                        |  \hyperref[html:y551]{KE_551}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y494}
+PEhE_494                :  \hyperref[html:y591]{PEhE_591}
+                        |  \hyperref[html:y591]{PEhE_591}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y495}
+CEhE_495                :  \hyperref[html:y517]{CEhE_517}
+                        |  \hyperref[html:y517]{CEhE_517}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y496}
+NUhI_496                :  \hyperref[html:y587]{NUhI_587}
+                        |  \hyperref[html:y587]{NUhI_587}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y497}
+VUhO_497                :  \hyperref[html:y617]{VUhO_617}
+                        |  \hyperref[html:y617]{VUhO_617}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y498}
+SOI_498                 :  \hyperref[html:y602]{SOI_602}
+                        |  \hyperref[html:y602]{SOI_602}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y499}
+LA_499                  :  \hyperref[html:y558]{LA_558}
+                        |  \hyperref[html:y558]{LA_558}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y801}
+utterance_ordinal_801   :  \hyperref[html:y905]{lexer_A_905}
+                        ;
+
+\phantomsection\label{html:y802}
+EK_802                  :  \hyperref[html:y910]{lexer_B_910}
+                        |  \hyperref[html:y910]{lexer_B_910}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y803}
+EK_BO_803               :  \hyperref[html:y915]{lexer_C_915}
+                        |  \hyperref[html:y915]{lexer_C_915}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y804}
+EK_KE_804               :  \hyperref[html:y916]{lexer_D_916}
+                        |  \hyperref[html:y916]{lexer_D_916}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y805}
+JEK_805                 :  \hyperref[html:y925]{lexer_E_925}
+                        ;
+
+\phantomsection\label{html:y806}
+JOIK_806                :  \hyperref[html:y930]{lexer_F_930}
+                        ;
+
+\phantomsection\label{html:y807}
+GEK_807                 :  \hyperref[html:y935]{lexer_G_935}
+                        |  \hyperref[html:y935]{lexer_G_935}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y808}
+GUhEK_808               :  \hyperref[html:y940]{lexer_H_940}
+                        |  \hyperref[html:y940]{lexer_H_940}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y809}
+NAhE_BO_809             :  \hyperref[html:y945]{lexer_I_945}
+                        |  \hyperref[html:y945]{lexer_I_945}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y810}
+NA_KU_810               :  \hyperref[html:y950]{lexer_J_950}
+                        |  \hyperref[html:y950]{lexer_J_950}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y811}
+I_BO_811                :  \hyperref[html:y955]{lexer_K_955}
+                        |  \hyperref[html:y955]{lexer_K_955}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y812}
+number_812              :  \hyperref[html:y960]{lexer_L_960}
+                        ;
+
+\phantomsection\label{html:y813}
+GIhEK_BO_813            :  \hyperref[html:y965]{lexer_M_965}
+                        |  \hyperref[html:y965]{lexer_M_965}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y814}
+GIhEK_KE_814            :  \hyperref[html:y966]{lexer_N_966}
+                        |  \hyperref[html:y966]{lexer_N_966}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y815}
+tense_modal_815         :  \hyperref[html:y970]{lexer_O_970}
+                        |  \hyperref[html:y970]{lexer_O_970}  \hyperref[html:y32]{free_modifier_32}
+                        |  \hyperref[html:y437]{FIhO_437}  \hyperref[html:y130]{selbri_130}  \hyperref[html:y458]{FEhU_gap_458}
+                        ;
+
+\phantomsection\label{html:y816}
+GIK_816                 :  \hyperref[html:y980]{lexer_P_980}
+                        |  \hyperref[html:y980]{lexer_P_980}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y817}
+lerfu_string_817        :  \hyperref[html:y985]{lexer_Q_985}
+                        ;
+
+\phantomsection\label{html:y818}
+GIhEK_818               :  \hyperref[html:y990]{lexer_R_990}
+                        |  \hyperref[html:y990]{lexer_R_990}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y819}
+I_819                   :  \hyperref[html:y995]{lexer_S_995}
+                        |  \hyperref[html:y995]{lexer_S_995}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y820}
+I_JEK_820               :  \hyperref[html:y1000]{lexer_T_1000}
+                        |  \hyperref[html:y1000]{lexer_T_1000}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y821}
+JEK_BO_821              :  \hyperref[html:y1005]{lexer_U_1005}
+                        |  \hyperref[html:y1005]{lexer_U_1005}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y822}
+JOIK_BO_822             :  \hyperref[html:y1010]{lexer_V_1010}
+                        |  \hyperref[html:y1010]{lexer_V_1010}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y823}
+JOIK_KE_823             :  \hyperref[html:y1015]{lexer_W_1015}
+                        |  \hyperref[html:y1015]{lexer_W_1015}  \hyperref[html:y32]{free_modifier_32}
+                        ;
+
+\phantomsection\label{html:y824}
+PA_MOI_824              :  \hyperref[html:y1025]{lexer_Y_1025}
+                        ;
+
+/* The following rules are used only in lexer processing.  They have been
+   tested for ambiguity at various levels in the YACC grammar, but are in
+   the recursive descent lexer in the current parser.  The lexer inserts
+   the lexer tokens before the processed strings, but leaves the original
+   tokens.  */
+
+\phantomsection\label{html:y905}
+lexer_A_905             :  \hyperref[html:y701]{lexer_A_701}  \hyperref[html:y906]{utt_ordinal_root_906}
+                        ;
+
+\phantomsection\label{html:y906}
+utt_ordinal_root_906    :  \hyperref[html:y986]{lerfu_string_root_986}  \hyperref[html:y661]{MAI_661}
+                        |  \hyperref[html:y961]{number_root_961}  \hyperref[html:y661]{MAI_661}
+                        ;
+
+\phantomsection\label{html:y910}
+lexer_B_910             :  \hyperref[html:y702]{lexer_B_702}  \hyperref[html:y911]{EK_root_911}
+                        ;
+
+\phantomsection\label{html:y911}
+EK_root_911             :  \hyperref[html:y501]{A_501}
+                        |  \hyperref[html:y596]{SE_596}  \hyperref[html:y501]{A_501}
+                        |  \hyperref[html:y578]{NA_578}  \hyperref[html:y501]{A_501}
+                        |  \hyperref[html:y501]{A_501}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y596]{SE_596}  \hyperref[html:y501]{A_501}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y578]{NA_578}  \hyperref[html:y501]{A_501}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y578]{NA_578}  \hyperref[html:y596]{SE_596}  \hyperref[html:y501]{A_501}
+                        |  \hyperref[html:y578]{NA_578}  \hyperref[html:y596]{SE_596}  \hyperref[html:y501]{A_501}  \hyperref[html:y581]{NAI_581}
+                        ;
+
+\phantomsection\label{html:y915}
+lexer_C_915             :  \hyperref[html:y703]{lexer_C_703}  \hyperref[html:y911]{EK_root_911}  \hyperref[html:y508]{BO_508}
+                        |  \hyperref[html:y703]{lexer_C_703}  \hyperref[html:y911]{EK_root_911}  \hyperref[html:y971]{simple_tag_971}  \hyperref[html:y508]{BO_508}
+                        ;
+
+\phantomsection\label{html:y916}
+lexer_D_916             :  \hyperref[html:y704]{lexer_D_704}  \hyperref[html:y911]{EK_root_911}  \hyperref[html:y551]{KE_551}
+                        |  \hyperref[html:y704]{lexer_D_704}  \hyperref[html:y911]{EK_root_911}  \hyperref[html:y971]{simple_tag_971}  \hyperref[html:y551]{KE_551}
+                        ;
+
+\phantomsection\label{html:y925}
+lexer_E_925             :  \hyperref[html:y705]{lexer_E_705}  \hyperref[html:y926]{JEK_root_926}
+                        ;
+
+\phantomsection\label{html:y926}
+JEK_root_926            :  \hyperref[html:y546]{JA_546}
+                        |  \hyperref[html:y546]{JA_546}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y578]{NA_578}  \hyperref[html:y546]{JA_546}
+                        |  \hyperref[html:y578]{NA_578}  \hyperref[html:y546]{JA_546}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y596]{SE_596}  \hyperref[html:y546]{JA_546}
+                        |  \hyperref[html:y596]{SE_596}  \hyperref[html:y546]{JA_546}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y578]{NA_578}  \hyperref[html:y596]{SE_596}  \hyperref[html:y546]{JA_546}
+                        |  \hyperref[html:y578]{NA_578}  \hyperref[html:y596]{SE_596}  \hyperref[html:y546]{JA_546}  \hyperref[html:y581]{NAI_581}
+                        ;
+
+\phantomsection\label{html:y930}
+lexer_F_930             :  \hyperref[html:y706]{lexer_F_706}  \hyperref[html:y931]{JOIK_root_931}
+                        ;
+
+\phantomsection\label{html:y931}
+JOIK_root_931           :  \hyperref[html:y548]{JOI_548}
+                        |  \hyperref[html:y548]{JOI_548}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y596]{SE_596}  \hyperref[html:y548]{JOI_548}
+                        |  \hyperref[html:y596]{SE_596}  \hyperref[html:y548]{JOI_548}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y932]{interval_932}
+                        |  \hyperref[html:y656]{GAhO_656}  \hyperref[html:y932]{interval_932}  \hyperref[html:y656]{GAhO_656}
+                        ;
+
+\phantomsection\label{html:y932}
+interval_932            :  \hyperref[html:y507]{BIhI_507}
+                        |  \hyperref[html:y507]{BIhI_507}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y596]{SE_596}  \hyperref[html:y507]{BIhI_507}
+                        |  \hyperref[html:y596]{SE_596}  \hyperref[html:y507]{BIhI_507}  \hyperref[html:y581]{NAI_581}
+                        ;
+
+\phantomsection\label{html:y935}
+lexer_G_935             :  \hyperref[html:y707]{lexer_G_707}  \hyperref[html:y537]{GA_537}
+                        |  \hyperref[html:y707]{lexer_G_707}  \hyperref[html:y596]{SE_596}  \hyperref[html:y537]{GA_537}
+                        |  \hyperref[html:y707]{lexer_G_707}  \hyperref[html:y537]{GA_537}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y707]{lexer_G_707}  \hyperref[html:y596]{SE_596}  \hyperref[html:y537]{GA_537}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y707]{lexer_G_707}  \hyperref[html:y971]{simple_tag_971}  \hyperref[html:y981]{GIK_root_981}
+                        |  \hyperref[html:y707]{lexer_G_707}  \hyperref[html:y931]{JOIK_root_931}  \hyperref[html:y539]{GI_539}
+                        ;
+
+\phantomsection\label{html:y940}
+lexer_H_940             :  \hyperref[html:y708]{lexer_H_708}  \hyperref[html:y544]{GUhA_544}
+                        |  \hyperref[html:y708]{lexer_H_708}  \hyperref[html:y596]{SE_596}  \hyperref[html:y544]{GUhA_544}
+                        |  \hyperref[html:y708]{lexer_H_708}  \hyperref[html:y544]{GUhA_544}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y708]{lexer_H_708}  \hyperref[html:y596]{SE_596}  \hyperref[html:y544]{GUhA_544}  \hyperref[html:y581]{NAI_581}
+                        ;
+
+\phantomsection\label{html:y945}
+lexer_I_945             :  \hyperref[html:y709]{lexer_I_709}  \hyperref[html:y583]{NAhE_583}  \hyperref[html:y508]{BO_508}
+                        ;
+
+\phantomsection\label{html:y950}
+lexer_J_950             :  \hyperref[html:y710]{lexer_J_710}  \hyperref[html:y578]{NA_578}  \hyperref[html:y556]{KU_556}
+                        ;
+
+\phantomsection\label{html:y955}
+lexer_K_955             :  \hyperref[html:y711]{lexer_K_711}  \hyperref[html:y956]{I_root_956}  \hyperref[html:y508]{BO_508}
+                        |  \hyperref[html:y711]{lexer_K_711}  \hyperref[html:y956]{I_root_956}  \hyperref[html:y971]{simple_tag_971}  \hyperref[html:y508]{BO_508}
+                        ;
+
+\phantomsection\label{html:y956}
+I_root_956              :  \hyperref[html:y545]{I_545}
+                        |  \hyperref[html:y545]{I_545}  \hyperref[html:y957]{simple_JOIK_JEK_957}
+                        ;
+
+\phantomsection\label{html:y957}
+simple_JOIK_JEK_957     :  \hyperref[html:y806]{JOIK_806}
+                        |  \hyperref[html:y805]{JEK_805}
+                        ;
+                        /* no freemod in this version; cf. \hyperref[html:y422]{JOIK_JEK_422} */
+                        /* this reference to a version of JOIK and JEK
+                           which already have the lexer tokens attached
+                           prevents shift/reduce errors.  The problem is
+                           resolved in a hard-coded parser implementation
+                           which builds lexer_K, before lexer_S, before
+                           lexer_E and lexer_F. */
+
+\phantomsection\label{html:y960}
+lexer_L_960             :  \hyperref[html:y712]{lexer_L_712}  \hyperref[html:y961]{number_root_961}
+                        ;
+
+\phantomsection\label{html:y961}
+number_root_961         :  \hyperref[html:y672]{PA_672}
+                        |  \hyperref[html:y961]{number_root_961}  \hyperref[html:y672]{PA_672}
+                        |  \hyperref[html:y961]{number_root_961}  \hyperref[html:y987]{lerfu_word_987}
+                        ;
+
+\phantomsection\label{html:y965}
+lexer_M_965             :  \hyperref[html:y713]{lexer_M_713}  \hyperref[html:y991]{GIhEK_root_991}  \hyperref[html:y508]{BO_508}
+                        |  \hyperref[html:y713]{lexer_M_713}  \hyperref[html:y991]{GIhEK_root_991}  \hyperref[html:y971]{simple_tag_971}  \hyperref[html:y508]{BO_508}
+                        ;
+
+\phantomsection\label{html:y966}
+lexer_N_966             :  \hyperref[html:y714]{lexer_N_714}  \hyperref[html:y991]{GIhEK_root_991}  \hyperref[html:y551]{KE_551}
+                        |  \hyperref[html:y714]{lexer_N_714}  \hyperref[html:y991]{GIhEK_root_991}  \hyperref[html:y971]{simple_tag_971}  \hyperref[html:y551]{KE_551}
+                        ;
+
+\phantomsection\label{html:y970}
+lexer_O_970             :  \hyperref[html:y715]{lexer_O_715}  \hyperref[html:y972]{simple_tense_modal_972}
+                        ;
+/* the following rule is a lexer version of non-terminal _815 for compounding
+   PU/modals; it disallows the lexer picking out FIhO clauses, which would
+   require it to have knowledge of the main parser grammar */
+
+\phantomsection\label{html:y971}
+simple_tag_971          :  \hyperref[html:y972]{simple_tense_modal_972}
+                        |  \hyperref[html:y971]{simple_tag_971}  \hyperref[html:y957]{simple_JOIK_JEK_957}
+                                \hyperref[html:y972]{simple_tense_modal_972}
+                        ;
+
+\phantomsection\label{html:y972}
+simple_tense_modal_972  :  \hyperref[html:y973]{simple_tense_modal_A_973}
+                        |  \hyperref[html:y583]{NAhE_583}  \hyperref[html:y973]{simple_tense_modal_A_973}
+                        |  \hyperref[html:y554]{KI_554}
+                        |  \hyperref[html:y522]{CUhE_522}
+                        ;
+
+\phantomsection\label{html:y973}
+simple_tense_modal_A_973:  \hyperref[html:y974]{modal_974}
+                        |  \hyperref[html:y974]{modal_974}  \hyperref[html:y554]{KI_554}
+                        |  \hyperref[html:y977]{tense_A_977}
+                        ;
+
+\phantomsection\label{html:y974}
+modal_974               :  \hyperref[html:y975]{modal_A_975}
+                        |  \hyperref[html:y975]{modal_A_975}  \hyperref[html:y581]{NAI_581}
+                        ;
+
+\phantomsection\label{html:y975}
+modal_A_975             :  \hyperref[html:y502]{BAI_502}
+                        |  \hyperref[html:y596]{SE_596}  \hyperref[html:y502]{BAI_502}
+                        ;
+
+\phantomsection\label{html:y977}
+tense_A_977             :  \hyperref[html:y978]{tense_B_978}
+                        |  \hyperref[html:y978]{tense_B_978}  \hyperref[html:y554]{KI_554}
+                        ;
+
+\phantomsection\label{html:y978}
+tense_B_978             :  \hyperref[html:y979]{tense_C_979}
+                        |  \hyperref[html:y514]{CAhA_514}
+                        |  \hyperref[html:y979]{tense_C_979}  \hyperref[html:y514]{CAhA_514}
+                        ;
+/* specifies actuality/potentiality of the bridi */
+
+/* puca'a = actually was */
+/* baca'a = actually will be */
+/* bapu'i = can and will have */
+/* banu'o = can, but won't have yet */
+/* canu'ojebapu'i = can, hasn't yet, but will */
+
+\phantomsection\label{html:y979}
+tense_C_979             :  \hyperref[html:y1030]{time_1030}
+   /* time-only */
+   /* space defaults to time-space reference space */
+
+                    |  \hyperref[html:y1040]{space_1040}
+   /* can include time if specified with VIhA */
+   /* otherwise time defaults to the time-space reference time */
+
+                    |  \hyperref[html:y1030]{time_1030}  \hyperref[html:y1040]{space_1040}
+   /* time and space - If \hyperref[html:y1040]{space_1040} is marked with
+   VIhA for space-time the tense may be self-contradictory */
+   /* interval prop before space_time is for time distribution */
+                        |  \hyperref[html:y1040]{space_1040}  \hyperref[html:y1030]{time_1030}
+                        ;
+
+\phantomsection\label{html:y980}
+lexer_P_980             :  \hyperref[html:y716]{lexer_P_716}  \hyperref[html:y981]{GIK_root_981}
+                        ;
+
+\phantomsection\label{html:y981}
+GIK_root_981            :  \hyperref[html:y539]{GI_539}
+                        |  \hyperref[html:y539]{GI_539}  \hyperref[html:y581]{NAI_581}
+                        ;
+
+\phantomsection\label{html:y985}
+lexer_Q_985             :  \hyperref[html:y717]{lexer_Q_717}  \hyperref[html:y986]{lerfu_string_root_986}
+                        ;
+
+\phantomsection\label{html:y986}
+lerfu_string_root_986   :  \hyperref[html:y987]{lerfu_word_987}
+                        |  \hyperref[html:y986]{lerfu_string_root_986}  \hyperref[html:y987]{lerfu_word_987}
+                        |  \hyperref[html:y986]{lerfu_string_root_986}  \hyperref[html:y672]{PA_672}
+                        ;
+
+\phantomsection\label{html:y987}
+lerfu_word_987          :  \hyperref[html:y513]{BY_513}
+                        |  \hyperref[html:y559]{LAU_559}  \hyperref[html:y987]{lerfu_word_987}
+                        |  \hyperref[html:y605]{TEI_605}  \hyperref[html:y986]{lerfu_string_root_986}  \hyperref[html:y533]{FOI_533}
+                        ;
+
+\phantomsection\label{html:y990}
+lexer_R_990             :  \hyperref[html:y718]{lexer_R_718}  \hyperref[html:y991]{GIhEK_root_991}
+                        ;
+
+\phantomsection\label{html:y991}
+GIhEK_root_991          :  \hyperref[html:y541]{GIhA_541}
+                        |  \hyperref[html:y596]{SE_596}  \hyperref[html:y541]{GIhA_541}
+                        |  \hyperref[html:y578]{NA_578}  \hyperref[html:y541]{GIhA_541}
+                        |  \hyperref[html:y541]{GIhA_541}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y596]{SE_596}  \hyperref[html:y541]{GIhA_541}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y578]{NA_578}  \hyperref[html:y541]{GIhA_541}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y578]{NA_578}  \hyperref[html:y596]{SE_596}  \hyperref[html:y541]{GIhA_541}
+                        |  \hyperref[html:y578]{NA_578}  \hyperref[html:y596]{SE_596}  \hyperref[html:y541]{GIhA_541}  \hyperref[html:y581]{NAI_581}
+                        ;
+
+\phantomsection\label{html:y995}
+lexer_S_995             :  \hyperref[html:y719]{lexer_S_719}  \hyperref[html:y545]{I_545}
+                        ;
+
+\phantomsection\label{html:y1000}
+lexer_T_1000            :  \hyperref[html:y720]{lexer_T_720}  \hyperref[html:y545]{I_545}  \hyperref[html:y957]{simple_JOIK_JEK_957}
+                        ;
+
+\phantomsection\label{html:y1005}
+lexer_U_1005            :  \hyperref[html:y721]{lexer_U_721}  \hyperref[html:y926]{JEK_root_926}  \hyperref[html:y508]{BO_508}
+                        |  \hyperref[html:y721]{lexer_U_721}  \hyperref[html:y926]{JEK_root_926}  \hyperref[html:y971]{simple_tag_971}  \hyperref[html:y508]{BO_508}
+                        ;
+
+\phantomsection\label{html:y1010}
+lexer_V_1010            :  \hyperref[html:y722]{lexer_V_722}  \hyperref[html:y931]{JOIK_root_931}  \hyperref[html:y508]{BO_508}
+                        |  \hyperref[html:y722]{lexer_V_722}  \hyperref[html:y931]{JOIK_root_931}  \hyperref[html:y971]{simple_tag_971}  \hyperref[html:y508]{BO_508}
+                        ;
+
+\phantomsection\label{html:y1015}
+lexer_W_1015            :  \hyperref[html:y723]{lexer_W_723}  \hyperref[html:y931]{JOIK_root_931}  \hyperref[html:y551]{KE_551}
+                        |  \hyperref[html:y723]{lexer_W_723}  \hyperref[html:y931]{JOIK_root_931}  \hyperref[html:y971]{simple_tag_971}  \hyperref[html:y551]{KE_551}
+                        ;
+
+\phantomsection\label{html:y1025}
+lexer_Y_1025            :  \hyperref[html:y725]{lexer_Y_725}  \hyperref[html:y961]{number_root_961}  \hyperref[html:y663]{MOI_663}
+                        |  \hyperref[html:y725]{lexer_Y_725}  \hyperref[html:y986]{lerfu_string_root_986}  \hyperref[html:y663]{MOI_663}
+                        ;
+
+\phantomsection\label{html:y1030}
+time_1030               :  \hyperref[html:y624]{ZI_624}
+                        |  \hyperref[html:y624]{ZI_624}  \hyperref[html:y1031]{time_A_1031}
+                        |  \hyperref[html:y1031]{time_A_1031}
+                        ;
+
+\phantomsection\label{html:y1031}
+time_A_1031             :  \hyperref[html:y1032]{time_B_1032}
+                        |  \hyperref[html:y1034]{time_interval_1034}
+                        |  \hyperref[html:y1032]{time_B_1032}  \hyperref[html:y1034]{time_interval_1034}
+                        ;
+
+\phantomsection\label{html:y1032}
+time_B_1032             :  \hyperref[html:y1033]{time_offset_1033}
+                        |  \hyperref[html:y1032]{time_B_1032}  \hyperref[html:y1033]{time_offset_1033}
+                        ;
+
+\phantomsection\label{html:y1033}
+time_offset_1033        :  \hyperref[html:y1035]{time_direction_1035}
+                        |  \hyperref[html:y1035]{time_direction_1035}  \hyperref[html:y624]{ZI_624}
+                        ;
+
+\phantomsection\label{html:y1034}
+time_interval_1034      :  \hyperref[html:y622]{ZEhA_622}
+                        |  \hyperref[html:y622]{ZEhA_622}  \hyperref[html:y1035]{time_direction_1035}
+                        |  \hyperref[html:y1036]{time_int_props_1036}
+                        |  \hyperref[html:y622]{ZEhA_622}  \hyperref[html:y1036]{time_int_props_1036}
+                        |  \hyperref[html:y622]{ZEhA_622}  \hyperref[html:y1035]{time_direction_1035}  \hyperref[html:y1036]{time_int_props_1036}
+                        ;
+
+\phantomsection\label{html:y1035}
+time_direction_1035     :  \hyperref[html:y592]{PU_592}
+                        |  \hyperref[html:y592]{PU_592}  \hyperref[html:y581]{NAI_581}
+                        ;
+
+\phantomsection\label{html:y1036}
+time_int_props_1036     :  \hyperref[html:y1051]{interval_property_1051}
+                        |  \hyperref[html:y1036]{time_int_props_1036}  \hyperref[html:y1051]{interval_property_1051}
+                        ;
+
+\phantomsection\label{html:y1040}
+space_1040              :  \hyperref[html:y1042]{space_A_1042}
+                        |  \hyperref[html:y1041]{space_motion_1041}
+                        |  \hyperref[html:y1042]{space_A_1042}  \hyperref[html:y1041]{space_motion_1041}
+                        ;
+
+\phantomsection\label{html:y1041}
+space_motion_1041       :  \hyperref[html:y577]{MOhI_577}  \hyperref[html:y1045]{space_offset_1045}
+                        ;
+
+\phantomsection\label{html:y1042}
+space_A_1042            :  \hyperref[html:y613]{VA_613}
+                        |  \hyperref[html:y613]{VA_613}  \hyperref[html:y1043]{space_B_1043}
+                        |  \hyperref[html:y1043]{space_B_1043}
+                        ;
+
+\phantomsection\label{html:y1043}
+space_B_1043            :  \hyperref[html:y1044]{space_C_1044}
+                        |  \hyperref[html:y1046]{space_intval_1046}
+                        |  \hyperref[html:y1044]{space_C_1044}  \hyperref[html:y1046]{space_intval_1046}
+                        ;
+
+\phantomsection\label{html:y1044}
+space_C_1044            :  \hyperref[html:y1045]{space_offset_1045}
+                        |  \hyperref[html:y1044]{space_C_1044}  \hyperref[html:y1045]{space_offset_1045}
+                        ;
+
+\phantomsection\label{html:y1045}
+space_offset_1045       :  \hyperref[html:y1048]{space_direction_1048}
+                        |  \hyperref[html:y1048]{space_direction_1048}  \hyperref[html:y613]{VA_613}
+                        ;
+
+\phantomsection\label{html:y1046}
+space_intval_1046       :  \hyperref[html:y1047]{space_intval_A_1047}
+                        |  \hyperref[html:y1047]{space_intval_A_1047}  \hyperref[html:y1048]{space_direction_1048}
+                        |  \hyperref[html:y1049]{space_int_props_1049}
+                        |  \hyperref[html:y1047]{space_intval_A_1047}  \hyperref[html:y1049]{space_int_props_1049}
+                        |  \hyperref[html:y1047]{space_intval_A_1047}  \hyperref[html:y1048]{space_direction_1048}
+                                  \hyperref[html:y1049]{space_int_props_1049}
+                        ;
+
+\phantomsection\label{html:y1047}
+space_intval_A_1047     :  \hyperref[html:y615]{VEhA_615}
+                        |  \hyperref[html:y616]{VIhA_616}
+                        |  \hyperref[html:y615]{VEhA_615}  \hyperref[html:y616]{VIhA_616}
+                        ;
+
+\phantomsection\label{html:y1048}
+space_direction_1048    :  \hyperref[html:y528]{FAhA_528}
+                        |  \hyperref[html:y528]{FAhA_528}  \hyperref[html:y581]{NAI_581}
+                        ;
+
+\phantomsection\label{html:y1049}
+space_int_props_1049    :  \hyperref[html:y1050]{space_int_props_A_1050}
+                        |  \hyperref[html:y1049]{space_int_props_1049}  \hyperref[html:y1050]{space_int_props_A_1050}
+                        ;
+
+\phantomsection\label{html:y1050}
+space_int_props_A_1050  : \hyperref[html:y530]{FEhE_530}  \hyperref[html:y1051]{interval_property_1051}
+                        ;
+
+/* This terminal gives an interval size in space-time (VEhA), and possibly a
+   dimensionality of the interval.  The dimensionality may also be used
+   with the interval size left unspecified.  When this terminal is used for the
+   spacetime origin, then barring any overriding VIhA, a VIhA here defines
+   the dimensionality of the space-time being discussed.                 */
+
+\phantomsection\label{html:y1051}
+interval_property_1051  :  \hyperref[html:y961]{number_root_961}  \hyperref[html:y594]{ROI_594}
+                        |  \hyperref[html:y961]{number_root_961}  \hyperref[html:y594]{ROI_594}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y604]{TAhE_604}
+                        |  \hyperref[html:y604]{TAhE_604}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y621]{ZAhO_621}
+                        |  \hyperref[html:y621]{ZAhO_621}  \hyperref[html:y581]{NAI_581}
+                        ;
+
+/* extensional/intensional interval parameters */
+/* These may be appended to any defined interval, or may stand in place of
+   either time or space tenses.  If no other tense is present, this terminal
+   stands for the time-space interval parameter with an unspecified interval.*/
+
+   /* roroi = always and everywhere */
+   /* roroiku'avi = always here (ku'a = intersection) */
+   /* puroroi = always in the past
+   /* paroi = once upon a time (somewhere) */
+   /* paroiku'avi = once upon a time here */
+
+/* The following are \q{Lexer-only rules}, covered by steps 1-4 described
+   at the beginning.  The grammar of these constructs is nonexistent,
+   except possibly in cases where they interact with each other.  Even
+   there, however, the effects are semantic rather than grammatical.  Where
+   it is believed possible that conflicts could exist, the grammar of these
+   constructs has been put in the above grammar, even though the
+   lexer/Preparser will actually prevent these from being passed thru to
+   the parse routine.  (Otherwise we have to put unacceptably fancy code in
+   the PreParser to determine just when these can be passed thru, and when
+   they can't.)  Constructs in this category include quotes and indicators
+   as defined above.  (The above grammar handles utterance scope
+   (free_modifier) and clause scope (gap) applications of the latter,
+   however, and indicators should be allowed to be absorbed into almost any
+   word without changing its grammar.
+
+   \hyperref[html:y601]{SI_601}, \hyperref[html:y595]{SA_595}, and \hyperref[html:y603]{SU_603} are metalinguistic erasers.
+
+\phantomsection\label{html:y1100}
+token_1100              :  \hyperref[html:y698]{any_word_698}
+                        |  \hyperref[html:y503]{BAhE_503}  \hyperref[html:y698]{any_word_698}
+                        |  \hyperref[html:y699]{anything_699}
+                        |  \hyperref[html:y698]{any_word_698}  \hyperref[html:y511]{BU_511}
+                        |  \hyperref[html:y698]{any_word_698}  \hyperref[html:y524]{DAhO_524}
+                        |  \hyperref[html:y698]{any_word_698}  \hyperref[html:y536]{FUhO_536}
+                        |  \hyperref[html:y698]{any_word_698}  \hyperref[html:y535]{FUhE_535}
+                        |  \hyperref[html:y698]{any_word_698}  \hyperref[html:y612]{UI_612}
+                        |  \hyperref[html:y698]{any_word_698}  \hyperref[html:y612]{UI_612}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y698]{any_word_698}  \hyperref[html:y619]{Y_619}
+                        |  \hyperref[html:y698]{any_word_698}  \hyperref[html:y515]{CAI_515}
+                        |  \hyperref[html:y698]{any_word_698}  \hyperref[html:y515]{CAI_515}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y612]{UI_612}  \hyperref[html:y581]{NAI_581}
+                        |  \hyperref[html:y515]{CAI_515}  \hyperref[html:y581]{NAI_581}
+                        ;
+
+\phantomsection\label{html:y1101}
+null_1101               :  \hyperref[html:y698]{any_word_698}  \hyperref[html:y601]{SI_601}
+                        |  possibly_unlexable_word  (PAUSE)  \hyperref[html:y601]{SI_601}
+                        |  \hyperref[html:y20]{utterance_20}  \hyperref[html:y595]{SA_595}
+                        |  possibly unlexable string  (PAUSE)  \hyperref[html:y595]{SA_595}
+                           erases back to the last individual token
+                           I or NIhO or start of text, ignoring the
+                           insides of ZOI, ZO, and LOhU/LEhU quotes.
+                           Start of text is defined for SU below.
+                        |  \hyperref[html:y3]{text_C_3}  \hyperref[html:y603]{SU_603}
+                        |  possibly unparsable text  (PAUSE)  \hyperref[html:y603]{SU_603}
+                           erases back to start of text which is the
+                           beginning of a speaker's statement,
+                           a parenthesis (TO/TOI), a LU/LIhU quote,
+                           or a TUhE/TUhU utterance string.
+                        ;
+
+*/
+%%
+
+
+
+\sect{EBNF Grammar of Lojban}
+Lojban Machine Grammar, EBNF Version, 3rd Baseline as of 10
+    January 1997 
+
+This document is explicitly dedicated to the public domain
+    by its author, the Logical Language Group Inc. Contact that
+    organization at: 2904 Beau Lane, Fairfax VA 22031 USA
+    703-385-0273 (intl: +1 703 385 0273)
+
+Explanation of notation: All rules have the form:
+
+<div class="c2">
+      name<sub>number</sub> = bnf-expression
+    </div>
+    <br />
+    <br />
+     which means that the grammatical construct \q{name} is defined
+    by \q{bnf-expression}. The number cross-references this grammar
+    with the rule numbers in the YACC grammar. The names are the
+    same as those in the YACC grammar, except that subrules are
+    labeled with A, B, C, ... in the YACC grammar and with 1, 2, 3,
+    ... in this grammar. In addition, rule 971 is \q{simple\_tag} in
+    the YACC grammar but \q{stag} in this grammar, because of its
+    frequent appearance. 
+\begin{enumerate}
+\item Names in lower case are grammatical constructs.
+\item Names in UPPER CASE are selma'o (lexeme) names, and are terminals.
+\item Concatenation is expressed by juxtaposition with no operator symbol.
+\item | represents alternation (choice).
+\item [] represents an optional element.
+\item \&represents and/or (\q{A \&B} is the same as ``A | B | A B'').
+\item ... represents optional repetition of the construct to the left. Left-grouping is implied; right-grouping is shown by explicit self-referential recursion with no \q{...}
+\item () serves to indicate the grouping of the other operators. Otherwise, \q{...} binds closer than \& which binds closer than |.
+\item # is shorthand for \q{[free ...]}, a construct which appears in many places.
+\item // encloses an elidable terminator, which may be omitted (without change of meaning) if no grammatical ambiguity results. \end{enumerate}\begin{description} <dd>\phantomsection\label{html:b0}
+\hyperref[html:y0]{}</dd>
+\item[text<sub>0</sub> =] [NAI ...] [CMENE ... # | (indicators \&free ...)] [joik-jek] text-1 \phantomsection\label{html:b2}
+\hyperref[html:y2]{}
+\item[text-1<sub>2</sub> =] [(I [jek | joik] [[stag] BO] #) ... | NIhO ... #] [paragraphs] \phantomsection\label{html:b4}
+\hyperref[html:y4]{}
+\item[paragraphs<sub>4</sub> =] paragraph [NIhO ... # paragraphs] \phantomsection\label{html:b10}
+\hyperref[html:y10]{}
+\item[paragraph<sub>10</sub> =] (statement | fragment) [I # [statement | fragment]] ... \phantomsection\label{html:b11}
+\hyperref[html:y11]{}
+\item[statement<sub>11</sub> =] statement-1<br /> | prenex statement \phantomsection\label{html:b12}
+\hyperref[html:y12]{}
+\item[statement-1<sub>12</sub> =] statement-2 [I joik-jek [statement-2]] ... \phantomsection\label{html:b13}
+\hyperref[html:y13]{}
+\item[statement-2<sub>13</sub> =] statement-3 [I [jek | joik] [stag] BO # [statement-2]] \phantomsection\label{html:b14}
+\hyperref[html:y14]{}
+\item[statement-3<sub>14</sub> =] sentence<br /> | [tag] TUhE # text-1 /TUhU#/ \phantomsection\label{html:b20}
+\hyperref[html:y20]{}
+\item[fragment<sub>20</sub> =] ek #<br /> | gihek #<br /> | quantifier<br /> | NA #<br /> | terms /VAU#/<br /> | prenex<br /> | relative-clauses<br /> | links<br /> | linkargs \phantomsection\label{html:b30}
+\hyperref[html:y30]{}
+\item[prenex<sub>30</sub> =] terms ZOhU # \phantomsection\label{html:b40}
+\hyperref[html:y40]{}
+\item[sentence<sub>40</sub> =] [terms [CU #]] bridi-tail \phantomsection\label{html:b41}
+\hyperref[html:y41]{}
+\item[subsentence<sub>41</sub> =] sentence<br /> | prenex subsentence \phantomsection\label{html:b50}
+\hyperref[html:y50]{}
+\item[bridi-tail<sub>50</sub> =] bridi-tail-1 [gihek [stag] KE # bridi-tail /KEhE#/ tail-terms] \phantomsection\label{html:b51}
+\hyperref[html:y51]{}
+\item[bridi-tail-1<sub>51</sub> =] bridi-tail-2 [gihek # bridi-tail-2 tail-terms] ... \phantomsection\label{html:b52}
+\hyperref[html:y52]{}
+\item[bridi-tail-2<sub>52</sub> =] bridi-tail-3 [gihek [stag] BO # bridi-tail-2 tail-terms] \phantomsection\label{html:b53}
+\hyperref[html:y53]{}
+\item[bridi-tail-3<sub>53</sub> =] selbri tail-terms<br /> | gek-sentence \phantomsection\label{html:b54}
+\hyperref[html:y54]{}
+\item[gek-sentence<sub>54</sub> =] gek subsentence gik subsentence tail-terms<br /> | [tag] KE # gek-sentence /KEhE#/<br /> | NA # gek-sentence \phantomsection\label{html:b71}
+\hyperref[html:y71]{}
+\item[tail-terms<sub>71</sub> =] [terms] /VAU#/ \phantomsection\label{html:b80}
+\hyperref[html:y80]{}
+\item[terms<sub>80</sub> =] terms-1 ... \phantomsection\label{html:b81}
+\hyperref[html:y81]{}
+\item[terms-1<sub>81</sub> =] terms-2 [PEhE # joik-jek terms-2] ... \phantomsection\label{html:b82}
+\hyperref[html:y82]{}
+\item[terms-2<sub>82</sub> =] term [CEhE # term] ... \phantomsection\label{html:b83}
+\hyperref[html:y83]{}
+\item[term<sub>83</sub> =] sumti | (tag | FA #) (sumti<br /> | /KU#/)<br /> | termset<br /> | NA KU # \phantomsection\label{html:b85}
+\hyperref[html:y85]{}
+\item[termset<sub>85</sub> =] NUhI # gek terms /NUhU#/ gik terms /NUhU#/<br /> | NUhI # terms /NUhU#/ \phantomsection\label{html:b90}
+\hyperref[html:y90]{}
+\item[sumti<sub>90</sub> =] sumti-1 [VUhO # relative-clauses] \phantomsection\label{html:b91}
+\hyperref[html:y91]{}
+\item[sumti-1<sub>91</sub> =] sumti-2 [(ek | joik) [stag] KE # sumti /KEhE#/] \phantomsection\label{html:b92}
+\hyperref[html:y92]{}
+\item[sumti-2<sub>92</sub> =] sumti-3 [joik-ek sumti-3] ... \phantomsection\label{html:b93}
+\hyperref[html:y93]{}
+\item[sumti-3<sub>93</sub> =] sumti-4 [(ek<br /> | joik) [stag] BO # sumti-3] \phantomsection\label{html:b94}
+\hyperref[html:y94]{}
+\item[sumti-4<sub>94</sub> =] sumti-5<br /> | gek sumti gik sumti-4 \phantomsection\label{html:b95}
+\hyperref[html:y95]{}
+\item[sumti-5<sub>95</sub> =] [quantifier] sumti-6 [relative-clauses]<br /> | quantifier selbri /KU#/ [relative-clauses] \phantomsection\label{html:b97}
+\hyperref[html:y97]{}
+\item[sumti-6<sub>97</sub> =] (LAhE # | NAhE BO #) [relative-clauses] sumti /LUhU#/<br /> | KOhA #<br /> | lerfu-string /BOI#/<br /> | LA # [relative-clauses] CMENE ... #<br /> | (LA | LE) # sumti-tail /KU#/<br /> | LI # mex /LOhO#/<br /> | ZO any-word #<br /> | LU text /LIhU#/<br /> | LOhU any-word ... LEhU #<br /> | ZOI any-word anything any-word # \phantomsection\label{html:b111}
+\hyperref[html:y111]{}
+\item[sumti-tail<sub>111</sub> =] [sumti-6 [relative-clauses]] sumti-tail-1<br /> | relative-clauses sumti-tail-1 \phantomsection\label{html:b112}
+\hyperref[html:y112]{}
+\item[sumti-tail-1<sub>112</sub> =] [quantifier] selbri [relative-clauses]<br /> | quantifier sumti \phantomsection\label{html:b121}
+\hyperref[html:y121]{}
+\item[relative-clauses<sub>121</sub> =] relative-clause [ZIhE # relative-clause] ... \phantomsection\label{html:b122}
+\hyperref[html:y122]{}
+\item[relative-clause<sub>122</sub> =] GOI # term /GEhU#/<br /> | NOI # subsentence /KUhO#/ \phantomsection\label{html:b130}
+\hyperref[html:y130]{}
+\item[selbri<sub>130</sub> =] [tag] selbri-1 \phantomsection\label{html:b131}
+\hyperref[html:y131]{}
+\item[selbri-1<sub>131</sub> =] selbri-2<br /> | NA # selbri \phantomsection\label{html:b132}
+\hyperref[html:y132]{}
+\item[selbri-2<sub>132</sub> =] selbri-3 [CO # selbri-2] \phantomsection\label{html:b133}
+\hyperref[html:y133]{}
+\item[selbri-3<sub>133</sub> =] selbri-4 ... \phantomsection\label{html:b134}
+\hyperref[html:y134]{}
+\item[selbri-4<sub>134</sub> =] selbri-5 [joik-jek selbri-5 | joik [stag] KE # selbri-3 /KEhE#/] ... \phantomsection\label{html:b135}
+\hyperref[html:y135]{}
+\item[selbri-5<sub>135</sub> =] selbri-6 [(jek | joik) [stag] BO # selbri-5] \phantomsection\label{html:b136}
+\hyperref[html:y136]{}
+\item[selbri-6<sub>136</sub> =] tanru-unit [BO # selbri-6]<br /> | [NAhE #] guhek selbri gik selbri-6 \phantomsection\label{html:b150}
+\hyperref[html:y150]{}
+\item[tanru-unit<sub>150</sub> =] tanru-unit-1 [CEI # tanru-unit-1] ... \phantomsection\label{html:b151}
+\hyperref[html:y151]{}
+\item[tanru-unit-1<sub>151</sub> =] tanru-unit-2 [linkargs] \phantomsection\label{html:b152}
+\hyperref[html:y152]{}
+\item[tanru-unit-2<sub>152</sub> =] BRIVLA #<br /> | GOhA [RAhO] #<br /> | KE # selbri-3 /KEhE#/<br /> | ME # sumti /MEhU#/ [MOI #] | (number<br /> | lerfu-string) MOI #<br /> | NUhA # mex-operator<br /> | SE # tanru-unit-2<br /> | JAI # [tag] tanru-unit-2<br /> | any-word (ZEI any-word) ...<br /> | NAhE # tanru-unit-2<br /> | NU [NAI] # [joik-jek NU [NAI] #] ... subsentence /KEI#/ \phantomsection\label{html:b160}
+\hyperref[html:y160]{}
+\item[linkargs<sub>160</sub> =] BE # term [links] /BEhO#/ \phantomsection\label{html:b161}
+\hyperref[html:y161]{}
+\item[links<sub>161</sub> =] BEI # term [links] \phantomsection\label{html:b300}
+\hyperref[html:y300]{}
+\item[quantifier<sub>300</sub> =] number /BOI#/<br /> | VEI # mex /VEhO#/ \phantomsection\label{html:b310}
+\hyperref[html:y310]{}
+\item[mex<sub>310</sub> =] mex-1 [operator mex-1] ...<br /> | FUhA # rp-expression \phantomsection\label{html:b311}
+\hyperref[html:y311]{}
+\item[mex-1<sub>311</sub> =] mex-2 [BIhE # operator mex-1] \phantomsection\label{html:b312}
+\hyperref[html:y312]{}
+\item[mex-2<sub>312</sub> =] operand<br /> | [PEhO #] operator mex-2 ... /KUhE#/ \phantomsection\label{html:b330}
+\hyperref[html:y330]{}
+\item[rp-expression<sub>330</sub> =] rp-operand rp-operand operator \phantomsection\label{html:b332}
+\hyperref[html:y332]{}
+\item[rp-operand<sub>332</sub> =] operand<br /> | rp-expression \phantomsection\label{html:b370}
+\hyperref[html:y370]{}
+\item[operator<sub>370</sub> =] operator-1 [joik-jek operator-1 | joik [stag] KE # operator /KEhE#/] ... \phantomsection\label{html:b371}
+\hyperref[html:y371]{}
+\item[operator-1<sub>371</sub> =] operator-2<br /> | guhek operator-1 gik operator-2<br /> | operator-2 (jek | joik) [stag] BO # operator-1 \phantomsection\label{html:b372}
+\hyperref[html:y372]{}
+\item[operator-2<sub>372</sub> =] mex-operator<br /> | KE # operator /KEhE#/ \phantomsection\label{html:b374}
+\hyperref[html:y374]{}
+\item[mex-operator<sub>374</sub> =] SE # mex-operator<br /> | NAhE # mex-operator<br /> | MAhO # mex /TEhU#/<br /> | NAhU # selbri /TEhU#/<br /> | VUhU # \phantomsection\label{html:b381}
+\hyperref[html:y381]{}
+\item[operand<sub>381</sub> =] operand-1 [(ek | joik) [stag] KE # operand /KEhE#/] \phantomsection\label{html:b382}
+\hyperref[html:y382]{}
+\item[operand-1<sub>382</sub> =] operand-2 [joik-ek operand-2] ... \phantomsection\label{html:b383}
+\hyperref[html:y383]{}
+\item[operand-2<sub>383</sub> =] operand-3 [(ek | joik) [stag] BO # operand-2] \phantomsection\label{html:b385}
+\hyperref[html:y385]{}
+\item[operand-3<sub>385</sub> =] quantifier<br /> | lerfu-string /BOI#/<br /> | NIhE # selbri /TEhU#/<br /> | MOhE # sumti /TEhU#/<br /> | JOhI # mex-2 ... /TEhU#/<br /> | gek operand gik operand-3<br /> | (LAhE # | NAhE BO #) operand /LUhU#/ \phantomsection\label{html:b812}
+\hyperref[html:y812]{}
+\item[number<sub>812</sub> =] PA [PA | lerfu-word] ... \phantomsection\label{html:b817}
+\hyperref[html:y817]{}
+\item[lerfu-string<sub>817</sub> =] lerfu-word [PA | lerfu-word] ... \phantomsection\label{html:b987}
+\hyperref[html:y987]{}
+\item[lerfu-word<sub>987</sub> =] BY<br /> | any-word BU<br /> | LAU lerfu-word<br /> | TEI lerfu-string FOI \phantomsection\label{html:b802}
+\hyperref[html:y802]{}
+\item[ek<sub>802</sub> =] [NA] [SE] A [NAI] \phantomsection\label{html:b818}
+\hyperref[html:y818]{}
+\item[gihek<sub>818</sub> =] [NA] [SE] GIhA [NAI] \phantomsection\label{html:b805}
+\hyperref[html:y805]{}
+\item[jek<sub>805</sub> =] [NA] [SE] JA [NAI] \phantomsection\label{html:b806}
+\hyperref[html:y806]{}
+\item[joik<sub>806</sub> =] [SE] JOI [NAI]<br /> | interval<br /> | GAhO interval GAhO \phantomsection\label{html:b932}
+\hyperref[html:y932]{}
+\item[interval<sub>932</sub> =] [SE] BIhI [NAI] \phantomsection\label{html:b421}
+\hyperref[html:y421]{}
+\item[joik-ek<sub>421</sub> =] joik #<br /> | ek # \phantomsection\label{html:b422}
+\hyperref[html:y422]{}
+\item[joik-jek<sub>422</sub> =] joik #<br /> | jek # \phantomsection\label{html:b807}
+\hyperref[html:y807]{}
+\item[gek<sub>807</sub> =] [SE] GA [NAI] #<br /> | joik GI #<br /> | stag gik \phantomsection\label{html:b808}
+\hyperref[html:y808]{}
+\item[guhek<sub>808</sub> =] [SE] GUhA [NAI] # \phantomsection\label{html:b816}
+\hyperref[html:y816]{}
+\item[gik<sub>816</sub> =] GI [NAI] # \phantomsection\label{html:b491}
+\hyperref[html:y491]{}
+\item[tag<sub>491</sub> =] tense-modal [joik-jek tense-modal] ... \phantomsection\label{html:b971}
+\hyperref[html:y971]{}
+\item[stag<sub>971</sub> =] simple-tense-modal [(jek | joik) simple-tense-modal] ... \phantomsection\label{html:b815}
+\hyperref[html:y815]{}
+\item[tense-modal<sub>815</sub> =] simple-tense-modal #<br /> | FIhO # selbri /FEhU#/ \phantomsection\label{html:b972}
+\hyperref[html:y972]{}
+\item[simple-tense-modal<sub>972</sub> =] [NAhE] [SE] BAI [NAI] [KI]<br /> | [NAhE] (time [space]<br /> | space [time]) \&CAhA [KI]<br /> | KI<br /> | CUhE \phantomsection\label{html:b1030}
+\hyperref[html:y1030]{}
+\item[time<sub>1030</sub> =] ZI \&time-offset ... \&ZEhA [PU [NAI]] \&      interval-property ... \phantomsection\label{html:b1033}
+\hyperref[html:y1033]{}
+\item[time-offset<sub>1033</sub> =] PU [NAI] [ZI] \phantomsection\label{html:b1040}
+\hyperref[html:y1040]{}
+\item[space<sub>1040</sub> =] VA \&space-offset ... \&space-interval \&      (MOhI space-offset) \phantomsection\label{html:b1045}
+\hyperref[html:y1045]{}
+\item[space-offset<sub>1045</sub> =] FAhA [NAI] [VA] \phantomsection\label{html:b1046}
+\hyperref[html:y1046]{}
+\item[space-interval<sub>1046</sub> =] ((VEhA \&VIhA) [FAhA [NAI]]) \&space-int-props \phantomsection\label{html:b1049}
+\hyperref[html:y1049]{}
+\item[space-int-props<sub>1049</sub> =] (FEhE interval-property) ... \phantomsection\label{html:b1051}
+\hyperref[html:y1051]{}
+\item[interval-property<sub>1051</sub> =] number ROI [NAI]<br /> | TAhE [NAI]<br /> | ZAhO [NAI] \phantomsection\label{html:b32}
+\hyperref[html:y32]{}
+\item[free<sub>32</sub> =] SEI # [terms [CU #]] selbri /SEhU/<br /> | SOI # sumti [sumti] /SEhU/<br /> | vocative [relative-clauses] selbri [relative-clauses] /DOhU/<br /> | vocative [relative-clauses] CMENE ... # [relative-clauses] /DOhU/<br /> | vocative [sumti] /DOhU/<br /> | (number | lerfu-string) MAI<br /> | TO text /TOI/<br /> | XI # (number | lerfu-string) /BOI/<br /> | XI # VEI # mex /VEhO/ \phantomsection\label{html:b415}
+\hyperref[html:y415]{}
+\item[vocative<sub>415</sub> =] (COI [NAI]) ... \&DOI \phantomsection\label{html:b411}
+\hyperref[html:y411]{}
+\item[indicators<sub>411</sub> =] [FUhE] indicator ... \phantomsection\label{html:b413}
+\hyperref[html:y413]{}
+\item[indicator<sub>413</sub> =] (UI | CAI) [NAI]<br /> | Y<br /> | DAhO<br /> | FUhO
+\end{description}
+
+The following rules are non-formal:
+\begin{description}
+      <dd>\phantomsection\label{html:b1100}
+\hyperref[html:y1100]{}</dd>
+\item[word<sub>1100</sub> =] [BAhE] any-word [indicators]
+\item[any-word =] \q{any single word (no compound cmavo)}
+\item[anything =] \q{any text at all, whether Lojban or not} \phantomsection\label{html:b1101}
+\hyperref[html:y1101]{}\item[null<sub>1101</sub> =] any-word SI<br /> | utterance SA<br /> | text SU
+\end{description}
+
+FAhO is a universal terminator and signals the end of parsable
+    input.
+
+
+
+\sect{EBNF Cross-Reference}
+\begin{description}
+\item[A] \hyperref[html:b802]{ek}<sub>802</sub>
+\item[BAI] \hyperref[html:b972]{simple-tense-modal}<sub>972</sub>
+\item[BAhE] \hyperref[html:b1100]{word}<sub>1100</sub>
+\item[BE] \hyperref[html:b160]{linkargs}<sub>160</sub>
+\item[BEI] \hyperref[html:b161]{links}<sub>161</sub>
+\item[BEhO] \hyperref[html:b160]{linkargs}<sub>160</sub>
+\item[BIhE] \hyperref[html:b311]{mex-1}<sub>311</sub>
+\item[BIhI] \hyperref[html:b932]{interval}<sub>932</sub>
+\item[BO] \hyperref[html:b52]{bridi-tail-2}<sub>52</sub>, \hyperref[html:b383]{operand-2}<sub>383</sub>, \hyperref[html:b385]{operand-3}<sub>385</sub>, \hyperref[html:b371]{operator-1}<sub>371</sub>, \hyperref[html:b135]{selbri-5}<sub>135</sub>, \hyperref[html:b136]{selbri-6}<sub>136</sub>, \hyperref[html:b13]{statement-2}<sub>13</sub>, \hyperref[html:b93]{sumti-3}<sub>93</sub>, \hyperref[html:b97]{sumti-6}<sub>97</sub>, \hyperref[html:b2]{text-1}<sub>2</sub>
+\item[BOI] \hyperref[html:b32]{free}<sub>32</sub>, \hyperref[html:b385]{operand-3}<sub>385</sub>, \hyperref[html:b300]{quantifier}<sub>300</sub>, \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[BRIVLA] \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[BU] \hyperref[html:b987]{lerfu-word}<sub>987</sub>
+\item[BY] \hyperref[html:b987]{lerfu-word}<sub>987</sub>
+\item[CAI] \hyperref[html:b413]{indicator}<sub>413</sub>
+\item[CAhA] \hyperref[html:b972]{simple-tense-modal}<sub>972</sub>
+\item[CEI] \hyperref[html:b150]{tanru-unit}<sub>150</sub>
+\item[CEhE] \hyperref[html:b82]{terms-2}<sub>82</sub>
+\item[CMENE] \hyperref[html:b32]{free}<sub>32</sub>, \hyperref[html:b97]{sumti-6}<sub>97</sub>, \hyperref[html:b0]{text}<sub>0</sub>
+\item[CO] \hyperref[html:b132]{selbri-2}<sub>132</sub>
+\item[COI] \hyperref[html:b415]{vocative}<sub>415</sub>
+\item[CU] \hyperref[html:b32]{free}<sub>32</sub>, \hyperref[html:b40]{sentence}<sub>40</sub>
+\item[CUhE] \hyperref[html:b972]{simple-tense-modal}<sub>972</sub>
+\item[DAhO] \hyperref[html:b413]{indicator}<sub>413</sub>
+\item[DOI] \hyperref[html:b415]{vocative}<sub>415</sub>
+\item[DOhU] \hyperref[html:b32]{free}<sub>32</sub>
+\item[FA] \hyperref[html:b83]{term}<sub>83</sub>
+\item[FAhA] \hyperref[html:b1046]{space-interval}<sub>1046</sub>, \hyperref[html:b1045]{space-offset}<sub>1045</sub>
+\item[FEhE] \hyperref[html:b1049]{space-int-props}<sub>1049</sub>
+\item[FEhU] \hyperref[html:b815]{tense-modal}<sub>815</sub>
+\item[FIhO] \hyperref[html:b815]{tense-modal}<sub>815</sub>
+\item[FOI] \hyperref[html:b987]{lerfu-word}<sub>987</sub>
+\item[FUhA] \hyperref[html:b310]{mex}<sub>310</sub>
+\item[FUhE] \hyperref[html:b411]{indicators}<sub>411</sub>
+\item[FUhO] \hyperref[html:b413]{indicator}<sub>413</sub>
+\item[GA] \hyperref[html:b807]{gek}<sub>807</sub>
+\item[GAhO] \hyperref[html:b806]{joik}<sub>806</sub>
+\item[GEhU] \hyperref[html:b122]{relative-clause}<sub>122</sub>
+\item[GI] \hyperref[html:b807]{gek}<sub>807</sub>, \hyperref[html:b816]{gik}<sub>816</sub>
+\item[GIhA] \hyperref[html:b818]{gihek}<sub>818</sub>
+\item[GOI] \hyperref[html:b122]{relative-clause}<sub>122</sub>
+\item[GOhA] \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[GUhA] \hyperref[html:b808]{guhek}<sub>808</sub>
+\item[I] \hyperref[html:b10]{paragraph}<sub>10</sub>, \hyperref[html:b12]{statement-1}<sub>12</sub>, \hyperref[html:b13]{statement-2}<sub>13</sub>, \hyperref[html:b2]{text-1}<sub>2</sub>
+\item[JA] \hyperref[html:b805]{jek}<sub>805</sub>
+\item[JAI] \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[JOI] \hyperref[html:b806]{joik}<sub>806</sub>
+\item[JOhI] \hyperref[html:b385]{operand-3}<sub>385</sub>
+\item[KE] \hyperref[html:b50]{bridi-tail}<sub>50</sub>, \hyperref[html:b54]{gek-sentence}<sub>54</sub>, \hyperref[html:b381]{operand}<sub>381</sub>, \hyperref[html:b372]{operator-2}<sub>372</sub>, \hyperref[html:b370]{operator}<sub>370</sub>, \hyperref[html:b134]{selbri-4}<sub>134</sub>, \hyperref[html:b91]{sumti-1}<sub>91</sub>, \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[KEI] \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[KEhE] \hyperref[html:b50]{bridi-tail}<sub>50</sub>, \hyperref[html:b54]{gek-sentence}<sub>54</sub>, \hyperref[html:b381]{operand}<sub>381</sub>, \hyperref[html:b372]{operator-2}<sub>372</sub>, \hyperref[html:b370]{operator}<sub>370</sub>, \hyperref[html:b134]{selbri-4}<sub>134</sub>, \hyperref[html:b91]{sumti-1}<sub>91</sub>, \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[KI] \hyperref[html:b972]{simple-tense-modal}<sub>972</sub>
+\item[KOhA] \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[KU] \hyperref[html:b95]{sumti-5}<sub>95</sub>, \hyperref[html:b97]{sumti-6}<sub>97</sub>, \hyperref[html:b83]{term}<sub>83</sub>
+\item[KUhE] \hyperref[html:b312]{mex-2}<sub>312</sub>
+\item[KUhO] \hyperref[html:b122]{relative-clause}<sub>122</sub>
+\item[LA] \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[LAU] \hyperref[html:b987]{lerfu-word}<sub>987</sub>
+\item[LAhE] \hyperref[html:b385]{operand-3}<sub>385</sub>, \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[LE] \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[LEhU] \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[LI] \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[LIhU] \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[LOhO] \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[LOhU] \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[LU] \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[LUhU] \hyperref[html:b385]{operand-3}<sub>385</sub>, \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[MAI] \hyperref[html:b32]{free}<sub>32</sub>
+\item[MAhO] \hyperref[html:b374]{mex-operator}<sub>374</sub>
+\item[ME] \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[MEhU] \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[MOI] \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[MOhE] \hyperref[html:b385]{operand-3}<sub>385</sub>
+\item[MOhI] \hyperref[html:b1040]{space}<sub>1040</sub>
+\item[NA] \hyperref[html:b802]{ek}<sub>802</sub>, \hyperref[html:b20]{fragment}<sub>20</sub>, \hyperref[html:b54]{gek-sentence}<sub>54</sub>, \hyperref[html:b818]{gihek}<sub>818</sub>, \hyperref[html:b805]{jek}<sub>805</sub>, \hyperref[html:b131]{selbri-1}<sub>131</sub>, \hyperref[html:b83]{term}<sub>83</sub>
+\item[NAI] \hyperref[html:b802]{ek}<sub>802</sub>, \hyperref[html:b807]{gek}<sub>807</sub>, \hyperref[html:b818]{gihek}<sub>818</sub>, \hyperref[html:b816]{gik}<sub>816</sub>, \hyperref[html:b808]{guhek}<sub>808</sub>, \hyperref[html:b413]{indicator}<sub>413</sub>, \hyperref[html:b1051]{interval-property}<sub>1051</sub>, \hyperref[html:b932]{interval}<sub>932</sub>, \hyperref[html:b805]{jek}<sub>805</sub>, \hyperref[html:b806]{joik}<sub>806</sub>, \hyperref[html:b972]{simple-tense-modal}<sub>972</sub>, \hyperref[html:b1046]{space-interval}<sub>1046</sub>, \hyperref[html:b1045]{space-offset}<sub>1045</sub>, \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>, \hyperref[html:b0]{text}<sub>0</sub>, \hyperref[html:b1033]{time-offset}<sub>1033</sub>, \hyperref[html:b1030]{time}<sub>1030</sub>, \hyperref[html:b415]{vocative}<sub>415</sub>
+\item[NAhE] \hyperref[html:b374]{mex-operator}<sub>374</sub>, \hyperref[html:b385]{operand-3}<sub>385</sub>, \hyperref[html:b136]{selbri-6}<sub>136</sub>, \hyperref[html:b972]{simple-tense-modal}<sub>972</sub>, \hyperref[html:b97]{sumti-6}<sub>97</sub>, \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[NAhU] \hyperref[html:b374]{mex-operator}<sub>374</sub>
+\item[NIhE] \hyperref[html:b385]{operand-3}<sub>385</sub>
+\item[NIhO] \hyperref[html:b4]{paragraphs}<sub>4</sub>, \hyperref[html:b2]{text-1}<sub>2</sub>
+\item[NOI] \hyperref[html:b122]{relative-clause}<sub>122</sub>
+\item[NU] \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[NUhA] \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[NUhI] \hyperref[html:b85]{termset}<sub>85</sub>
+\item[NUhU] \hyperref[html:b85]{termset}<sub>85</sub>
+\item[PA] \hyperref[html:b817]{lerfu-string}<sub>817</sub>, \hyperref[html:b812]{number}<sub>812</sub>
+\item[PEhE] \hyperref[html:b81]{terms-1}<sub>81</sub>
+\item[PEhO] \hyperref[html:b312]{mex-2}<sub>312</sub>
+\item[PU] \hyperref[html:b1033]{time-offset}<sub>1033</sub>, \hyperref[html:b1030]{time}<sub>1030</sub>
+\item[RAhO] \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[ROI] \hyperref[html:b1051]{interval-property}<sub>1051</sub>
+\item[SA] \hyperref[html:b1101]{null}<sub>1101</sub>
+\item[SE] \hyperref[html:b802]{ek}<sub>802</sub>, \hyperref[html:b807]{gek}<sub>807</sub>, \hyperref[html:b818]{gihek}<sub>818</sub>, \hyperref[html:b808]{guhek}<sub>808</sub>, \hyperref[html:b932]{interval}<sub>932</sub>, \hyperref[html:b805]{jek}<sub>805</sub>, \hyperref[html:b806]{joik}<sub>806</sub>, \hyperref[html:b374]{mex-operator}<sub>374</sub>, \hyperref[html:b972]{simple-tense-modal}<sub>972</sub>, \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[SEI] \hyperref[html:b32]{free}<sub>32</sub>
+\item[SEhU] \hyperref[html:b32]{free}<sub>32</sub>
+\item[SI] \hyperref[html:b1101]{null}<sub>1101</sub>
+\item[SOI] \hyperref[html:b32]{free}<sub>32</sub>
+\item[SU] \hyperref[html:b1101]{null}<sub>1101</sub>
+\item[TAhE] \hyperref[html:b1051]{interval-property}<sub>1051</sub>
+\item[TEI] \hyperref[html:b987]{lerfu-word}<sub>987</sub>
+\item[TEhU] \hyperref[html:b374]{mex-operator}<sub>374</sub>, \hyperref[html:b385]{operand-3}<sub>385</sub>
+\item[TO] \hyperref[html:b32]{free}<sub>32</sub>
+\item[TOI] \hyperref[html:b32]{free}<sub>32</sub>
+\item[TUhE] \hyperref[html:b14]{statement-3}<sub>14</sub>
+\item[TUhU] \hyperref[html:b14]{statement-3}<sub>14</sub>
+\item[UI] \hyperref[html:b413]{indicator}<sub>413</sub>
+\item[VA] \hyperref[html:b1045]{space-offset}<sub>1045</sub>, \hyperref[html:b1040]{space}<sub>1040</sub>
+\item[VAU] \hyperref[html:b20]{fragment}<sub>20</sub>, \hyperref[html:b71]{tail-terms}<sub>71</sub>
+\item[VEI] \hyperref[html:b32]{free}<sub>32</sub>, \hyperref[html:b300]{quantifier}<sub>300</sub>
+\item[VEhA] \hyperref[html:b1046]{space-interval}<sub>1046</sub>
+\item[VEhO] \hyperref[html:b32]{free}<sub>32</sub>, \hyperref[html:b300]{quantifier}<sub>300</sub>
+\item[VIhA] \hyperref[html:b1046]{space-interval}<sub>1046</sub>
+\item[VUhO] \hyperref[html:b90]{sumti}<sub>90</sub>
+\item[VUhU] \hyperref[html:b374]{mex-operator}<sub>374</sub>
+\item[XI] \hyperref[html:b32]{free}<sub>32</sub>
+\item[Y] \hyperref[html:b413]{indicator}<sub>413</sub>
+\item[ZAhO] \hyperref[html:b1051]{interval-property}<sub>1051</sub>
+\item[ZEI] \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[ZEhA] \hyperref[html:b1030]{time}<sub>1030</sub>
+\item[ZI] \hyperref[html:b1033]{time-offset}<sub>1033</sub>, \hyperref[html:b1030]{time}<sub>1030</sub>
+\item[ZIhE] \hyperref[html:b121]{relative-clauses}<sub>121</sub>
+\item[ZO] \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[ZOI] \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[ZOhU] \hyperref[html:b30]{prenex}<sub>30</sub>
+\item[any-word] \hyperref[html:b987]{lerfu-word}<sub>987</sub>, \hyperref[html:b1101]{null}<sub>1101</sub>, \hyperref[html:b97]{sumti-6}<sub>97</sub>, \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>, \hyperref[html:b1100]{word}<sub>1100</sub>
+\item[anything] \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[bridi-tail] \hyperref[html:b50]{bridi-tail}<sub>50</sub>, \hyperref[html:b40]{sentence}<sub>40</sub>
+\item[bridi-tail-1] \hyperref[html:b50]{bridi-tail}<sub>50</sub>
+\item[bridi-tail-2] \hyperref[html:b51]{bridi-tail-1}<sub>51</sub>, \hyperref[html:b52]{bridi-tail-2}<sub>52</sub>
+\item[bridi-tail-3] \hyperref[html:b52]{bridi-tail-2}<sub>52</sub>
+\item[ek] \hyperref[html:b20]{fragment}<sub>20</sub>, \hyperref[html:b421]{joik-ek}<sub>421</sub>, \hyperref[html:b383]{operand-2}<sub>383</sub>, \hyperref[html:b381]{operand}<sub>381</sub>, \hyperref[html:b91]{sumti-1}<sub>91</sub>, \hyperref[html:b93]{sumti-3}<sub>93</sub>
+\item[fragment] \hyperref[html:b10]{paragraph}<sub>10</sub>
+\item[free] \hyperref[html:b0]{text}<sub>0</sub>
+\item[gek] \hyperref[html:b54]{gek-sentence}<sub>54</sub>, \hyperref[html:b385]{operand-3}<sub>385</sub>, \hyperref[html:b94]{sumti-4}<sub>94</sub>, \hyperref[html:b85]{termset}<sub>85</sub>
+\item[gek-sentence] \hyperref[html:b53]{bridi-tail-3}<sub>53</sub>, \hyperref[html:b54]{gek-sentence}<sub>54</sub>
+\item[gihek] \hyperref[html:b51]{bridi-tail-1}<sub>51</sub>, \hyperref[html:b52]{bridi-tail-2}<sub>52</sub>, \hyperref[html:b50]{bridi-tail}<sub>50</sub>, \hyperref[html:b20]{fragment}<sub>20</sub>
+\item[gik] \hyperref[html:b54]{gek-sentence}<sub>54</sub>, \hyperref[html:b807]{gek}<sub>807</sub>, \hyperref[html:b385]{operand-3}<sub>385</sub>, \hyperref[html:b371]{operator-1}<sub>371</sub>, \hyperref[html:b136]{selbri-6}<sub>136</sub>, \hyperref[html:b94]{sumti-4}<sub>94</sub>, \hyperref[html:b85]{termset}<sub>85</sub>
+\item[guhek] \hyperref[html:b371]{operator-1}<sub>371</sub>, \hyperref[html:b136]{selbri-6}<sub>136</sub>
+\item[indicator] \hyperref[html:b411]{indicators}<sub>411</sub>
+\item[indicators] \hyperref[html:b0]{text}<sub>0</sub>, \hyperref[html:b1100]{word}<sub>1100</sub>
+\item[interval] \hyperref[html:b806]{joik}<sub>806</sub>
+\item[interval-property] \hyperref[html:b1049]{space-int-props}<sub>1049</sub>, \hyperref[html:b1030]{time}<sub>1030</sub>
+\item[jek] \hyperref[html:b422]{joik-jek}<sub>422</sub>, \hyperref[html:b371]{operator-1}<sub>371</sub>, \hyperref[html:b135]{selbri-5}<sub>135</sub>, \hyperref[html:b971]{stag}<sub>971</sub>, \hyperref[html:b13]{statement-2}<sub>13</sub>, \hyperref[html:b2]{text-1}<sub>2</sub>
+\item[joik] \hyperref[html:b807]{gek}<sub>807</sub>, \hyperref[html:b421]{joik-ek}<sub>421</sub>, \hyperref[html:b422]{joik-jek}<sub>422</sub>, \hyperref[html:b383]{operand-2}<sub>383</sub>, \hyperref[html:b381]{operand}<sub>381</sub>, \hyperref[html:b371]{operator-1}<sub>371</sub>, \hyperref[html:b370]{operator}<sub>370</sub>, \hyperref[html:b134]{selbri-4}<sub>134</sub>, \hyperref[html:b135]{selbri-5}<sub>135</sub>, \hyperref[html:b971]{stag}<sub>971</sub>, \hyperref[html:b13]{statement-2}<sub>13</sub>, \hyperref[html:b91]{sumti-1}<sub>91</sub>, \hyperref[html:b93]{sumti-3}<sub>93</sub>, \hyperref[html:b2]{text-1}<sub>2</sub>
+\item[joik-ek] \hyperref[html:b382]{operand-1}<sub>382</sub>, \hyperref[html:b92]{sumti-2}<sub>92</sub>
+\item[joik-jek] \hyperref[html:b370]{operator}<sub>370</sub>, \hyperref[html:b134]{selbri-4}<sub>134</sub>, \hyperref[html:b12]{statement-1}<sub>12</sub>, \hyperref[html:b491]{tag}<sub>491</sub>, \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>, \hyperref[html:b81]{terms-1}<sub>81</sub>, \hyperref[html:b0]{text}<sub>0</sub>
+\item[lerfu-string] \hyperref[html:b32]{free}<sub>32</sub>, \hyperref[html:b987]{lerfu-word}<sub>987</sub>, \hyperref[html:b385]{operand-3}<sub>385</sub>, \hyperref[html:b97]{sumti-6}<sub>97</sub>, \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[lerfu-word] \hyperref[html:b817]{lerfu-string}<sub>817</sub>, \hyperref[html:b987]{lerfu-word}<sub>987</sub>, \hyperref[html:b812]{number}<sub>812</sub>
+\item[linkargs] \hyperref[html:b20]{fragment}<sub>20</sub>, \hyperref[html:b151]{tanru-unit-1}<sub>151</sub>
+\item[links] \hyperref[html:b20]{fragment}<sub>20</sub>, \hyperref[html:b160]{linkargs}<sub>160</sub>, \hyperref[html:b161]{links}<sub>161</sub>
+\item[mex] \hyperref[html:b32]{free}<sub>32</sub>, \hyperref[html:b374]{mex-operator}<sub>374</sub>, \hyperref[html:b300]{quantifier}<sub>300</sub>, \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[mex-1] \hyperref[html:b311]{mex-1}<sub>311</sub>, \hyperref[html:b310]{mex}<sub>310</sub>
+\item[mex-2] \hyperref[html:b311]{mex-1}<sub>311</sub>, \hyperref[html:b312]{mex-2}<sub>312</sub>, \hyperref[html:b385]{operand-3}<sub>385</sub>
+\item[mex-operator] \hyperref[html:b374]{mex-operator}<sub>374</sub>, \hyperref[html:b372]{operator-2}<sub>372</sub>, \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[number] \hyperref[html:b32]{free}<sub>32</sub>, \hyperref[html:b1051]{interval-property}<sub>1051</sub>, \hyperref[html:b300]{quantifier}<sub>300</sub>, \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[operand] \hyperref[html:b312]{mex-2}<sub>312</sub>, \hyperref[html:b385]{operand-3}<sub>385</sub>, \hyperref[html:b381]{operand}<sub>381</sub>, \hyperref[html:b332]{rp-operand}<sub>332</sub>
+\item[operand-1] \hyperref[html:b381]{operand}<sub>381</sub>
+\item[operand-2] \hyperref[html:b382]{operand-1}<sub>382</sub>, \hyperref[html:b383]{operand-2}<sub>383</sub>
+\item[operand-3] \hyperref[html:b383]{operand-2}<sub>383</sub>, \hyperref[html:b385]{operand-3}<sub>385</sub>
+\item[operator] \hyperref[html:b311]{mex-1}<sub>311</sub>, \hyperref[html:b312]{mex-2}<sub>312</sub>, \hyperref[html:b310]{mex}<sub>310</sub>, \hyperref[html:b372]{operator-2}<sub>372</sub>, \hyperref[html:b370]{operator}<sub>370</sub>, \hyperref[html:b330]{rp-expression}<sub>330</sub>
+\item[operator-1] \hyperref[html:b371]{operator-1}<sub>371</sub>, \hyperref[html:b370]{operator}<sub>370</sub>
+\item[operator-2] \hyperref[html:b371]{operator-1}<sub>371</sub>
+\item[paragraph] \hyperref[html:b4]{paragraphs}<sub>4</sub>
+\item[paragraphs] \hyperref[html:b4]{paragraphs}<sub>4</sub>, \hyperref[html:b2]{text-1}<sub>2</sub>
+\item[prenex] \hyperref[html:b20]{fragment}<sub>20</sub>, \hyperref[html:b11]{statement}<sub>11</sub>, \hyperref[html:b41]{subsentence}<sub>41</sub>
+\item[quantifier] \hyperref[html:b20]{fragment}<sub>20</sub>, \hyperref[html:b385]{operand-3}<sub>385</sub>, \hyperref[html:b95]{sumti-5}<sub>95</sub>, \hyperref[html:b112]{sumti-tail-1}<sub>112</sub>
+\item[relative-clause] \hyperref[html:b121]{relative-clauses}<sub>121</sub>
+\item[relative-clauses] \hyperref[html:b20]{fragment}<sub>20</sub>, \hyperref[html:b32]{free}<sub>32</sub>, \hyperref[html:b95]{sumti-5}<sub>95</sub>, \hyperref[html:b97]{sumti-6}<sub>97</sub>, \hyperref[html:b112]{sumti-tail-1}<sub>112</sub>, \hyperref[html:b111]{sumti-tail}<sub>111</sub>, \hyperref[html:b90]{sumti}<sub>90</sub>
+\item[rp-expression] \hyperref[html:b310]{mex}<sub>310</sub>, \hyperref[html:b332]{rp-operand}<sub>332</sub>
+\item[rp-operand] \hyperref[html:b330]{rp-expression}<sub>330</sub>
+\item[selbri] \hyperref[html:b53]{bridi-tail-3}<sub>53</sub>, \hyperref[html:b32]{free}<sub>32</sub>, \hyperref[html:b374]{mex-operator}<sub>374</sub>, \hyperref[html:b385]{operand-3}<sub>385</sub>, \hyperref[html:b131]{selbri-1}<sub>131</sub>, \hyperref[html:b136]{selbri-6}<sub>136</sub>, \hyperref[html:b95]{sumti-5}<sub>95</sub>, \hyperref[html:b112]{sumti-tail-1}<sub>112</sub>, \hyperref[html:b815]{tense-modal}<sub>815</sub>
+\item[selbri-1] \hyperref[html:b130]{selbri}<sub>130</sub>
+\item[selbri-2] \hyperref[html:b131]{selbri-1}<sub>131</sub>, \hyperref[html:b132]{selbri-2}<sub>132</sub>
+\item[selbri-3] \hyperref[html:b132]{selbri-2}<sub>132</sub>, \hyperref[html:b134]{selbri-4}<sub>134</sub>, \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[selbri-4] \hyperref[html:b133]{selbri-3}<sub>133</sub>
+\item[selbri-5] \hyperref[html:b134]{selbri-4}<sub>134</sub>, \hyperref[html:b135]{selbri-5}<sub>135</sub>
+\item[selbri-6] \hyperref[html:b135]{selbri-5}<sub>135</sub>, \hyperref[html:b136]{selbri-6}<sub>136</sub>
+\item[sentence] \hyperref[html:b14]{statement-3}<sub>14</sub>, \hyperref[html:b41]{subsentence}<sub>41</sub>
+\item[simple-tense-modal] \hyperref[html:b971]{stag}<sub>971</sub>, \hyperref[html:b815]{tense-modal}<sub>815</sub>
+\item[space] \hyperref[html:b972]{simple-tense-modal}<sub>972</sub>
+\item[space-int-props] \hyperref[html:b1046]{space-interval}<sub>1046</sub>
+\item[space-interval] \hyperref[html:b1040]{space}<sub>1040</sub>
+\item[space-offset] \hyperref[html:b1040]{space}<sub>1040</sub>
+\item[stag] \hyperref[html:b52]{bridi-tail-2}<sub>52</sub>, \hyperref[html:b50]{bridi-tail}<sub>50</sub>, \hyperref[html:b807]{gek}<sub>807</sub>, \hyperref[html:b383]{operand-2}<sub>383</sub>, \hyperref[html:b381]{operand}<sub>381</sub>, \hyperref[html:b371]{operator-1}<sub>371</sub>, \hyperref[html:b370]{operator}<sub>370</sub>, \hyperref[html:b134]{selbri-4}<sub>134</sub>, \hyperref[html:b135]{selbri-5}<sub>135</sub>, \hyperref[html:b13]{statement-2}<sub>13</sub>, \hyperref[html:b91]{sumti-1}<sub>91</sub>, \hyperref[html:b93]{sumti-3}<sub>93</sub>, \hyperref[html:b2]{text-1}<sub>2</sub>
+\item[statement] \hyperref[html:b10]{paragraph}<sub>10</sub>, \hyperref[html:b11]{statement}<sub>11</sub>
+\item[statement-1] \hyperref[html:b11]{statement}<sub>11</sub>
+\item[statement-2] \hyperref[html:b12]{statement-1}<sub>12</sub>, \hyperref[html:b13]{statement-2}<sub>13</sub>
+\item[statement-3] \hyperref[html:b13]{statement-2}<sub>13</sub>
+\item[subsentence] \hyperref[html:b54]{gek-sentence}<sub>54</sub>, \hyperref[html:b122]{relative-clause}<sub>122</sub>, \hyperref[html:b41]{subsentence}<sub>41</sub>, \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[sumti] \hyperref[html:b32]{free}<sub>32</sub>, \hyperref[html:b385]{operand-3}<sub>385</sub>, \hyperref[html:b91]{sumti-1}<sub>91</sub>, \hyperref[html:b94]{sumti-4}<sub>94</sub>, \hyperref[html:b97]{sumti-6}<sub>97</sub>, \hyperref[html:b112]{sumti-tail-1}<sub>112</sub>, \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>, \hyperref[html:b83]{term}<sub>83</sub>
+\item[sumti-1] \hyperref[html:b90]{sumti}<sub>90</sub>
+\item[sumti-2] \hyperref[html:b91]{sumti-1}<sub>91</sub>
+\item[sumti-3] \hyperref[html:b92]{sumti-2}<sub>92</sub>, \hyperref[html:b93]{sumti-3}<sub>93</sub>
+\item[sumti-4] \hyperref[html:b93]{sumti-3}<sub>93</sub>, \hyperref[html:b94]{sumti-4}<sub>94</sub>
+\item[sumti-5] \hyperref[html:b94]{sumti-4}<sub>94</sub>
+\item[sumti-6] \hyperref[html:b95]{sumti-5}<sub>95</sub>, \hyperref[html:b111]{sumti-tail}<sub>111</sub>
+\item[sumti-tail] \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[sumti-tail-1] \hyperref[html:b111]{sumti-tail}<sub>111</sub>
+\item[tag] \hyperref[html:b54]{gek-sentence}<sub>54</sub>, \hyperref[html:b130]{selbri}<sub>130</sub>, \hyperref[html:b14]{statement-3}<sub>14</sub>, \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>, \hyperref[html:b83]{term}<sub>83</sub>
+\item[tail-terms] \hyperref[html:b51]{bridi-tail-1}<sub>51</sub>, \hyperref[html:b52]{bridi-tail-2}<sub>52</sub>, \hyperref[html:b53]{bridi-tail-3}<sub>53</sub>, \hyperref[html:b50]{bridi-tail}<sub>50</sub>, \hyperref[html:b54]{gek-sentence}<sub>54</sub>
+\item[tanru-unit] \hyperref[html:b136]{selbri-6}<sub>136</sub>
+\item[tanru-unit-1] \hyperref[html:b150]{tanru-unit}<sub>150</sub>
+\item[tanru-unit-2] \hyperref[html:b151]{tanru-unit-1}<sub>151</sub>, \hyperref[html:b152]{tanru-unit-2}<sub>152</sub>
+\item[tense-modal] \hyperref[html:b491]{tag}<sub>491</sub>
+\item[term] \hyperref[html:b160]{linkargs}<sub>160</sub>, \hyperref[html:b161]{links}<sub>161</sub>, \hyperref[html:b122]{relative-clause}<sub>122</sub>, \hyperref[html:b82]{terms-2}<sub>82</sub>
+\item[terms] \hyperref[html:b20]{fragment}<sub>20</sub>, \hyperref[html:b32]{free}<sub>32</sub>, \hyperref[html:b30]{prenex}<sub>30</sub>, \hyperref[html:b40]{sentence}<sub>40</sub>, \hyperref[html:b71]{tail-terms}<sub>71</sub>, \hyperref[html:b85]{termset}<sub>85</sub>
+\item[terms-1] \hyperref[html:b80]{terms}<sub>80</sub>
+\item[terms-2] \hyperref[html:b81]{terms-1}<sub>81</sub>
+\item[termset] \hyperref[html:b83]{term}<sub>83</sub>
+\item[text] \hyperref[html:b32]{free}<sub>32</sub>, \hyperref[html:b1101]{null}<sub>1101</sub>, \hyperref[html:b97]{sumti-6}<sub>97</sub>
+\item[text-1] \hyperref[html:b14]{statement-3}<sub>14</sub>, \hyperref[html:b0]{text}<sub>0</sub>
+\item[time] \hyperref[html:b972]{simple-tense-modal}<sub>972</sub>
+\item[time-offset] \hyperref[html:b1030]{time}<sub>1030</sub>
+\item[utterance] \hyperref[html:b1101]{null}<sub>1101</sub>
+\item[vocative] \hyperref[html:b32]{free}<sub>32</sub>
+\end{description}

@@ -1,0 +1,2645 @@
+\chap{If Wishes Were Horses: The Lojban Connective System}
+\sect{Logical connection and truth tables}
+Lojban is a logical language: the name of the language
+    itself means \q{logical language}. The fundamentals of ordinary
+    logic (there are variant logics, which aren't addressed in this
+    book) include the notions of a \q{sentence}, (sometimes called
+    a \q{statement} or \q{proposition}), which asserts a truth or
+    falsehood, and a small set of \q{truth functions}, which
+    combine two sentences to create a new sentence. The truth
+    functions have the special characteristic that the truth value
+    (that is, the truth or falsehood) of the results depends only
+    on the truth value of the component sentences. For example,
+\begin{example}
+John is a man or James is a woman.
+\end{example}
+
+{\noindent}is true if \q{John is a man} is true, or if ``James is a
+    woman'' is true. If we know whether John is a man, and we know
+    whether James is a woman, we know whether ``John is a man or
+    James is a woman'' is true, provided we know the meaning of
+    \q{or}. Here \q{John is a man} and \q{James is a woman} are the
+    component sentences. 
+
+We will use the phrase \q{negating a sentence} to mean
+    changing its truth value. An English sentence may always be
+    negated by prefixing \q{It is false that ... }, or more
+    idiomatically by inserting \q{not} at the right point,
+    generally before the verb. \q{James is not a woman} is the
+    negation of \q{James is a woman}, and vice versa. Recent slang
+    can also negate a sentence by following it with the exclamation
+    \q{Not!}
+
+Words like \q{or} are called \q{logical connectives}, and
+    Lojban has many of them, as befits a logical language. This
+    chapter is mostly concerned with explaining the forms and uses
+    of the Lojban logical connectives. There are a number of other
+    logical connectives in English such as \q{and}, \q{and/or},
+    \q{if}, \q{only if}, \q{whether or not}, and others; however,
+    not every use of these English words corresponds to a logical
+    connective. This point will be made clear in particular cases
+    as needed. The other English meanings are supported by
+    different Lojban connective constructs.
+
+The Lojban connectives form a system (as the title of this
+    chapter suggests), regular and predictable, whereas
+    natural-language connectives are rather less systematic and
+    therefore less predictable.
+
+There exist 16 possible different truth functions. A truth
+    table is a graphical device for specifying a truth function,
+    making it clear what the value of the truth function is for
+    every possible value of the component sentences. Here is a
+    truth table for \q{or}:
+
+   first       second      result
+    -------     -------     ------
+    True        True        True
+    True        False       True
+    False       True        True
+    False       False       False
+
+This table means that if the first sentence stated is true,
+    and the second sentence stated is true, then the result of the
+    truth function is also true. The same is true for every other
+    possible combination of truth values except the one where both
+    the first and the second sentences are false, in which case the
+    truth value of the result is also false.
+
+Suppose that \q{John is a man} is true (and ``John is not a
+    man'' is false), and that \q{James is a woman} is false (and
+    \q{James is not a woman} is true). Then the truth table tells
+    us that
+\begin{description}
+\item[] \q{John is a man, or James is not a woman} (true, true) is true; \q{John is a man, or James is a woman} (true, false) is true; \q{John is not a man, or James is not a woman} (false, true) is true; ``John is not a man, or James is a woman'' (false, false) is false.
+
+\end{description}
+
+Note that the kind of \q{or} used
+    in this example can also be expressed (in formal English) with
+    \q{and/or}. There is a different truth table for the kind of
+    \q{or} that means \q{either ... or ... but not both}. 
+
+To save space, we will write truth tables in a shorter
+    format henceforth. Let the letters T and F stand for True and
+    False. The rows will always be given in the order shown above:
+    TT, TF, FT, FF for the two sentences. Then it is only necessary
+    to give the four letters from the result column, which can be
+    written TTTF, as can be seen by reading down the third column
+    of the table above. So TTTF is the abbreviated truth table for
+    the \q{or} truth function. Here are the 16 possible truth
+    functions, with an English version of what it means to assert
+    that each function is, in fact, true (\q{first} refers to the
+    first sentence, and \q{second} to the second sentence):
+
+   TTTT    (always true)
+    TTTF    first is true and/or second is true.
+    TTFT    first is true if second is true.
+    TTFF    first is true whether or not second is true.
+    TFTT    first is true only if second is true.
+    TFTF    whether or not first is true, second is true.
+    TFFT    first is true if and only if second is true.
+    TFFF    first is true and second is true
+
+FTTT    first and second are not both true.
+    FTTF    first or second is true, but not both.
+    FTFT    whether or not first is true, second is false.
+    FTFF    first is true, but second is false.
+    FFTT    first is false whether or not second is true.
+    FFTF    first is false, but second is true.
+    FFFT    neither first nor second is true.
+    FFFF    (always false)
+
+Skeptics may work out the detailed truth tables for
+    themselves.
+
+
+
+\sect{The Four basic vowels}
+Lojban regards four of these 16 truth functions as
+    fundamental, and assigns them the four vowels <span
+    class="c3">A</span>, <span class="c3">E</span>, <span
+    class="c3">O</span>, and <span class="c3">U</span>. These
+    letters do not represent actual cmavo or selma'o, but rather a
+    component vowel from which actual logical-connective cmavo are
+    built up, as explained in the next section. Here are the four
+    vowels, their truth tables, and rough English equivalents:
+
+   <span class="c3">A</span>   TTTF    or, and/or
+    <span class="c3">E</span>   TFFF    and
+    <span class="c3">O</span>   TFFT    if and only if
+    <span class="c3">U</span>   TTFF    whether or not
+
+More precisely:
+\begin{description}
+\item[] <span class="c3">A</span> is true if either or both sentences are true; <span class="c3">E</span> is true if both sentences are true, but not otherwise; <span class="c3">O</span> is true if the sentences are both true or both false; <span class="c3">U</span> is true if the first sentence is true, regardless of the truth value of the second sentence.
+\end{description}
+
+With the four vowels, the ability to negate either sentence,
+    and the ability to exchange the sentences, as if their order
+    had been reversed, we can create all of the 16 possible truth
+    functions except TTTT and FFFF, which are fairly useless
+    anyway. The following table illustrates how to create each of
+    the 14 remaining truth functions: 
+
+   TTTF    <span class="c3">A</span>
+    TTFT    <span class="c3">A</span> with second sentence negated
+    TTFF    <span class="c3">U</span>
+    TFTT    <span class="c3">A</span> with first sentence negated
+    TFTF    <span class="c3">U</span> with sentences exchanged
+    TFFT    <span class="c3">O</span>
+    TFFF    <span class="c3">E</span>
+
+FTTT    <span class="c3">A</span> with both sentences negated
+    FTTF    <span
+class="c3">O</span> with either first or second negated (not both)
+    FTFT    <span
+class="c3">U</span> with sentences exchanged and then second negated
+    FTFF    <span class="c3">E</span> with second sentence negated
+    FFTT    <span class="c3">U</span> with first sentence negated
+    FFTF    <span class="c3">E</span> with first sentence negated
+    FFFT    <span class="c3">E</span> with both sentences negated
+
+Note that exchanging the sentences is only necessary with <span
+    class="c3">U</span>. The three other basic truth functions are
+    commutative; that is, they mean the same thing regardless of
+    the order of the component sentences. There are other ways of
+    getting some of these truth tables; these just happen to be the
+    methods usually employed.
+
+
+
+\sect{The six types of logical connectives}
+In order to remain unambiguous, Lojban cannot have only a
+    single logical connective for each truth function. There are
+    many places in the grammar of the language where logical
+    connection is permitted, and each must have its appropriate set
+    of connectives. If the connective suitable for sumti were used
+    to connect selbri, ambiguity would result. Consider the English
+    sentence:
+\begin{example}
+Mary went to the window and  ...
+\end{example}
+
+{\noindent}where the last word could be followed by \q{the door}, a noun
+    phrase, or by \q{saw the horses}, a sentence with subject
+    omitted, or by \q{John went to the door}, a full sentence, or
+    by one of a variety of other English grammatical constructions.
+    Lojban cannot tolerate such grammatical looseness. 
+
+Instead, there are a total of five different selma'o used
+    for logical connection: A, GA, GIhA, GUhA, and JA. Each of
+    these includes four cmavo, one based on each of the four
+    vowels, which is always the last vowel in the cmavo. In selma'o
+    A, the vowel is the entire cmavo.
+
+Thus, in selma'o A, the cmavo for the function <span
+    class="c3">A</span> is \q{a}. (Do not confuse A, which is a
+    selma'o, with <span class="c3">A</span>, which is a truth
+    function, or \q{a}, which is a cmavo.) Likewise, the cmavo for
+    <span class="c3">E</span> in selma'o GIhA is \q{gi'e}, and the
+    cmavo for <span class="c3">U</span> in selma'o GA is \q{gu}.
+    This systematic regularity makes the cmavo easier to learn.
+
+Obviously, four cmavo are not enough to express the 14 truth
+    functions explained in \sectref{14.1}. Therefore,
+    compound cmavo must be used. These compound cmavo follow a
+    systematic pattern: each has one cmavo from the five logical
+    connection selma'o at its heart, and may also contain one or
+    more of the auxiliary cmavo \q{se}, \q{na}, or \q{nai}. Which
+    auxiliaries are used with which logical connection cmavo, and
+    with what grammar and meaning, will be explained in the
+    following sections. The uses of each of these auxiliary cmavo
+    relates to its other uses in other parts of Lojban grammar.
+
+For convenience, each of the types of compound cmavo used
+    for logical connection is designated by a Lojban name. The name
+    is derived by changing the final \q{-A} of the selma'o name to
+    \q{-ek}; the reasons for using \q{-ek} are buried deep in the
+    history of the Loglan Project. Thus, compound cmavo based on
+    selma'o A are known as eks, and those based on selma'o JA are
+    known as jeks. (When writing in English, it is conventional to
+    use \q{eks} as the plural of \q{ek}.) When the term ``logical
+    connective'' is used in this chapter, it refers to one or more
+    of these kinds of compound cmavo.
+
+Why does the title of this section refer to \q{six types}
+    when there are only five selma'o? A jek may be preceded by
+    \q{.i}, the usual Lojban cmavo for connecting two sentences.
+    The compound produced by \q{.i} followed by a jek is known as
+    an ijek. It is useful to think of ijeks as a sixth kind of
+    logical connective, parallel to eks, jeks, geks, giheks, and
+    guheks.
+
+There also exist giks, joiks, ijoiks, and joigiks, which are
+    not logical connectives but are other kinds of compound cmavo
+    which will be introduced later.
+
+
+
+\sect{Logical connection of bridi}
+Now we are ready to express \exref{14.1.1}
+    in Lojban! The kind of logical connective which is placed
+    between two Lojban bridi to connect them logically is an
+    ijek:
+\begin{example}
+la djan. nanmu .ija la djeimyz. ninmu\n
+John is-a-man or James is-a-woman.
+\end{example}
+
+Here we have two separate Lojban bridi, \q{la djan. nanmu}
+    and \q{la djeimyz. ninmu}. These bridi are connected by
+    \q{.ija}, the ijek for the truth function <span
+    class="c3">A</span>. The \q{.i} portion of the ijek tells us
+    that we are dealing with separate sentences here. Similarly, we
+    can now say:
+\begin{example}
+la djan. nanmu .ije la djeimyz. ninmu\n
+John is-a-man and James is-a-woman.
+\end{example}
+
+\begin{example}
+la djan. nanmu .ijo la djeimyz. ninmu\n
+John is-a-man if-and-only-if James is-a-woman.
+\end{example}
+
+\begin{example}
+la djan. nanmu .iju la djeimyz. ninmu\n
+John is-a-man whether-or-not James is-a-woman.
+\end{example}
+
+To obtain the other truth tables listed in \sectref{14.2}, we need to know how to negate the two
+    bridi which represent the component sentences. We could negate
+    them directly by inserting \q{na} before the selbri, but Lojban
+    also allows us to place the negation within the connective
+    itself. 
+
+To negate the first or left-hand bridi, prefix \q{na} to the
+    JA cmavo but after the \q{.i}. To negate the second or
+    right-hand bridi, suffix \q{-nai} to the JA cmavo. In either
+    case, the negating word is placed on the side of the connective
+    that is closest to the bridi being negated.
+
+So to express the truth table FTTF, which requires <span
+    class="c3">O</span> with either of the two bridi negated (not
+    both), we can say either:
+\begin{example}
+la djan. nanmu .inajo la djeimyz. ninmu\n
+John is-not-a-man if-and-only-if James is-a-woman.
+\end{example}
+
+\begin{example}
+la djan. nanmu .ijonai la djeimyz. ninmu\n
+John is a man if-and-only-if James is-not-a-woman
+\end{example}
+
+The meaning of both \exref{14.4.5} and \exref{14.4.6} is the same as that of:
+\begin{example}
+John is a man or James is a woman, but not both.
+\end{example}
+
+Here is another example:
+\begin{example}
+la djan. nanmu .ijanai la djeimyz. ninmu\n
+John is-a-man or James is-not-a-woman.\n
+John is a man if James is a woman.
+\end{example}
+
+How's that again? Are those two English sentences in \exref{14.4.8} really equivalent? In English, no.
+    The Lojban TTFT truth function can be glossed \q{A if B}, but
+    the \q{if} does not quite have its English sense. \exref{14.4.8} is true so long as John is a man,
+    even if James is not a woman; likewise, it is true just because
+    James is not a woman, regardless of John's gender. This kind of
+    \q{if-then} is technically known as a \q{material conditional}.
+
+Since James is not a woman (by our assertions in \sectref{14.1}), the English sentence ``John is a man
+    if James is a woman'' seems to be neither true nor false, since
+    it assumes something which is not true. It turns out to be most
+    convenient to treat this \q{if} as TTFT, which on investigation
+    means that \exref{14.4.8} is true. \exref{14.4.9}, however, is equally true:
+\begin{example}
+la djan. ninmu .ijanai la djeimyz. ninmu\n
+John is a woman if James is a woman.
+\end{example}
+
+This can be thought of as a principle of consistency, and may
+    be paraphrased as follows: ``If a false statement is true, any
+    statement follows from it.'' All uses of English \q{if} must be
+    considered very carefully when translating into Lojban to see
+    if they really fit this Lojban mold. 
+\exref{14.4.10}, which uses the TFTT truth
+    function, is subject to the same rules: the stated gloss of TFTT as
+    \q{only if} works naturally only when the left-hand bridi is true;
+    if it is false, the right-hand bridi may be either true or false.
+    The last gloss of \exref{14.4.10} illustrates the
+    use of \q{if ... then} as a more natural substitute for ``only
+    if''.</p>
+\begin{example}
+la djan. nanmu .inaja la djeimyz. ninmu\n
+John is-not-a-man or James is-a-woman.\n
+John is a man only if James is a woman.\n
+If John is a man, then James is a woman.
+\end{example}
+
+The following example illustrates the use of \q{se} to, in
+    effect, exchange the two sentences. The normal use of \q{se} is
+    to (in effect) tranpose places of a bridi, as explained in \chapref{5}.
+\begin{example}
+la djan. nanmu .iseju la djeimyz. ninmu\n
+Whether or not John is a man, James is a woman.
+\end{example}
+
+If both \q{na} and \q{se} are present, which is legal but never
+    necessary, \q{na} would come before \q{se}. 
+
+The full syntax of ijeks, therefore, is:
+\begin{description}
+\item[] .i [na] [se] JA [nai]
+\end{description}
+
+where the cmavo in brackets are optional.
+
+
+
+\sect{Forethought bridi connection}
+Many concepts in Lojban are expressible in two different
+    ways, generally referred to as \q{afterthought} and
+    \q{forethought}. \sectref{14.4} discussed what is
+    called \q{afterthought bridi logical connection}. The word
+    \q{afterthought} is used because the connective cmavo and the
+    second bridi were added, as it were, afterwards and without
+    changing the form of the first bridi. This form might be used
+    by someone who makes a statement and then wishes to add or
+    qualify that statement after it has been completed. Thus,
+\begin{example}
+la djan. nanmu
+\end{example}
+
+{\noindent}is a complete bridi, and adding an afterthought connection to
+    make
+\begin{example}
+la djan. nanmu .ija la djeimyz. ninmu\n
+John is a man or James is a woman (or both)
+\end{example}
+
+{\noindent}provides additional information without requiring any change in
+    the form of what has come before, which may not be possible or
+    practical, especially in speaking. (The meaning, however, may
+    be changed by the use of a negating connective.) Afterthought
+    connectives make it possible to construct all the important
+    truth-functional relationships in a variety of ways. 
+
+In forethought style the speaker decides in advance, before
+    expressing the first bridi, that a logical connection will be
+    expressed. Forethought and afterthought connectives are
+    expressed with separate selma'o: the forethought logical
+    connectives corresponding to afterthought ijeks are geks:
+\begin{example}
+ga la djan. nanmu gi la djeimyz. ninmu\n
+Either John is a man or James is a woman (or both).
+\end{example}
+
+\q{ga} is the cmavo which represents the <span
+    class="c3">A</span> truth function in selma'o GA. The word
+    \q{gi} does not belong to GA at all, but constitutes its own
+    selma'o: it serves only to separate the two bridi without
+    having any content of its own. The English translation of ``ga
+    ... gi'' is \q{either ... or}, but in the English form the
+    truth function is specified both by the word \q{either} and by
+    the word \q{or}: not so in Lojban. 
+
+Even though two bridi are being connected, geks and giks do
+    not have any \q{.i} in them. The forethought construct binds up
+    the two bridi into a single sentence as far as the grammar is
+    concerned.
+
+Some more examples of forethought bridi connection are:
+\begin{example}
+ge la djan. nanmu gi la djeimyz. ninmu\n
+(It is true that)\n
+both John is a man and James is a woman.
+\end{example}
+
+\begin{example}
+gu la djan. nanmu\n
+\T	gi la djeimyz. ninmu\n
+It is true that John is a man,\n
+\T	whether or not James is a woman.
+\end{example}
+
+It is worth emphasizing that \exref{14.5.5}
+    does not assert that James is (or is not) a woman. The \q{gu}
+    which indicates that \q{la djeimyz. ninmu} may be true or false
+    is unfortunately rather remote from the bridi thus
+    affected.
+
+Perhaps the most important of the truth functions commonly
+    expressed in forethought is TFTT, which can be paraphrased as
+    \q{if ... then ... }:
+\begin{example}
+ganai la djan. nanmu gi la djeimyz. ninmu\n
+Either John is not a man, or James is a woman.\n
+If John is a man, then James is a woman.
+\end{example}
+
+Note the placement of the \q{nai} in \exref{14.5.6}. When added to afterthought selma'o such as JA, a
+    following \q{nai} negates the second bridi, to which it is
+    adjacent. Since GA cmavo precede the first bridi, a following
+    \q{nai} negates the first bridi instead. 
+
+Why does English insist on forethought in the translation of\exref{14.5.6}? Possibly because it would be
+    confusing to seemingly assert a sentence and then make it
+    conditional (which, as the Lojban form shows, involves a
+    negation). Truth functions which involve negating the first
+    sentence may be confusing, even to the Lojbanic understanding,
+    when expressed using afterthought.
+
+It must be reiterated here that not every use of English ``if ...
+    then'' is properly translated by \q{.inaja} or \q{ganai ... gi};
+    anything with implications of time needs a somewhat different Lojban
+    translation, which will be discussed in \hyperref[sec:14:18]{Section
+    18}. Causal sentences like ``If you feed the pig, then it will
+    grow'' are not logical connectives of any type, but rather need a
+    translation using \q{rinka} as the selbri joining two event
+    abstractions, thus:
+\begin{example}
+le nu do cidja dunda fi le xarju\n
+\T	cu rinka le nu ri ba banro\n
+The event-of (you food-give to the pig)\n
+\T	causes the event-of (it will grow).
+\end{example}
+
+Causality is discussed in far more detail in \chapref{9}.
+\exref{14.5.8} and \exref{14.5.9} illustrates a truth function, FTTF, which needs to
+    negate either the first or the second bridi. We already
+    understand how to negate the first bridi:
+\begin{example}
+gonai la djan. nanmu gi la djeimyz. ninmu\n
+John is-not-a-man if-and-only-if James is-a-woman,\n
+Either John is a man or James is a woman but not both.
+\end{example}
+
+How can the second bridi be negated? By adding \q{-nai} to the
+    \q{gi}.
+\begin{example}
+go la djan. nanmu ginai la djeimyz. ninmu\n
+John is-a-man if-and-only-if James is-not-a-woman.\n
+Either John is a man or James is a woman but not both.
+\end{example}
+
+A compound cmavo based on \q{gi} is called a gik; the only giks
+    are \q{gi} itself and \q{ginai}. 
+
+Further examples:
+\begin{example}
+ge la djan. nanmu ginai la djeimyz. ninmu\n
+John is-a-man and James is-not-a-woman.
+\end{example}
+
+\begin{example}
+ganai la djan. nanmu ginai la djeimyz. ninmu\n
+John is-not-a-man or James is-not-a-woman.
+\end{example}
+
+The syntax of geks is: 
+\begin{description}
+\item[] [se] GA [nai]
+\end{description}
+
+and of giks (which are not themselves connectives, but part of
+    the machinery of forethought connection) is: 
+\begin{description}
+\item[] gi [nai]
+\end{description}
+
+
+
+\sect{sumti connection}
+Geks and ijeks are sufficient to state every possible
+    logical connection between two bridi. However, it is often the
+    case that two bridi to be logically connected have one or more
+    portions in common:
+\begin{example}
+la djan. klama le zarci\n
+\T	.ije la .alis. klama le zarci\n
+John goes to the market,\n
+\T	and Alice goes to the market.
+\end{example}
+
+Here only a single sumti differs between the two bridi.
+    Lojban does not require that both bridi be expressed in full.
+    Instead, a single bridi can be given which contains both of the
+    different sumti and uses a logical connective from a different
+    selma'o to combine the two sumti:
+\begin{example}
+la djan .e la .alis. klama le zarci\n
+John and Alice go-to the market.
+\end{example}
+
+\exref{14.6.2} means exactly the same thing as
+    \exref{14.6.1}: one may be rigorously
+    transformed into the other without any change of logical
+    meaning. This rule is true in general for every different kind
+    of logical connection in Lojban; all of them, with one
+    exception (see \sectref{14.12}), can always be
+    transformed into a logical connection between sentences that
+    expresses the same truth function. 
+
+The afterthought logical connectives between sumti are eks,
+    which contain a connective cmavo of selma'o A. If ijeks were
+    used in \exref{14.6.2}, the meaning would be
+    changed:
+\begin{example}
+la djan. .ije la .alis. klama le zarci\n
+John \optional{is/does something}.  And Alices goes-to the market.
+\end{example}
+
+{\noindent}leaving the reader uncertain why John is mentioned at all. 
+
+Any ek may be used between sumti, even if there is no direct
+    English equivalent:
+\begin{example}
+la djan. .o la .alis. klama le zarci\n
+John if-and-only-if Alice goes-to the market.\n
+John goes to the market if, and only if, Alice does.
+\end{example}
+
+The second line of \exref{14.6.3} is highly
+    stilted English, but the first line (of which it is a literal
+    translation) is excellent Lojban.
+
+What about forethought sumti connection? As is the case for
+    bridi connection, geks are appropriate. They are not the only
+    selma'o of forethought logical-connectives, but are the most
+    commonly used ones.
+\begin{example}
+ga la djan. gi la .alis. klama le zarci\n
+Either John or Alice (or both) goes-to the market.
+\end{example}
+
+Of course, eks include all the same patterns of compound cmavo
+    that ijeks do. When \q{na} or \q{se} is part of an ek, a
+    special writing convention is invoked, as in the following
+    example:
+\begin{example}
+la djan. na.a la .alis. klama le zarci\n
+John only if Alice goes-to the market.\n
+John goes to the market only if Alice does.
+\end{example}
+
+Note the period in \q{na.a}. The cmavo of A begin with
+    vowels, and therefore must always be preceded by a pause. It is
+    conventional to write all connective compounds as single words
+    (with no spaces), but this pause must still be marked in
+    writing as in speech; otherwise, the \q{na} and \q{a} would
+    tend to run together.
+
+
+
+\sect{More than two propositions}
+So far we have seen logical connectives used to connect
+    exactly two sentences. How about connecting three or more? Is
+    this possible in Lojban? The answer is yes, subject to some
+    warnings and some restrictions.
+
+Of the four primitive truth functions <span
+    class="c3">A</span>, <span class="c3">E</span>, <span
+    class="c3">O</span>, and <span class="c3">U</span>, all but
+    <span class="c3">O</span> have the same truth values no matter
+    how their component sentences are associated in pairs.
+    Therefore,
+\begin{example}
+mi dotco .ije mi ricfu .ije mi nanmu\n
+I am-German.  And I am-rich.  And I am-a-man.
+\end{example}
+
+{\noindent}means that all three component sentences are true. Likewise,
+\begin{example}
+mi dotco .ija mi ricfu .ija mi nanmu\n
+I am-German.  Or I am-rich.  Or I am-a-man.
+\end{example}
+
+{\noindent}means that one or more of the component sentences is true. 
+
+<span class="c3">O</span>, however, is different. Working
+    out the truth table for
+\begin{example}
+mi dotco .ijo mi ricfu\n
+\T	.ijo mi nanmu\n
+I am-German.  If-and-only-if I am-rich.\n
+\T	If-and-only-if I am-a-man.
+\end{example}
+
+{\noindent}shows that \exref{14.7.3} does not mean that
+    either I am all three of these things or none of them; instead,
+    an accurate translation would be: 
+\begin{description}
+\item[] Of the three properties --- German-ness, wealth, and manhood -- I possess either exactly one or else all three.
+\end{description}
+
+Because of the counterintuitiveness of this outcome, it is
+    safest to avoid <span class="c3">O</span> with more than two
+    sentences. Likewise, the connectives which involve negation
+    also have unexpected truth values when used with more than two
+    sentences. 
+
+In fact, no combination of logical connectives can produce
+    the \q{all or none} interpretation intended (but not achieved)
+    by \exref{14.7.3} without repeating one of the
+    bridi. See \exref{14.8.11}.
+
+There is an additional difficulty with the use of more than
+    two sentences. What is the meaning of:
+\begin{example}
+mi nelci la djan. .ije mi nelci la martas.\n
+\T	.ija mi nelci la meris.\n
+I like John.  And I like Martha.\n
+\T	Or I like Mary.
+\end{example}
+
+Does this mean:
+\begin{example}
+I like John, and I like\n
+\T	either Martha or Mary or both.
+\end{example}
+
+Or is the correct translation:
+\begin{example}
+Either I like John and I like Martha,\n
+\T	or I like Mary, or both.
+\end{example}
+
+\exref{14.7.6} is the correct translation of
+    \exref{14.7.4}. The reason is that Lojban
+    logical connectives pair off from the left, like many
+    constructs in the language. This rule, called the left-grouping
+    rule, is easy to forget, especially when intuition pulls the
+    other way. Forethought connectives are not subject to this
+    problem:
+\begin{example}
+ga ge mi nelci la djan. gi mi nelci la martas.\n
+\T	gi mi nelci la meris.\n
+Either (Both I like John and I like Martha)\n
+\T	or I like Mary.
+\end{example}
+
+{\noindent}is equivalent in meaning to \exref{14.7.4},
+    whereas
+\begin{example}
+ge mi nelci la djan. gi\n
+\T	ga mi nelci la martas. gi mi nelci la meris.\n
+Both I like John and\n
+\T	(Either I like Martha or I like Mary).
+\end{example}
+
+{\noindent}is not equivalent to \exref{14.7.4}, but is
+    instead a valid translation into Lojban, using forethought, of
+    \exref{14.7.5}.
+
+
+
+\sect{Grouping of afterthought connectives}
+There are several ways in Lojban to render \exref{14.7.5} using afterthought only. The
+    simplest method is to make use of the cmavo \q{bo} (of selma'o
+    BO). This cmavo has several functions in Lojban, but is always
+    associated with high precedence and short scope. In particular,
+    if \q{bo} is placed after an ijek, the result is a
+    grammatically distinct kind of ijek which overrides the regular
+    left-grouping rule. Connections marked with \q{bo} are
+    interpreted before connections not so marked. \exref{14.8.1} is equivalent in meaning to \exref{14.7.8}:
+\begin{example}
+mi nelci la djan.\n
+\T	.ije mi nelci la martas.\n
+\T	.ijabo mi nelci la meris.\n
+I like John,\n
+\T	and I like Martha or I like Mary.
+\end{example}
+
+The English translation feebly indicates with a comma what
+    the Lojban marks far more clearly: the \q{I like Martha} and
+    \q{I like Mary} sentences are joined by \q{.ija} first, before
+    the result is joined to \q{I like John} by \q{.ije}.
+\begin{description}
+\item[] Eks can have \q{bo} attached in exactly the same way, so that \exref{14.8.2} is equivalent in meaning to Example 8.l:
+\item[
+\begin{example}
+] mi nelci la djan. .e la martas. .abo la meris.\n
+
+\end{description}
+
+\n
+Forethought connectives, however, never can be suffixed with\n
+\q{bo}, for every use of forethought connectives clearly\n
+indicates the intended pattern of grouping. 
+\n
+What happens if \q{bo} is used on both connectives, giving\n
+them the same high precedence, as in \exref{14.8.3}?
+\end{example}
+
+\begin{example}
+mi nelci la djan. .ebo la martas. .abo la meris.
+\end{example}
+
+Does this wind up meaning the same as \exref{14.7.4} and \exref{14.7.6}? Not at all. A
+    second rule relating to \q{bo} is that where several
+    \q{bo}-marked connectives are used in succession, the normal
+    Lojban left-grouping rule is replaced by a right-grouping rule.
+    As a result, \exref{14.8.3} in fact means the
+    same as \exref{14.8.1} and hyperref\optional{ex:14:8:2}{8.2}. This rule may be occasionally exploited
+    for special effects, but is tricky to keep straight; in writing
+    intended to be easy to understand, multiple consecutive
+    connectives marked with \q{bo} should be avoided. 
+
+The use of \q{bo}, therefore, gets tricky in complex
+    connections of more than three sentences. Looking back at the
+    English translations of \exref{14.7.7} and
+    hyperref[ex:14:7:8]{7.8}, parentheses were used to clarify the
+    grouping. These parentheses have their Lojban equivalents, two
+    sets of them actually. \q{tu'e} and \q{tu'u} are used with
+    ijeks, and \q{ke} and \q{ke'e} with eks and other connectives
+    to be discussed later. (\q{ke} and \q{ke'e} are also used in
+    other roles in the language, but always as grouping markers).
+    Consider the English sentence:
+\begin{example}
+I kiss you and you kiss me,\n
+\T	if I love you and you love me.
+\end{example}
+
+{\noindent}where the semantics tells us that the instances of \q{and} are
+    meant to have higher precedence than that of \q{if}. If we wish
+    to express \exref{14.8.4} in afterthought, we
+    can say:
+\begin{example}
+mi cinba do .ije\optional{bo} do cinba mi\n
+\T	.ijanai mi prami do .ijebo do prami mi\n
+I kiss you and you kiss me,\n
+\T	if I love you and you love me.
+\end{example}
+
+{\noindent}marking two of the ijeks with \q{bo} for high precedence. (The
+    first \q{bo} is not strictly necessary, because of the
+    left-grouping rule, and is shown here in brackets.) 
+
+But it may be clearer to use explicit parenthesis words and
+    say:
+\begin{example}
+tu'e mi cinba do .ije do cinba mi tu'u\n
+\T	.ijanai tu'e mi prami do .ije do prami mi \optional{tu'u}\n
+( I kiss you and you kiss me )\n
+\T	if ( I love you and you love me ).
+\end{example}
+
+{\noindent}where the \q{tu'e ... tu'u} pairs set off the structure. The
+    cmavo \q{tu'u} is an elidable terminator, and its second
+    occurrence in \exref{14.8.6} is bracketed,
+    because all terminators may be elided at the end of text. 
+
+In addition, parentheses are a general solution: multiple
+    parentheses may be nested inside one another, and additional
+    afterthought material may be added without upsetting the
+    existing structure. Neither of these two advantages apply to
+    \q{bo} grouping. In general, afterthought constructions trade
+    generality for simplicity.
+
+Because of the left-grouping rule, the first set of ``tu'e
+    ... tu'u'' parentheses may actually be left off altogether,
+    producing:
+\begin{example}
+mi cinba do .ije do cinba mi\n
+\T	.ijanai tu'e mi prami do .ije do prami mi \optional{tu'u}\n
+I kiss you and you kiss me\n
+\T	if ( I love you and you love me ).
+\end{example}
+
+What about parenthesized sumti connection? Consider
+\begin{example}
+I walk to either the market and the house,\n
+\T	or the school and the office.
+\end{example}
+
+Two pairs of parentheses, analogous to \exref{14.8.6}, would seem to be the right approach. However, it is a
+    rule of Lojban grammar that a sumti may not begin with \q{ke},
+    so the first set of parentheses must be omitted, producing \exref{14.8.10}, which is instead parallel to \exref{14.8.7}:
+\begin{example}
+mi dzukla le zarci .e le zdani\n
+\T	.a ke le ckule .e le briju \optional{ke'e}\n
+I walk-to the market and the house\n
+\T	or ( the school and the office ).
+\end{example}
+
+If sumti were allowed to begin with \q{ke}, unavoidable
+    ambiguities would result, so \q{ke} grouping of sumti is
+    allowed only just after a logical connective. This rule does
+    not apply to \q{tu'e} grouping of bridi, as \exref{14.8.6} shows. 
+
+Now we have enough facilities to handle the problem of \exref{14.7.3}: ``I am German, rich, and a man
+    --- or else none of these.'' The following paraphrase has the
+    correct meaning:
+\begin{example}
+\T	\optional{tu'e} mi dotco .ijo mi ricfu [tu'u]\n
+\T	.ije tu'e mi dotco .ijo mi nanmu [tu'u]\n
+( I am-German if-and-only-if I am-rich )\n
+\T	and (I am-German if-and-only-if I am-a-man ).
+\end{example}
+
+The truth table, when worked out, produces T if and only if
+    all three component sentences are true or all three are
+    false.
+
+
+
+\sect{Compound bridi}
+So far we have seen how to handle two sentences that need
+    have no similarity at all (bridi connection) and sentences that
+    are identical except for a difference in one sumti (sumti
+    connection). It would seem natural to ask how to logically
+    connect sentences that are identical except for having
+    different selbri.
+
+Surprise! Lojban provides no logical connective that is
+    designed to handle selbri and nothing else. Instead, selbri
+    connection is provided as part of a more general-purpose
+    mechanism called \q{compound bridi}. Compound bridi result from
+    logically connecting sentences that differ in their selbri and
+    possibly some of their sumti.
+
+The simplest cases result when the $x_1$ sumti is the only
+    common point:
+\begin{example}
+mi klama le zarci .ije mi nelci la djan.\n
+I go to the market, and I like John.
+\end{example}
+
+{\noindent}is equivalent in meaning to the compound bridi:
+\begin{example}
+mi klama le zarci gi'e nelci la djan.\n
+I go-to the market and like John.
+\end{example}
+
+As \exref{14.9.2} indicates, giheks are used
+    in afterthought to create compound bridi; \q{gi'e} is the gihek
+    corresponding to \q{and}. The actual phrases \q{klama le zarci}
+    and \q{nelci la djan.} that the gihek connects are known as
+    \q{bridi-tails}, because they represent (in this use) the
+    \q{tail end} of a bridi, including the selbri and any following
+    sumti, but excluding any sumti that precede the selbri:
+\begin{example}
+mi ricfu gi'e klama le zarci\n
+I am-rich and go-to the market.
+\end{example}
+
+In \exref{14.9.3}, the first bridi-tail is
+    \q{ricfu}, a simple selbri, and the second bridi-tail is
+    \q{klama le zarci}, a selbri with one following sumti.
+
+Suppose that more than a single sumti is identical between
+    the two sentences:
+\begin{example}
+mi dunda le cukta do\n
+\T	.ije mi lebna lo rupnu do\n
+I give the book to-you,\n
+\T	and I take some currency-units from-you.
+\end{example}
+
+In \exref{14.9.4}, the first and last sumti of
+    each bridi are identical; the selbri and the second sumti are
+    different. By moving the final sumti to the beginning, a form
+    analogous to \exref{14.9.2} can be achieved:
+\begin{example}
+fi do fa mi dunda le cukta\n
+\T	gi'e lebna lo rupnu\n
+to/from you I give the book\n
+\T	and take some currency-units.
+\end{example}
+
+{\noindent}where the \q{fi} does not have an exact English translation
+    because it merely places \q{do} in the third place of both
+    \q{lebna} and \q{dunda}. However, a form that preserves natural
+    sumti order also exists in Lojban. Giheks connect two
+    bridi-tails, but also allow sumti to be added following the
+    bridi-tail. These sumti are known as tail-terms, and apply to
+    both bridi. The straightforward gihek version of \exref{14.9.4} therefore is:
+\begin{example}
+mi dunda le cukta\n
+\T	gi'e lebna lo rupnu vau do\n
+I (give the book)\n
+\T	and (take some currency-units) to/from you.
+\end{example}
+
+The \q{vau} (of selma'o VAU) serves to separate the bridi-tail
+    from the tail-terms. Every bridi-tail is terminated by an
+    elidable \q{vau}, but only in connection with compound bridi is
+    it ever necessary to express this \q{vau}. Thus:
+\begin{example}
+mi klama le zarci \optional{vau}\n
+I go-to the market.
+\end{example}
+
+{\noindent}has a single elided \q{vau}, and \exref{14.9.2} is equivalent to:
+\begin{example}
+mi klama le zarci \optional{vau}\n
+\T	gi'e nelci la djan. [vau] [vau]
+\end{example}
+
+{\noindent}where the double \q{vau} at the end of \exref{14.9.8} terminates both the right-hand bridi-tail and the
+    unexpressed tail-terms. 
+
+A final use of giheks is to combine bridi-tails used as
+    complete sentences, the Lojban observative:
+\begin{example}
+klama le zarci gi'e dzukla le briju\n
+A goer to-the market and a walker to-the office.
+\end{example}
+
+Since $x_1$ is omitted in both of the bridi underlying \exref{14.9.9}, this compound bridi does not
+    necessarily imply that the goer and the walker are the same.
+    Only the presence of an explicit $x_1$ (other than \q{zo'e}, which
+    is equivalent to omission) can force the goer and the walker to
+    be identical. 
+
+A strong argument for this convention is provided by
+    analysis of the following example:
+\begin{example}
+\T	klama la nu,IORK. la finyks.\n
+\T	gi'e klama la nu,IORK. la rom.\n
+A goer to-New York from-Phoenix\n
+\T	and a goer to-New York from-Rome.
+\end{example}
+
+If the rule were that the $x_1$ places of the two underlying
+    bridi were identified, then (since there is nothing special
+    about $x_1$), the unspecified $x_4$ (route) and $x_5$ (means) places
+    would also have to be the same, leading to the absurd result
+    that the route from Phoenix to New York is the same as the
+    route from Rome to New York. Inserting \q{da}, meaning roughly
+    \q{something}, into the $x_1$ place cures the problem:
+\begin{example}
+da klama la nu,IORK. la finyks.\n
+\T	gi'e klama la nu,IORK. la rom.\n
+Something is-a-goer to-New York from-Phoenix\n
+\T	and is-a-goer to-New York from-Rome.
+\end{example}
+
+The syntax of giheks is: 
+\begin{description}
+\item[] [na] [se] GIhA [nai]
+\end{description}
+
+which is exactly parallel to the syntax of eks.
+
+
+
+\sect{Multiple compound bridi}
+Giheks can be combined with \q{bo} in the same way as
+    eks:
+\begin{example}
+mi nelci la djan.\n
+\T	gi'e nelci la martas. gi'abo nelci la meris.\n
+I like John\n
+\T	and (like Martha or like Mary).
+\end{example}
+
+{\noindent}is equivalent in meaning to \exref{14.8.1} and \exref{14.8.2}. Likewise, \q{ke ... ke'e} grouping can be used after
+    giheks:
+\begin{example}
+mi dzukla le zarci gi'e dzukla le zdani\n
+\T	gi'a ke dzukla le ckule gi'e dzukla le briju \optional{ke'e}\n
+I walk-to the market and walk-to the house,\n
+\T	or walk-to the school and walk-to the office.
+\end{example}
+
+{\noindent}is the gihek version of \exref{14.8.9}. The
+    same rule about using \q{ke ... ke'e} bracketing only just
+    after a connective applies to bridi-tails as to sumti, so the
+    first two bridi-tails in \exref{14.10.2}
+    cannot be explicitly grouped; implicit left-grouping suffices
+    to associate them. 
+
+Each of the pairs of bridi-tails joined by multiple giheks
+    can have its own set of tail-terms:
+\begin{example}
+mi dejni lo rupnu la djan.\n
+\T	.inaja mi dunda le cukta la djan.\n
+\T	.ijabo mi lebna le cukta la djan.\n
+\optional{If} I owe some currency-units to John,\n
+\T	then I give the book to John\n
+\T	or I take the book from John.
+\end{example}
+
+{\noindent}is equivalent in meaning to:
+\begin{example}
+mi dejni lo rupnu nagi'a dunda gi'abo lebna vau\n
+\T	le cukta vau la djan.\n
+\optional{If} I owe some currency-units then (give or take)\n
+\T	a book to/from John.
+\end{example}
+
+The literal English translation in \exref{14.10.4} is almost unintelligible, but the Lojban is perfectly
+    grammatical. \q{mi} fills the $x_1$ place of all three selbri;
+    \q{lo rupnu} is the $x_2$ of \q{dejni}, whereas \q{le cukta} is a
+    tail-term shared between \q{dunda} and \q{lebna}; \q{la djan.}
+    is a tail-term shared by \q{dejni} and by ``dunda gi'abo
+    lebna''. In this case, greater clarity is probably achieved by
+    moving \q{la djan.} to the beginning of the sentence, as in \exref{14.9.5}:
+\begin{example}
+fi la djan. fa mi dejni lo rupnu\n
+\T	nagi'a dunda gi'abo lebna vau le cukta\n
+To/from John, \optional{if} I owe some currency-units\n
+\T	then [I] give or take the book.
+\end{example}
+
+Finally, what about forethought logical connection of
+    bridi-tails? There is no direct mechanism for the purpose.
+    Instead, Lojban grammar allows a pair of forethought-connected
+    sentences to function as a single bridi-tail, and of course the
+    sentences need not have terms before their selbri. For example:
+
+\phantomsection\label{html:e10d5.5}
+10.5.5)    mi ge klama le zarci gi nelci la djan.
+    I both go to the market and like John.
+
+is equivalent in meaning to \exref{14.9.2}. 
+
+Of course, either of the connected sentences may contain
+    giheks:
+\begin{example}
+mi ge klama le zarci gi'e dzukla le zdani\n
+\T	gi nelci la djan.\n
+I both (go to the market and walk to the house)\n
+\T	and like John.
+\end{example}
+
+The entire gek-connected sentence pair may be negated as a
+    whole by prefixing \q{na}:
+\begin{example}
+mi na ge klama le zarci gi dzukla le zdani\n
+\optional{False!} I both go to the market and walk to the house.
+\end{example}
+
+Since a pair of sentences joined by geks is the equivalent of a
+    bridi-tail, it may be followed by tail terms. The forethought
+    equivalent of \exref{14.9.6} is:
+\begin{example}
+mi ge dunda le cukta\n
+\T	gi lebna lo rupnu vau do\n
+I both (give the book)\n
+\T	and (take some currency-units) to/from you.
+\end{example}
+
+Here is a pair of gek-connected observatives, a forethought
+    equivalent of \exref{14.9.9}:
+\begin{example}
+ge klama le zarci gi dzukla le briju\n
+Both a goer to-the market and a walker to-the office.
+\end{example}
+
+Finally, here is an example of gek-connected sentences with
+    both shared and unshared terms before their selbri:
+\begin{example}
+mi gonai le zarci cu klama\n
+\T	gi le bisli cu dansu\n
+I either-but-not-both to-the office go\n
+\T	or on-the ice dance.\n
+I either go to the office or dance on the ice\n
+\T	(but not both).
+\end{example}
+
+
+
+\sect{Termset logical connection}
+So far we have seen sentences that differ in all components,
+    and require bridi connection; sentences that differ in one
+    sumti only, and permit sumti connection; and sentences that
+    differ in the selbri and possibly one or more sumti, and permit
+    bridi-tail connection. Termset logical connectives are employed
+    for sentences that differ in more than one sumti but not in the
+    selbri, such as:
+\begin{example}
+I go to the market from the office\n
+\T	and to the house from the school.
+\end{example}
+
+The Lojban version of \exref{14.11.1}
+    requires two termsets joined by a logical connective. A
+    \q{term} is either a sumti or a sumti preceded by a tense or
+    modal tag such as \q{pu} or \q{bai}. Afterthought termsets are
+    formed by linking terms together by inserting the cmavo
+    \q{ce'e} (of selma'o CEhE) between each of them. Furthermore,
+    the logical connective (which is a jek) must be prefixed by the
+    cmavo \q{pe'e} (of selma'o PEhE). (We could refer to the
+    combination of \q{pe'e} and a jek as a \q{pehejek}, I suppose.)
+\begin{example}
+mi klama le zarci ce'e le briju pe'e je\n
+\T	le zdani ce'e le ckule\n
+I go to-the market \optional{plus} from-the office [joint] and\n
+\T	to-the house [plus] from-the school.
+\end{example}
+
+The literal translation uses \q{[plus]} to indicate the
+    termset connective, and \q{[joint]} to indicate the position of
+    the logical connective joint. As usual, there is an equivalent
+    bridi-connection form:
+\begin{example}
+mi klama le zarci le briju\n
+\T	.ije mi klama le zdani le ckule\n
+I go to-the market from-the office,\n
+\T	and I go to-the house from-the school.
+\end{example}
+
+{\noindent}which illustrates that the two bridi differ in the $x_2$ and $x_3$
+    places only. 
+
+What happens if the two joined sets of terms are of unequal
+    length? Expanding to bridi connection will always make clear
+    which term goes in which place of which bridi. It can happen
+    that a sumti may fall in the $x_2$ place of one bridi and the $x_3$
+    place of another:
+\begin{example}
+mi pe'e ja do ce'e le zarci\n
+\T	cu klama le briju\n
+I \optional{joint} or you to-the market [plus]\n
+\T	go to/from-the office.
+\end{example}
+
+{\noindent}can be clearly understood by expansion to:
+\begin{example}
+mi klama le briju\n
+\T	.ija do le zarci cu klama le briju\n
+I go to-the office,\n
+\T	or you to-the market go from-the office.
+\end{example}
+
+So \q{le briju} is your origin but my destination, and thus
+    falls in the $x_2$ and $x_3$ places of \q{klama} simultaneously! This
+    is legal because even though there is only one selbri,
+    \q{klama}, there are two distinct bridi expressed here. In
+    addition, \q{mi} in \exref{14.11.4} is
+    serving as a termset containing only one term. An analogous
+    paradox applies to compound bridi with tail-terms and unequal
+    numbers of sumti within the connected bridi-tails:
+\begin{example}
+\T	mi klama le zarci gi'e dzukla vau le briju\n
+I (go to-the market and walk) to/from-the office.
+\end{example}
+
+{\noindent}means that I go to the market from the office, and I walk to
+    the office; \q{le briju} is the $x_3$ place of \q{klama} and the
+    $x_2$ place of \q{dzukla}. 
+
+Forethought termsets also exist, and use \q{nu'i} of selma'o
+    NUhI to signal the beginning and \q{nu'u} of selma'o NUhU (an
+    elidable terminator) to signal the end. Nothing is inserted
+    between the individual terms: they simply sit side-by-side. To
+    make a logical connection in a forethought termset, use a gek,
+    with the gek just after the \q{nu'i}, and an extra \q{nu'u}
+    just before the gik:
+\begin{example}
+mi klama nu'i ge le zarci le briju\n
+\T	nu'u gi le zdani le ckule \optional{nu'u}\n
+I go [start termset] both to-the market from-the office\n
+\T	[joint] and to-the house from-the school\n
+\T	[end termset].
+\end{example}
+
+Note that even though two termsets are being connected, only
+    one \q{nu'i} is used.
+
+The grammatical uses of termsets that do not contain logical
+    connectives are explained in \chapref{12} and \chapref{16}.
+
+
+
+\sect{Logical connection within tanru}
+As noted at the beginning of \sectref{14.9},
+    there is no logical connective in Lojban that joins selbri and
+    nothing but selbri. However, it is possible to have logical
+    connectives within a selbri, forming a kind of tanru that
+    involves a logical connection. Consider the simple tanru
+    \q{blanu zdani}, blue house. Now anything that is a blue ball,
+    in the most ordinary understanding of the phrase at least, is
+    both blue and a ball. And indeed, instead of \q{blanu bolci},
+    Lojbanists can say \q{blanu je bolci}, using a jek connective
+    within the tanru. (We saw jeks used in \hyperref[sec:14:11]{Section
+    11} also, but there they were always prefixed by \q{pe'e};
+    in this section they are used alone.) Here is a pair of
+    examples:
+\begin{example}
+ti blanu zdani\n
+This is-a-blue type-of house.
+\end{example}
+
+\begin{example}
+ti blanu je zdani\n
+This is-blue and a-house.
+\end{example}
+
+But of course \exref{14.12.1} and \exref{14.12.2} are not necessarily equivalent
+    in meaning! It is the most elementary point about Lojban tanru
+    that \exref{14.12.1} might just as well mean
+\begin{example}
+This is a house for blue inhabitants.
+\end{example}
+
+{\noindent}and \exref{14.12.2} certainly is not
+    equivalent in meaning to \exref{14.12.3}. 
+
+A full explanation of logical connection within tanru
+    belongs rather to a discussion of selbri structure than to
+    logical connectives in general. Why? Because although \exref{14.12.2} happens to mean the same as
+\begin{example}
+ti blanu gi'e zdani
+\end{example}
+
+{\noindent}and therefore as
+\begin{example}
+ti blanu .ije ti zdani
+\end{example}
+
+{\noindent}the rule of expansion into separate bridi simply does not
+    always work for tanru connection. Supposing Alice to be a
+    person who lives in blue houses, then
+\begin{example}
+la .alis. cu blanu je zdani prenu\n
+Alice is-a (blue and house) type-of-person.
+\end{example}
+
+{\noindent}would be true, because tanru grouping with a jek has higher
+    precedence than unmarked tanru grouping, but:
+\begin{example}
+la .alis. cu blanu prenu\n
+\T	.ije la .alis. cu zdani prenu\n
+Alice is-a blue person,\n
+\T	and Alice is-a house person.
+\end{example}
+
+{\noindent}is probably false, because the blueness is associated with the
+    house, not with Alice, even leaving aside the question of what
+    it means to say \q{Alice is a blue person}. (Perhaps she
+    belongs to the Blue team, or is wearing blue clothes.) The
+    semantic ambiguity of tanru make such logical manipulations
+    impossible. 
+
+It suffices to note here, then, a few purely grammatical
+    points about tanru logical connection. \q{bo} may be appended
+    to jeks as to eks, with the same rules:
+\begin{example}
+la teris. cu ricfu je nakni jabo fetsi\n
+Terry is rich and (male or female).
+\end{example}
+
+The components of tanru may be grouped with \q{ke} both before
+    and after a logical connective:
+\begin{example}
+la .teris. cu \optional{ke} ricfu ja pindi [ke'e]\n
+\T	je ke nakni ja fetsi [ke'e]\n
+Terry is (rich or poor)\n
+\T	and (male or female).
+\end{example}
+
+{\noindent}where the first \q{ke ... ke'e} pair may be omitted altogether
+    by the rule of left-grouping, but is optionally permitted (as
+    in bridi connection). In any case, both instances of \q{ke'e}
+    may be elided. 
+
+The syntax of jeks is:
+\begin{description}
+\item[] [na] [se] JA [nai]
+\end{description}
+
+parallel to eks and giheks. 
+
+Forethought tanru connection does not use geks, but uses
+    guheks instead. Guheks have exactly the same form as geks:
+\begin{description}
+\item[] [se] GUhA [nai]
+\end{description}
+
+Using guheks in tanru connection (rather than geks) resolves
+    what would otherwise be an unacceptable ambiguity between
+    bridi-tail and tanru connection:
+\begin{example}
+la .alis. gu'e ricfu gi fetsi\n
+Alice is both rich and female.
+\end{example}
+
+Note that giks are used with guheks in exactly the same way
+    they are used with geks. Like jeks, guheks bind more closely
+    than unmarked tanru grouping does:
+\begin{example}
+la .alis. gu'e blanu gi zdani prenu\n
+Alice is-a-(both blue and a-house) type-of-person.
+\end{example}
+
+{\noindent}is the forethought version of \exref{14.12.6}. 
+
+A word of caution about the use of logically connected tanru
+    within descriptions. English-based intuition can lead the
+    speaker astray. In correctly reducing
+\begin{example}
+mi viska pa nanmu .ije mi viska pa ninmu\n
+I see a man, and I see a woman.
+\end{example}
+
+{\noindent}to
+\begin{example}
+mi viska pa nanmu .e pa ninmu\n
+I see a man and a woman.
+\end{example}
+
+{\noindent}there is a great temptation to reduce further to:
+\begin{example}
+mi viska pa nanmu je ninmu\n
+I see a man and woman.
+\end{example}
+
+But \exref{14.12.14} means that you see
+    one thing which is both a man and a woman simultaneously! A
+    \q{nanmu je ninmu} is a manwoman, a presumably non-existent
+    creature who is both a \q{nanmu} and a \q{ninmu}.
+
+
+
+\sect{Truth questions and connective questions}
+So far we have addressed only sentences which are
+    statements. Lojban, like all human languages, needs also to
+    deal with sentences which are questions. There are many ways of
+    asking questions in Lojban, but some of these (like questions
+    about quantity, tense, and emotion) are discussed in other
+    chapters.
+
+The simplest kind of question is of the type ``Is it true
+    that ... '' where some statement follows. This type is called a
+    \q{truth question}, and can be represented in English by \exref{14.13.1}:
+\begin{example}
+Is it true that Fido is a dog?\n
+Is Fido a dog?
+\end{example}
+
+Note the two formulations. English truth questions can always
+    be formed by prefixing \q{Is is true that} to the beginning of
+    a statement; there is also usually a more idiomatic way
+    involving putting the verb before its subject. ``Is Alice a
+    dog?'' is the truth question corresponding to ``Fido is a
+    dog''. In Lojban, the equivalent mechanism is to prefix the
+    cmavo \q{xu} (of selma'o UI) to the statement:
+\begin{example}
+xu la faidon. gerku\n
+is-it-true-that Fido is-a-dog?
+\end{example}
+
+\exref{14.13.1} and \exref{14.13.2} are equivalent in meaning. 
+
+A truth question can be answered \q{yes} or \q{no},
+    depending on the truth or falsity, respectively, of the
+    underlying statement. The standard way of saying \q{yes} in
+    Lojban is \q{go'i} and of saying \q{no} is \q{nago'i}. (The
+    reasons for this rule are explained in \chapref{7}.) In answer to \exref{14.13.2}, the possible answers are:
+\begin{example}
+go'i\n
+Fido is a dog.
+\end{example}
+
+{\noindent}and
+\begin{example}
+nago'i\n
+Fido is not a dog.
+\end{example}
+
+Some English questions seemingly have the same form as the
+    truth questions so far discussed. Consider
+\begin{example}
+Is Fido a dog or a cat?
+\end{example}
+
+Superficially, \exref{14.13.5} seems like
+    a truth question with the underlying statement:
+\begin{example}
+Fido is a dog or a cat.
+\end{example}
+
+By translating \exref{14.13.6} into Lojban
+    and prefixing \q{xu} to signal a truth question, we get:
+\begin{example}
+xu la faidon. gerku gi'onai mlatu\n
+is-it-true-that Fido is-a-dog or is-a-cat\n
+\T	(but not both)?
+\end{example}
+
+Given that Fido really is either a dog or a cat, the
+    appropriate answer would be \q{go'i}; if Fido were a fish, the
+    appropriate answer would be \q{nago'i}.
+
+But that is not what an English-speaker who utters \exref{14.13.5} is asking! The true significance
+    of \exref{14.13.5} is that the speaker
+    desires to know the truth value of either of the two underlying
+    bridi (it is presupposed that only one is true).
+
+Lojban has an elegant mechanism for rendering this kind of
+    question which is very unlike that used in English. Instead of
+    asking about the truth value of the connected bridi, Lojban
+    users ask about the truth function which connects them. This is
+    done by using a special question cmavo: there is one of these
+    for each of the logical connective selma'o, as shown by the
+    following table:
+
+   ge'i    GA  forethought connective question
+    gi'i    GIhA    bridi-tail connective question
+    gu'i    GUhA    tanru forethought connective question
+    je'i    JA  tanru connective question
+    ji  A   sumti connective question
+
+(This list unfortunately departs from the pretty regularity of
+    the other cmavo for logical connection. The two-syllable
+    selma'o, GIhA and GUhA, make use of the cmavo ending in \q{-i}
+    which is not used for a truth function, but \q{gi} and \q{.i}
+    were not available, and different cmavo had to be chosen. This
+    table must simply be memorized, like most other non-connective
+    cmavo assignments.) 
+
+One correct translation of \exref{14.13.5}
+    employs a question gihek:
+\begin{example}
+la .alis gerku gi'i mlatu\n
+Alice is-a-dog \optional{truth function?} is-a-cat?
+\end{example}
+
+Here are some plausible answers:
+\begin{example}
+nagi'e\n
+Alice is not a dog and is a cat.
+\end{example}
+
+\begin{example}
+gi'enai\n
+Alice is a dog and is not a cat.
+\end{example}
+
+\begin{example}
+nagi'enai\n
+Alice is not a dog and is not a cat.
+\end{example}
+
+\begin{example}
+nagi'o\n
+gi'onai\n
+Alice is a dog or is a cat but not both\n
+\T	(I'm not saying which).
+\end{example}
+
+\exref{14.13.12} is correct but
+    uncooperative. 
+
+As usual, Lojban questions are answered by filling in the
+    blank left by the question. Here the blank is a logical
+    connective, and therefore it is grammatical in Lojban to utter
+    a bare logical connective without anything for it to
+    connect.
+
+The answer \q{gi'e}, meaning that Alice is a dog and is a
+    cat, is impossible in the real world, but for:
+\begin{example}
+do djica tu'a loi ckafi\n
+\T	ji loi tcati\n
+you desire something-about a-mass-of coffee\n
+\T	\optional{truth function?} a-mass-of tea?\n
+Do you want coffee or tea?
+\end{example}
+
+{\noindent}the answer \q{.e}, meaning that I want both, is perfectly
+    plausible, if not necessarily polite. 
+
+The forethought questions \q{ge'i} and \q{gu'i} are used
+    like the others, but ambiguity forbids the use of isolated
+    forethought connectives as answers --- they sound like the
+    start of forethought-connected bridi. So although \exref{14.13.14} is the forethought version of
+    \exref{14.13.13}:
+\begin{example}
+do djica tu'a\n
+\T	ge'i loi ckafi\n
+\T	gi loi tcati\n
+you desire something-about\n
+\T	\optional{truth function?} a-mass-of coffee\n
+\T	[or] a-mass-of tea?
+\end{example}
+
+{\noindent}the answer must be in afterthought form. 
+
+There are natural languages, notably Chinese, which employ
+    the Lojbanic form of connective question. The Chinese
+    sentence
+\begin{example}
+ni<sup>3</sup> zou<sup>3</sup> hai<sup>2</sup>shi pao<sup>3</sup>\n
+you walk \optional{or?} run?
+\end{example}
+
+{\noindent}means \q{Do you walk or run?}, and is exactly parallel to the
+    Lojban:
+\begin{example}
+do cadzu gi'i bajra\n
+you walk \optional{or?} run?
+\end{example}
+
+However, Chinese does not use logical connectives in the reply
+    to such a question, so the resemblance, though striking, is
+    superficial. 
+
+Truth questions may be used in bridi connection. This form
+    of sentence is perfectly legitimate, and can be interpreted by
+    using the convention that a truth question is true if the
+    answer is \q{yes} and false if the answer is \q{no}.
+    Analogously, an imperative sentence (involving the special
+    pro-sumti \q{ko}, which means \q{you} but marks the sentence as
+    a command) is true if the command is obeyed, and false
+    otherwise. A request of Abraham Lincoln's may be translated
+    thus:
+\begin{example}
+ganai ti ckafi\n
+\T	gi ko bevri loi tcati mi\n
+.ije ganai ti tcati\n
+\T	gi ko bevri loi ckafi mi\n
+If this is-coffee\n
+\T	then \optional{you!} bring a-mass-of tea to-me,\n
+and if this is-tea\n
+\T	then [you!] bring a-mass-of coffee to-me.\n
+If this is coffee, bring me tea;\n
+\T	but if this is tea, bring me coffee.
+\end{example}
+
+In logical terms, however, \q{but} is the same as \q{and}; the
+    difference is that the sentence after a \q{but} is felt to be
+    in tension or opposition to the sentence before it. Lojban
+    represents this distinction by adding the discursive cmavo
+    \q{ku'i} (of selma'o UI), which is explained in \chapref{13}, to the logical \q{.ije}.)
+
+
+
+\sect{Non-logical connectives}
+Way back in \sectref{14.1}, the point was made
+    that not every use of English \q{and}, \q{if ... then}, and so
+    on represents a Lojban logical connective. In particular,
+    consider the \q{and} of:
+\begin{example}
+John and Alice carried the piano.
+\end{example}
+
+Given the nature of pianos, this probably means that John
+    carried one end and Alice the other. So it is not true that:
+\begin{example}
+John carried the piano,\n
+\T	and Alice carried the piano.
+\end{example}
+
+{\noindent}which would mean that each of them carried the piano by
+    himself/herself. Lojban deals with this particular linguistic
+    phenomenon as a \q{mass}. John and Alice are joined together
+    into a mass, John-and-Alice, and it is this mass which carried
+    the piano, not either of them separately. The cmavo \q{joi} (of
+    selma'o JOI) is used to join two or more components into a
+    mass:
+\begin{example}
+la djan. joi la .alis. cu bevri le pipno\n
+John massed-with Alice carry the piano.
+\end{example}
+
+\exref{14.14.3} covers the case mentioned,
+    where John and Alice divide the labor; it also could mean that
+    John did all the hauling and Alice did the supervising. This
+    possibility arises because the properties of a mass are the
+    properties of its components, which can lead to apparent
+    contradictions: if John is small and Alice is large, then
+    John-and-Alice is both small and large. Masses are also
+    discussed in \chapref{6}. 
+
+Grammatically, \q{joi} can appear between two sumti (like an
+    ek) or between two tanru components (like a jek). This
+    flexibility must be paid for in the form of occasional
+    terminators that cannot be elided:
+\begin{example}
+le nanmu ku joi le ninmu \optional{ku} cu klama le zarci\n
+The man massed-with the woman go-to the market.
+\end{example}
+
+The cmavo \q{ku} is the elidable terminator for \q{le},
+    which can almost always be elided, but not in this case. If the
+    first \q{ku} were elided here, Lojban's parsing rules would see
+    \q{le nanmu joi} and assume that another tanru component is to
+    follow; since the second \q{le} cannot be part of a tanru, a
+    parsing error results. No such problem can occur with logical
+    connectives, because an ek signals a following sumti and a jek
+    a following tanru component unambiguously.
+
+Single or compound cmavo involving members of selma'o JOI
+    are called joiks, by analogy with the names for logical
+    connectives. It is not grammatical to use joiks to connect
+    bridi-tails.
+
+In tanru, \q{joi} has the connotation \q{mixed with}, as in
+    the following example:
+\begin{example}
+ti blanu joi xunre bolci\n
+This is-a-(blue mixed-with red) ball.\n
+This is a blue and red ball.
+\end{example}
+
+Here the ball is neither wholly blue nor wholly red, but
+    partly blue and partly red. Its blue/redness is a mass
+    property. (Just how blue something has to be to count as
+    \q{wholly blue} is an unsettled question, though. A ``blanu
+    zdani'' may be so even though not every part of it is
+    blue.)
+
+There are several other cmavo in selma'o JOI which can be
+    used in the same grammatical constructions. Not all of them are
+    well-defined as yet in all contexts. All have clear definitions
+    as sumti connectives; those definitions are shown in the
+    following table:
+
+   A joi B     the mass with components A and B
+    A ce B      the set with elements A and B
+    A ce'o B    the sequence with elements A and B in order
+    A sece'o B  the sequence with elements B and A in order
+    A jo'u B    A and B considered jointly
+    A fa'u B    A and B respectively
+    A sefa'u B  B and A respectively
+    A jo'e B    the union of sets A and B
+    A ku'a B    the intersection of sets A and B
+    A pi'u B    the cross product of sets A and B
+    A sepi'u B  the cross product of sets B and A
+
+The cmavo \q{se} is grammatical before any JOI cmavo, but only
+    useful with those that have inherent order. Here are some
+    examples of joiks:
+\begin{example}
+mi cuxna la .alis. la frank.\n
+\T	ce la .alis. ce la djeimyz.\n
+I choose Alice from Frank\n
+\T	and-member Alice and-member James.\n
+I choose Alice from among Frank, Alice, and James.
+\end{example}
+
+The $x_3$ place of \q{cuxna} is a set from which the choice is
+    being made. A set is an abstract object which is determined by
+    specifying its members. Unlike those of a mass, the properties
+    of a set are unrelated to its members' properties: the set of
+    all rats is large (since many rats exist), but the rats
+    themselves are small. This chapter does not attempt to explain
+    set theory (the mathematical study of sets) in detail:
+    explaining propositional logic is quite enough for one chapter!
+
+In \exref{14.14.6} we specify that set by
+    listing the members with \q{ce} joining them.
+\begin{example}
+ti liste mi ce'o do ce'o la djan.\n
+This is-a-list-of me and-sequence you and-sequence John.\n
+This is a list of you, me, and John.
+\end{example}
+
+The $x_2$ place of \q{liste} is a sequence of the things which are
+    mentioned in the list. (It is worth pointing out that ``lo
+    liste'' means a physical object such as a grocery list: a
+    purely abstract list is \q{lo porsi}, a sequence.) Here the
+    three sumti connected by \q{ce'o} are in a definite order, not
+    just lumped together in a set or a mass. 
+
+So \q{joi}, \q{ce}, and \q{ce'o} are parallel, in that the
+    sumti connected are taken to be individuals, and the result is
+    something else: a mass, a set, or a sequence respectively. The
+    cmavo \q{jo'u} serves as a fourth element in this pattern: the
+    sumti connected are individuals, and the result is still
+    individuals --- but inseparably so. The normal Lojban way of
+    saying that James and George are brothers is:
+\begin{example}
+la djeimyz. bruna la djordj.\n
+James is-the-brother-of George.
+\end{example}
+
+{\noindent}possibly adding a discursive element meaning ``and vice
+    versa''. However, \q{James and George are brothers} cannot be
+    correctly translated as:
+\begin{example}
+la djeimyz. .e la djordj. bruna\n
+James and George is-a-brother.
+\end{example}
+
+{\noindent}since that expands to two bridi and means that James is a
+    brother and so is George, but not necessarily of each other. If
+    the \q{.e} is changed to \q{jo'u}, however, the meaning of \exref{14.14.8} is preserved:
+\begin{example}
+la djeimyz. jo'u la djordj.\n
+\T	cu remei bruna\n
+James in-common-with George\n
+\T	are-a-twosome type-of-brothers.
+\end{example}
+
+The tanru \q{remei bruna} is not strictly necessary in this
+    sentence, but is used to make clear that we are not saying that
+    James and George are both brothers of some third person not
+    specified. Alternatively, we could turn the tanru around: the
+    $x_1$ place of \q{remei} is a mass with two components, leading
+    to:
+\begin{example}
+la djeimyz. joi la djordj.\n
+\T	cu bruna remei\n
+James massed-with George\n
+\T	are-a-brother type-of-twosome.
+\end{example}
+
+{\noindent}where \q{joi} is used to create the necessary mass. 
+
+Likewise, \q{fa'u} can be used to put two individuals
+    together where order matters. Typically, there will be another
+    \q{fa'u} somewhere else in the same bridi:
+\begin{example}
+la djeimyz. fa'u la djordj.\n
+\T	prami la meris. fa'u la martas.\n
+James jointly-in-order-with George\n
+\T	loves Mary jointly-in-order-with Martha.\n
+James and George love Mary and Martha, respectively.
+\end{example}
+
+Here the information carried by the English adverb
+    \q{respectively}, namely that James loves Mary and George loves
+    Martha, is divided between the two occurrences of \q{fa'u}. If
+    both uses of \q{fa'u} were to be changed to \q{.e}, we would
+    get:
+\begin{example}
+la djeimyz. .e la djordj.\n
+\T	prami la meris. .e la martas.\n
+James and George love Mary and Martha.
+\end{example}
+
+{\noindent}which can be transformed to four bridi:
+\begin{example}
+la djeimyz. prami la meris.\n
+\T	.ije la djordj. prami la meris.\n
+\T	.ije la djeimyz. prami la martas.\n
+\T	.ije la djordj. prami la martas.\n
+James loves Mary, and George loves Mary,\n
+\T	and James loves Martha, and George loves Martha
+\end{example}
+
+{\noindent}which represents quite a different state of affairs from \exref{14.14.12}. The meaning of \exref{14.14.12} can also be conveyed by a
+    termset:
+\begin{example}
+la djeimyz. ce'e la meris.\n
+\T	pe'e .e la djordj. ce'e la martas. prami\n
+James \optional{plus} Mary\n
+\T	[joint] and George [plus] Martha loves.
+\end{example}
+
+{\noindent}at the expense of re-ordering the list of names so as to make
+    the pairs explicit. This option is not available when one of
+    the lists is only described rather than enumerated:
+\begin{example}
+la djeimyz. fa'u la djordj. prami re sorme\n
+James and-respectively George love two sisters.
+\end{example}
+
+{\noindent}which conveys that James loves one sister and George the other,
+    though we are not able to tell which of the sisters is which.
+
+
+
+\sect{More about non-logical connectives}
+The final three JOI cmavo, \q{jo'e}, \q{ku'a}, and \q{pi'u},
+    are probably only useful when talking explicitly about sets.
+    They represent three standard set operators usually called
+    \q{union}, \q{intersection}, and \q{cross product} (also known
+    as \q{Cartesian product}). The union of two sets is a set
+    containing all the members that are in either set; the
+    intersection of two sets is a set containing all the members
+    that are in both sets. The cross product of two sets is the set
+    of all possible ordered pairs, where each ordered pair contains
+    a single element from the first set followed by a single
+    element from the second. This may seem very abstract;
+    hopefully, the following examples will help:
+\begin{example}
+lo'i ricfu ku jo'e lo'i dotco\n
+\T	cu barda\n
+The-set-of rich-things union the-set-of German-things\n
+\T	is large.
+\end{example}
+
+\begin{example}
+lo'i ricfu ku ku'a\n
+\T	lo'i dotco cu cmalu\n
+The set-of rich-things intersection\n
+\T	the-set-of German-things is small.
+\end{example}
+
+There is a parallelism between logic and set theory that makes\exref{14.15.1} and \exref{14.15.2} equivalent respectively to:
+\begin{example}
+lo'i ricfu ja dotco cu barda\n
+The-set-of rich-or-German-things is large.
+\end{example}
+
+{\noindent}and
+\begin{example}
+lo'i ricfu je dotco cu cmalu\n
+The-set-of rich-and-German-things is small.
+\end{example}
+
+The following example uses \q{se remei}, which is a set (not
+    a mass) of two elements:
+\begin{example}
+la djeimyz. ce\optional{bo} la djordj.\n
+\T	pi'u la meris. cebo la martas.\n
+\T	cu prami se remei\n
+James and-set George\n
+\T	cross-product Mary and-set Martha\n
+\T	are-lover type-of-pairs.
+\end{example}
+
+{\noindent}means that each of the pairs James/Mary, George/Mary,
+    James/Martha, and George/Martha love each other. Therefore it
+    is similar in meaning to \exref{14.14.13};
+    however, that example speaks only of the men loving the women,
+    not vice versa. 
+
+Joiks may be combined with \q{bo} or with \q{ke} in the same
+    way as eks and jeks; this allows grouping of non-logical
+    connections between sumti and tanru units, in complete
+    parallelism with logical connections:
+\begin{example}
+mi joibo do ce la djan. joibo la djein.\n
+\T	cu gunma se remei\n
+(I massed-with you) and (John massed-with Jane)\n
+\T	are-a-mass type-of-two-set
+\end{example}
+
+{\noindent}asserts that there is a set of two items each of which is a
+    mass. 
+
+Non-logical connection is permitted at the joint of a
+    termset; this is useful for associating more than one sumti or
+    tagged sumti with each side of the non-logical connection. The
+    place structure of \q{casnu} is:
+\begin{description}
+\item[] the mass $x_1$ discusses/talks about $x_2$
+\end{description}
+
+so the $x_1$ place must be occupied by a mass (for reasons not
+    explained here); however, different components of the mass may
+    discuss in different languages. To associate each participant
+    with his or her language, we can say:
+\begin{example}
+\T	mi ce'e bau la lojban.\n
+\T	pe'e joi do ce'e bau la gliban. nu'u casnu\n
+( I \optional{plus} in-language Lojban\n
+\T	massed-with you [plus] in-language English ) discuss.
+\end{example}
+
+Like all non-logical connectives, the usage shown in \exref{14.15.7} cannot be mechanically converted
+    into a non-logical connective placed at another location in the
+    bridi. The forethought equivalent of \exref{14.15.7} is:
+\begin{example}
+\T	nu'i joigi mi bau la lojban\n
+\T	gi do bau la gliban. nu'u casnu
+\end{example}
+
+Non-logical forethought termsets are also useful when the
+    things to be non-logically connected are sumti preceded with
+    tense or modal (BAI) tags:
+\begin{example}
+la djan. fa'u la frank. cusku\n
+\T	nu'i bau la lojban.\n
+\T	nu'u fa'u\n
+\T	bai la djordj. \optional{nu'u}\n
+John respectively-with Frank express\n
+\T	[start termset] in-language Lojban\n
+\T	[joint] respectively-with\n
+\T	under-compulsion-by George.\n
+John and Frank speak in Lojban and under George's\n
+\T	compulsion, respectively.
+\end{example}
+
+\exref{14.14.17} associates speaking in
+    Lojban with John, and speaking under George's compulsion with
+    Frank. We do not know what language Frank uses, or whether John
+    speaks under anyone's compulsion. 
+
+Joiks may be prefixed with \q{.i} to produce ijoiks, which
+    serve to non-logically connect sentences. The main known use
+    here is \q{.ice'o}, which indicates that the event of the
+    second bridi follows that of the first bridi in some way other
+    than a time relationship (which is handled with a tense):
+\begin{example}
+mi ba gasnu la'edi'e\n
+\T	.i tu'e kanji lo ni cteki\n
+\T	.ice'o lumci le karce\n
+\T	.ice'o dzukansa le gerku tu'u\n
+I \optional{future} do the-referent-of-the-following:\n
+\T	( Compute the quantity of taxes.\n
+\T	And-then wash the car.\n
+\T	And-then walkingly-accompany the dog. )\n
+List of things to do:\n
+\T	Figure taxes.\n
+\T	Wash car.\n
+\T	Walk dog.
+\end{example}
+
+\exref{14.15.10} represents a list of things
+    to be done in priority order. The order is important, hence the
+    need for a sequence connective, but does not necessarily
+    represent a time order (the dog may end up getting walked
+    first). Note the use of \q{tu'e} and \q{tu'u} as general
+    brackets around the whole list. This is related to, but
+    distinct from, their use in \sectref{14.8},
+    because there is no logical connective between the introductory
+    phrase \q{mi ba gasnu la'edi'e} and the rest. The brackets
+    effectively show how large an utterance the word \q{di'e},
+    which means \q{the following utterance}, refers to. 
+
+The following \q{nai}, if present, does not negate either of
+    the things to be connected, but instead specifies that some
+    other connection (logical or non-logical) is applicable: it is
+    a scalar negation:
+\begin{example}
+mi jo'unai do cu remei\n
+I in-common-with \optional{not!} you are-a-twosome
+\end{example}
+
+The result of \q{mi jo'u do} would be two individuals, not a
+    mass, therefore \q{jo'u} is not applicable; \q{joi} would be
+    the correct connective.
+
+There is no joik question cmavo as such; however, joiks and
+    ijoiks may be uttered in isolation in response to a logical
+    connective question, as in the following exchange:
+\begin{example}
+do djica tu'a\n
+\T	loi ckafi\n
+\T	ji loi tcati\n
+You desire something-about\n
+\T	a-mass-of coffee \optional{what connective?}\n
+\T	a-mass-of tea?\n
+Do you want coffee or tea?
+\end{example}
+
+\begin{example}
+joi\n
+Mixed-mass-and.\n
+Both as a mass (i.e, mixed together).
+\end{example}
+
+Ugh. (Or in Lojban: .a'unaisairo'o.) 
+
+<h3>
+16. Interval connectives and forethought non-logical
+    connection</h3>
+
+In addition to the non-logical connectives of selma'o JOI
+    explained in \hyperref[sec:14:14]{Sections 14} and \hyperref[sec:14:15]{15}, there are three other connectives which can
+    appear in joiks: \q{bi'i}, \q{bi'o}, and \q{mi'i}, all of
+    selma'o BIhI. The first two cmavo are used to specify
+    intervals: abstract objects defined by two endpoints. The cmavo
+    \q{bi'i} is correct if the endpoints are independent of order,
+    whereas \q{bi'o} or \q{sebi'o} are used when order matters.
+
+An example of \q{bi'i} in sumti connection:
+\begin{example}
+mi ca sanli\n
+\T	la drezdn. bi'i la frankfurt.\n
+I \optional{present} stand-on-surface\n
+\T	Dresden [interval] Frankfurt.\n
+I am standing between Dresden and Frankfurt.
+\end{example}
+
+In \exref{14.16.1}, it is all the same
+    whether I am standing between Dresden and Frankfurt or between
+    Frankfurt and Dresden, so \q{bi'i} is the appropriate interval
+    connective. The sumti \q{la drezdn. bi'i la frankfurt.} falls
+    into the $x_2$ place of \q{sanli}, which is the surface I stand
+    on; the interval specifies that surface by its limits.
+    (Obviously, I am not standing on the whole of the interval; the
+    $x_2$ place of \q{sanli} specifies a surface which is typically
+    larger in extent than just the size of the stander's feet.)
+\begin{example}
+mi cadzu ca\n
+\T	la pacac. bi'o la recac.\n
+I walk simultaneous-with\n
+\T	First-hour \optional{ordered-interval} Second-hour.\n
+I walk from one o'clock to two o'clock.
+\end{example}
+
+In \exref{14.16.2}, on the other hand, it is
+    essential that \q{la pacac.} comes before \q{la recac.};
+    otherwise we have an 11-hour (or 23-hour) interval rather than
+    a one-hour interval. In this use of an interval, the whole
+    interval is probably intended, or at least most of it. 
+\exref{14.16.2} is equivalent to:
+\begin{example}
+mi cadzu ca\n
+\T	la recac. sebi'o la pacac.\n
+I walk simultaneous-with\n
+\T	Second-hour \optional{reverse} [ordered] First-hour.
+\end{example}
+
+English cannot readily express \q{sebi'o}, but its meaning
+    can be understood by reversing the two sumti.
+
+The third cmavo of selma'o BIhI, namely \q{mi'i}, expresses
+    an interval seen from a different viewpoint: not a pair of
+    endpoints, but a center point and a distance. For example:
+\begin{example}
+le jbama pu daspo la .uacintyn.\n
+\T	mi'i lo minli be li muno\n
+the bomb \optional{past} destroys Washington\n
+\T	[center] what-is measured-in-miles by 50.\n
+The bomb destroyed Washington and fifty miles around.
+\end{example}
+
+Here we have an interval whose center is Washington and
+    whose distance, or radius, is fifty miles.
+
+In \exref{14.16.1}, is it possible that I
+    am standing in Dresden (or Frankfurt) itself? Yes. The
+    connectives of selma'o BIhI are ambiguous about whether the
+    endpoints themselves are included in or excluded from the
+    interval. Two auxiliary cmavo \q{ga'o} and \q{ke'i} (of cmavo
+    GAhO) are used to indicate the status of the endpoints:
+    \q{ga'o} means that the endpoint is included, \q{ke'i} that it
+    is excluded:
+\begin{example}
+mi ca sanli la drezdn.\n
+\T	ga'o bi'i ga'o la frankfurt.\n
+I \optional{present} stand Dresden\n
+\T	[inclusive] [interval] [inclusive] Frankfurt.\n
+I am standing between Dresden and Frankfurt,\n
+\T	inclusive of both.
+\end{example}
+
+\begin{example}
+mi ca sanli la drezdn.\n
+\T	ga'o bi'i ke'i la frankfurt.\n
+I \optional{present} stand Dresden\n
+\T	[inclusive] [interval] [exclusive] Frankfurt.\n
+I am standing between Dresden (inclusive)\n
+\T	and Frankfurt (exclusive).
+\end{example}
+
+\begin{example}
+mi ca sanli la drezdn.\n
+\T	ke'i bi'i ga'o la frankfurt.\n
+I \optional{present} stand Dresden\n
+\T	[exclusive] [interval] [inclusive] Frankfurt.\n
+I am standing between Dresden (exclusive)\n
+\T	and Frankfurt (inclusive).
+\end{example}
+
+\begin{example}
+mi ca sanli la drezdn.\n
+\T	ke'i bi'i ke'i la frankfurt.\n
+I \optional{present} stand Dresden\n
+\T	[exclusive] [interval] [exclusive] Frankfurt.\n
+I am standing between Dresden and Frankfurt,\n
+\T	exclusive of both.
+\end{example}
+
+As these examples should make clear, the GAhO cmavo that
+    applies to a given endpoint is the one that stands physically
+    adjacent to it: the left-hand endpoint is referred to by the
+    first GAhO, and the right-hand endpoint by the second GAhO. It
+    is ungrammatical to have just one GAhO. 
+
+(Etymologically, \q{ga'o} is derived from \q{ganlo}, which
+    means \q{closed}, and \q{ke'i} from \q{kalri}, which means
+    \q{open}. In mathematics, inclusive intervals are referred to
+    as closed intervals, and exclusive intervals as open ones.)
+
+BIhI joiks are grammatical anywhere that other joiks are,
+    including in tanru connection and (as ijoiks) between
+    sentences. No meanings have been found for these uses.
+
+Negated intervals, marked with a \q{-nai} following the BIhI
+    cmavo, indicate an interval that includes everything but what
+    is between the endpoints (with respect to some understood
+    scale):
+\begin{example}
+do dicra .e'a mi ca la daucac. bi'onai la gaicac.\n
+You disturb (allowed) me at 10 not-from ... to 12\n
+You can contact me except from 10 to 12.
+\end{example}
+
+The complete syntax of joiks is:
+\begin{description}
+\item[] [se] JOI [nai] [se] BIhI [nai] GAhO [se] BIhI [nai] GAhO
+\end{description}
+
+Notice that the colloquial English translations of \q{bi'i} and
+    \q{bi'o} have forethought form: \q{between ... and} for
+    \q{bi'i}, and \q{from ... to} for \q{bi'o}. In Lojban too,
+    non-logical connectives can be expressed in forethought. Rather
+    than using a separate selma'o, the forethought logical
+    connectives are constructed from the afterthought ones by
+    suffixing \q{gi}. Such a compound cmavo is not unnaturally
+    called a \q{joigik}; the syntax of joigiks is any of: 
+\begin{description}
+\item[] [se] JOI [nai] GI [se] BIhI [nai] GI GAhO [se] BIhI [nai] GAhO GI
+\end{description}
+
+Joigiks may be used to non-logically connect bridi, sumti, and
+    bridi-tails; and also in termsets. 
+
+\exref{14.14.3} in forethought
+    becomes:
+\begin{example}
+joigi la djan. gi la .alis. bevri le pipno\n
+\optional{Together} John and Alice carry the piano.
+\end{example}
+
+The first \q{gi} is part of the joigik; the second \q{gi} is
+    the regular gik that separates the two things being connected
+    in all forethought forms.
+\exref{14.16.6} can be expressed in
+    forethought as:
+\begin{example}
+mi ca sanli ke'i bi'i ga'o\n
+\T	gi la drezdn.\n
+\T	gi la frankfurt.\n
+I \optional{present} stand\n
+\T	[exclusive] between [inclusive] Dresden\n
+\T	and Frankfurt.\n
+I am standing between Dresden (exclusive)\n
+\T	and Frankfurt (inclusive).
+\end{example}
+
+In forethought, unfortunately, the GAhOs become physically
+    separated from the endpoints, but the same rule applies: the
+    first GAhO refers to the first endpoint.
+
+
+
+\sect{Logical and non-logical connectives within mekso}
+Lojban has a separate grammar embedded within the main
+    grammar for representing mathematical expressions (or mekso in
+    Lojban) such as \q{2 + 2}. Mathematical expressions are
+    explained fully in \chapref{18}. The
+    basic components of mekso are operands, like \q{2}, and
+    operators, like \q{+}. Both of these may be either logically or
+    non-logically connected.
+
+Operands are connected in afterthought with eks and in
+    forethought with geks, just like sumti. Operators, on the other
+    hand, are connected in afterthought with jeks and in
+    forethought with guheks, just like tanru components. (However,
+    jeks and joiks with \q{bo} are not allowed for operators.) This
+    parallelism is no accident.
+
+In addition, eks with \q{bo} and with \q{ke ... ke'e} are
+    allowed for grouping logically connected operands, and ``ke ...
+    ke'e'' is allowed for grouping logically connected operators,
+    although there is no analogue of tanru among the operators.
+
+Only a few examples of each kind of mekso connection will be
+    given. Despite the large number of rules required to support
+    this feature, it is of relatively minor importance in either
+    the mekso or the logical-connective scheme of things. These
+    examples are drawn from \chapref{18},
+    and contain many mekso features not explained in this
+    chapter.
+
+\exref{14.17.1} exhibits afterthought
+    logical connection between operands:
+\begin{example}
+vei ci .a vo \optional{ve'o} prenu cu klama le zarci\n
+( three or four ) people go-to the market.
+\end{example}
+
+\exref{14.17.2} is equivalent in meaning, but
+    uses forethought connection:
+\begin{example}
+vei ga ci gi vo \optional{ve'o} prenu cu klama le zarci\n
+( either 3 or 4 ) people go-to the market.
+\end{example}
+
+Note that the mekso in \exref{14.17.1} and \exref{14.17.2} are being used as quantifiers.
+    Lojban requires that any mekso other than a simple number be
+    enclosed in \q{vei} and \q{ve'o} parentheses when used as a
+    quantifier. The right parenthesis mark, \q{ve'o}, is an
+    elidable terminator. 
+
+Simple examples of logical connection between operators are
+    hard to come by. A contrived example is:
+\begin{example}
+li re su'i je pi'i re du li vo\n
+the-number 2 plus and times 2 equals the-number 4.\n
+2 + 2 = 4 and 2 x 2 = 4.
+\end{example}
+
+The forethought form of \exref{14.17.3}
+    is:
+\begin{example}
+li re ge su'i gi pi'i re\n
+\T	du li vo\n
+the-number two both plus and times two\n
+\T	equals the-number four.\n
+Both 2 + 2 = 4 and 2 x 2 = 4.
+\end{example}
+
+Non-logical connection with joiks or joigiks is also permitted
+    between operands and between operators. One use for this
+    construct is to connect operands with \q{bi'i} to create
+    mathematical intervals:
+\begin{example}
+li no ga'o bi'i ke'i pa\n
+the-number zero (inclusive) from-to (exclusive) one\n
+\optional{0,1)\n
+the numbers from zero to one,\n
+\T	including zero but not including one
+\end{example}
+
+You can also combine two operands with \q{ce'o}, the sequence
+    connective of selma'o JOI, to make a compound subscript:
+\begin{example}
+\T	xy. boi xi vei by. ce'o dy. [ve'o}\n
+\q{x} sub ( \q{b} sequence \q{d} )\n
+$x<sub>b,d</sub>$
+\end{example}
+
+Note that the \q{boi} in \exref{14.17.5} is
+    not elidable, because the \q{xi} subscript needs something to
+    attach to.
+
+
+
+\sect{Tenses, modals, and logical connection}
+The tense and modal systems of Lojban interact with the
+    logical connective system. No one chapter can explain all of
+    these simultaneously, so each chapter must present its own view
+    of the area of interaction with emphasis on its own concepts
+    and terminology. In the examples of this chapter, the many
+    tenses of various selma'o as well as the modals of selma'o BAI
+    are simplified to the simple time cmavo \q{pu}, \q{ca}, and
+    \q{ba} (of selma'o PU) representing the past, the present, and
+    the future respectively. Preceding a selbri, these cmavo state
+    the time when the bridi was, is, or will be true (analogous to
+    English verb tenses); preceding a sumti, they state that the
+    event of the main bridi is before, simultaneous with, or after
+    the event given by the sumti (which is generally a \q{le nu}
+    abstraction; see \chapref{11}).
+
+The two types of interaction between tenses and logical
+    connectives are logically connected tenses and tensed logical
+    connections. The former are fairly simple. Jeks may be used
+    between tense cmavo to specify two connected bridi that differ
+    only in tense:
+\begin{example}
+la .artr. pu nolraitru\n
+\T	.ije la .artr. ba nolraitru\n
+Arthur \optional{past} is-a-noblest-governor.\n
+\T	And Arthur [future] is-a-noblest-governor.\n
+Arthur was a king, and Arthur will be a king.
+\end{example}
+
+{\noindent}can be reduced to:
+\begin{example}
+la .artr. pu je ba nolraitru\n
+Arthur \optional{past} and [future] is-a-noblest-governor.\n
+Arthur was and will be king.
+\end{example}
+
+\exref{14.18.1} and \exref{14.18.2} are equivalent in meaning; neither says anything about
+    whether Arthur is king now. 
+
+Non-logical connection with joiks is also possible between
+    tenses:
+\begin{example}
+mi pu bi'o ba vasxu\n
+I \optional{past} from ... to [future] breathe.\n
+I breathe from a past time until a future time.
+\end{example}
+
+The full tense system makes more interesting tense intervals
+    expressible, such as ``from a medium time ago until a long time
+    from now''.
+
+No forethought connections between tenses are permitted by
+    the grammar, nor is there any way to override the default
+    left-grouping rule; these limitations are imposed to keep the
+    tense grammar simpler. Whatever can be said with tenses or
+    modals can be said with subordinate bridi stating the time,
+    place, or mode explicitly, so it is reasonable to try to remove
+    at least some complications.
+
+Tensed logical connections are both more complex and more
+    important than logical connections between tenses. Consider the
+    English sentence:
+\begin{example}
+I went to the market, and I bought food.
+\end{example}
+
+The verbatim translation of \exref{14.18.4}, namely:
+\begin{example}
+mi pu klama le zarci .ije mi pu tervecnu lo cidja\n
+I \optional{past} go-to the market. And I [past] buy items-of food.
+\end{example}
+
+{\noindent}fails to fully represent a feature of the English, namely that
+    the buying came after the going. (It also fails to represent
+    that the buying was a consequence of the going, which can be
+    expressed by a modal that is discussed in \chapref{9}.) However, the tense
+    information --- that the event of my going to the market
+    preceded the event of my buying food --- can be added to the
+    logical connective as follows. The \q{.ije} is replaced by
+    \q{.ijebo}, and the tense cmavo \q{ba} is inserted between
+    \q{.ije} and \q{bo}:
+\begin{example}
+mi pu klama le zarci\n
+\T	.ijebabo mi pu tervecnu lo cidja\n
+I \optional{past} go-to the market.\n
+\T	And [later] I [past] buy items-of food.
+\end{example}
+
+Here the \q{pu} cmavo in the two bridi-tails express the
+    time of both actions with respect to the speaker: in the past.
+    The \q{ba} relates the two items to one another: the second
+    item is later than the first item. The grammar does not permit
+    omitting the \q{bo}; if it were omitted, the \q{ba} and the
+    second \q{pu} would run together to form a compound tense
+    \q{bapu} applying to the second bridi-tail only.
+
+Adding tense or modal information to
+    a logical connective is permitted only in the following
+    situations:
+
+Between an ek (or joik) and \q{bo}, as in:
+\begin{example}
+la .djan .ecabo la .alis. klama le zarci\n
+John and \optional{simultaneous} Alice go-to the market.\n
+John and Alice go to the market simultaneously.
+\end{example}
+
+Between an ek (or joik) and \q{ke}, as
+    in:
+\begin{example}
+mi dzukla le zarci\n
+\T	.epuke le zdani .a le ckule \optional{ke'e}\n
+I walk-to the market\n
+\T	and [earlier] ( the house or the school ).\n
+I walk to the market and,\n
+\T	before that, to the house or the school.
+\end{example}
+
+Between a gihek and \q{bo}, as in:
+\begin{example}
+mi dunda le cukta\n
+\T	gi'ebabo lebna lo rupnu vau do\n
+I give the book\n
+\T	and \optional{later} take some currency-units from/to you.\n
+I give you the book and then take some dollars\n
+\T	(pounds, yen) from you.
+\end{example}
+
+Between a gihek and \q{ke}, as in:
+\begin{example}
+mi dzukla le zarci\n
+\T	gi'ecake cusku zo'e la djan. \optional{ke'e}\n
+I walk-to the market\n
+\T	and [simultaneous] express something to-John.\n
+I walk to the market and at the same time talk to John.
+\end{example}
+
+Between an ijek (or ijoik) and \q{bo},
+    as in:
+\begin{example}
+mi viska pa nanmu .ijebabo mi viska pa ninmu\n
+I see a man. And \optional{later} I see a woman.\n
+I see a man, and then I see a woman.
+\end{example}
+
+Between an ijek (or ijoik) and
+    \q{tu'e}, as in:
+\begin{example}
+mi viska pa nanmu\n
+\T	.ijebatu'e mi viska pa ninmu \optional{tu'u}\n
+I see a man.\n
+\T	And [later] I see a woman.\n
+I see a man, and then I see a woman.
+\end{example}
+
+And finally, between a jek (or joik)
+    and \q{bo}, as in:
+\begin{example}
+mi mikce jebabo ricfu\n
+I-am-a doctor and \optional{later} rich\n
+I am a doctor and future rich person.
+\end{example}
+
+As can be seen from \exref{14.18.11} and \exref{14.18.12}, the choice between \q{bo} and
+    \q{ke} (or \q{tu'e}) is arbitrary when there are only two
+    things to be connected. If there were no tense information to
+    include, of course neither would be required; it is only the
+    rule that tense information must always be sandwiched between
+    the logical connective and a following \q{bo}, \q{ke}, or
+    \q{tu'e} that requires the use of one of these grouping cmavo
+    in \exref{14.18.7} and \exref{14.18.9} through hyperref[ex:14:18:13]{18.13}. 
+
+Non-logical connectives with \q{bo} and \q{ke} can include
+    tense information in exactly the same way as logical
+    connectives. Forethought connectives, however (except as noted
+    below) are unable to do so, as are termsets or tense
+    connectives. Mathematical operands and operators can also
+    include tense information in their logical connectives as a
+    result of their close parallelism with sumti and tanru
+    components respectively:
+\begin{example}
+vei ci .ebabo vo \optional{ve'o} tadni cu zvati le kumfa\n
+( 3 and [future] 4 ) students are-at the room.\n
+Three and, later, four students were in the room.
+\end{example}
+
+{\noindent}is a simple example. There is a special grammatical rule for
+    use when a tense applies to both of the selbri in a forethought
+    bridi-tail connection: the entire forethought construction can
+    just be preceded by a tense. For example:
+\begin{example}
+mi pu ge klama le zarci gi tervecnu lo cidja\n
+I \optional{past} both go-to the market and buy some food\n
+I went to the market and bought some food.
+\end{example}
+
+\exref{14.18.15} is similar to \exref{14.18.5}. There is no time relationship
+    specified between the going and the buying; both are simply set
+    in the past. 
+
+<h3>
+19. Abstractor connection and connection within
+    abstractions</h3>
+
+Last and (as a matter of fact) least: a logical connective
+    is allowed between abstraction markers of selma'o NU. As usual,
+    the connection can be expanded to a bridi connection between
+    two bridi which differ only in abstraction marker. Jeks are the
+    appropriate connective. \exref{14.19.1} and
+    \exref{14.19.2} are equivalent in
+    meaning:
+\begin{example}
+le ka la frank. ciska cu xlali\n
+\T	.ije le ni la frank. ciska cu xlali\n
+The quality-of Frank's writing is bad,\n
+\T	and the quantity of Frank's writing is bad.
+\end{example}
+
+\begin{example}
+le ka je ni la frank. ciska cu xlali\n
+The quality and quantity of Frank's writing is bad.
+\end{example}
+
+As with tenses and modals, there is no forethought and no way
+    to override the left-grouping rule. 
+
+Logical connectives and abstraction are related in another
+    way as well, though. Since an abstraction contains a bridi, the
+    bridi may have a logical connection inside it. Is it legitimate
+    to split the outer bridi into two, joined by the logical
+    connection? Absolutely not. For example:
+\begin{example}
+mi jinvi le du'u loi jmive cu zvati\n
+\T	gi'onai na zvati vau la .iupiter.\n
+I opine the fact-that a-mass-of living-things (is-at\n
+\T	or-else isn't-at) Jupiter.\n
+I believe there either is or isn't life on Jupiter.
+\end{example}
+
+{\noindent}is true, since the embedded sentence is a tautology, but:
+\begin{example}
+mi jinvi le du'u loi jmive\n
+\T	cu zvati la .iupiter.\n
+.ijonai mi jinvi le du'u loi jmive\n
+\T	cu zvati la .iupiter.\n
+I opine the fact-that a-mass-of living-things\n
+\T	is-at Jupiter\n
+or-else I opine the fact-that a-mass-of living-things\n
+\T	isn't-at Jupiter
+\end{example}
+
+{\noindent}is false, since I have no evidence one way or the other
+    (\q{jinvi} requires some sort of evidence, real or fancied,
+    unlike \q{krici}).
+
+
+
+\sect{Constructs and appropriate connectives}
+The following table specifies, for each kind of construct
+    that can be logically or non-logically connected in Lojban,
+    what kind of connective is required for both afterthought and
+    (when possible) forethought modes. An asterisk (*) indicates
+    that tensed connection is permitted.
+
+A line of dashes indicates that connection of the specified
+    type is not possible.
+
+   construct   afterth. foreth.  afterth.  foreth.
+                    logical  logical  non-log.  non-log.
+    ---------   -------  -------  --------  --------
+
+bridi       ijek*    gek     ijoik*     joigik
+    sumti       ek*      gek     joik*      joigik
+    bridi-tails gihek*   gek     ---        joigik
+    termsets    ek*      gek     joik*      joigik
+    tanru parts jek      guhek   joik*      ---
+    operands    ek*      gek     joik*      joigik
+    operators   jek      guhek   joik       ---
+    tenses/modals   jek      ---     joik       ---
+    abstractors jek      ---     joik       ---
+
+<h3>
+21. Truth functions and corresponding logical
+    connectives</h3>
+
+The following table specifies, for each truth function, the
+    most-often used compound cmavo which expresses it for each of
+    the six types of logical connective. (Other compound cmavo are
+    often possible: for example, \q{se.a} means the same as \q{a},
+    and could be used instead.)
+
+truth  ek  jek gihek     gek--gik  guhek--gik
+-----   --  --- -----     --------- -----------
+
+TTTF    .a  ja  gi'a      ga--gi    gu'a--gi
+TTFT    .anai   janai   gi'anai   ga--ginai gu'a--ginai
+TTFF    .u  ju  gi'u      gu--gi    gu'u--gi
+TFTT    na.a    naja    nagi'a    ganai--gi gu'anai--gi
+TFTF    se.u    seju    segi'u    segu--gi  segu'u--gi
+TFFT    .o  jo  gi'o      go--gi    gu'o--gi
+TFFF    .e  je  gi'e      ge--gi    gu'e--gi
+FTTT    na.anai najanai nagi'anai ganai--ginai  gu'anai--ginai
+FTTF    .onai   jonai   gi'onai   go--ginai gu'o--ginai
+FTFT    se.unai sejunai segi'unai segu--ginai   segu'u--ginai
+FTFF    .enai   jenai   gi'enai   ge--ginai gu'e--ginai
+FFTT    na.u    naju    nagi'u    gunai--gi gu'unai--gi
+FFTF    na.e    naje    nagi'e    genai--gi gu'enai--gi
+FFFT    na.enai najenai nagi'enai genai--ginai  gu'enai--ginai
+
+Note: Ijeks are exactly the same as the corresponding jeks,
+    except for the prefixed \q{.i}.
+
+<h3>
+22. Rules for making logical and non-logical
+    connectives</h3>
+
+The full set of rules for inserting \q{na}, \q{se}, and
+    \q{nai} into any connective is:
+
+Afterthought logical connectives (eks, jeks, giheks,
+    ijeks):
+
+Negate first construct:
+\begin{description}
+\item[] place \q{na} before the connective cmavo (but after the \q{.i} of an ijek).
+
+\end{description}
+
+Negate second construct:
+\begin{description}
+\item[] place \q{nai} after the connective cmavo.
+
+\end{description}
+
+Exchange constructs:
+\begin{description}
+\item[] place \q{se} before the connective cmavo (after \q{na} if any).
+
+\end{description}
+
+Forethought logical connectives (geks, guheks):
+
+Negate first construct:
+\begin{description}
+\item[] place \q{nai} after the connective cmavo.
+
+\end{description}
+
+Negate second construct:
+\begin{description}
+\item[] place \q{nai} after the \q{gi}.
+
+\end{description}
+
+Exchange constructs:
+\begin{description}
+\item[] place \q{se} before the connective cmavo.
+
+\end{description}
+
+Non-logical connectives (joiks, joigiks):
+
+Negate connection:
+\begin{description}
+\item[] place \q{nai} after the connective cmavo (but before the \q{gi} of a joigik).
+
+\end{description}
+
+Exchange constructs:
+\begin{description}
+\item[] place \q{se} before the connective cmavo.
+\end{description}
+
+
+
+\sect{Locations of other tables} \sectref{14.1}: a table explaining the meaning
+    of each truth function in English. \sectref{14.2}: a table relating the truth
+    functions to the four basic vowels. \sectref{14.13}: a table of the connective
+    question cmavo. \sectref{14.14}: a table of the meanings of
+    JOI cmavo when used to connect sumti.

@@ -1,0 +1,2397 @@
+\chap{lojbau mekso: Mathematical Expressions in Lojban}
+\sect{Introductory}
+lojbau mekso (\q{Lojbanic mathematical-expression}) is the part
+    of the Lojban language that is tailored for expressing
+    statements of a mathematical character, or for adding numerical
+    information to non-mathematical statements. Its formal design
+    goals include: 
+\begin{enumerate}
+\item representing all the different forms of expression used by mathematicians in their normal modes of writing, so that a reader can unambiguously read off mathematical text as written with minimal effort and expect a listener to understand it;
+\item providing a vocabulary of commonly used mathematical terms which can readily be expanded to include newly coined words using the full resources of Lojban;
+\item permitting the formulation, both in writing and in speech, of unambiguous mathematical text;
+\item encompassing all forms of quantified expression found in natural languages, as well as encouraging greater precision in ordinary language situations than natural languages allow.
+\end{enumerate}
+
+Goal 1 requires that mekso not be constrained to a single
+    notation such as Polish notation or reverse Polish notation,
+    but make provision for all forms, with the most commonly used
+    forms the most easily used. 
+
+Goal 2 requires the provision of several conversion
+    mechanisms, so that the boundary between mekso and full Lojban
+    can be crossed from either side at many points.
+
+Goal 3 is the most subtle. Written mathematical expression
+    is culturally unambiguous, in the sense that mathematicians in
+    all parts of the world understand the same written texts to
+    have the same meanings. However, international mathematical
+    notation does not prescribe unique forms. For example, the
+    expression
+\begin{example}
+3x + 2y
+\end{example}
+
+{\noindent}contains omitted multiplication operators, but there are other
+    possible interpretations for the strings \q{3x} and \q{2y} than
+    as mathematical multiplication. Therefore, the Lojban verbal
+    (spoken and written) form of \exref{18.1.1}
+    must not omit the multiplication operators. 
+
+The remainder of this chapter explains (in as much detail as
+    is currently possible) the mekso system. This chapter is by
+    intention complete as regards mekso components, but only
+    suggestive about uses of those components --- as of now, there
+    has been no really comprehensive use made of mekso facilities,
+    and many matters must await the test of usage to be fully
+    clarified.
+
+
+
+\sect{Lojban numbers}
+The following cmavo are discussed in this section:
+
+   pa  PA  1
+    re  PA  2
+    ci  PA  3
+    vo  PA  4
+    mu  PA  5
+    xa  PA  6
+    ze  PA  7
+    bi  PA  8
+    so  PA  9
+    no  PA  0           
+
+The simplest kind of mekso are numbers, which are cmavo or
+    compound cmavo. There are cmavo for each of the 10 decimal
+    digits, and numbers greater than 9 are made by stringing
+    together the cmavo. Some examples:
+\begin{example}
+pa re ci\n
+one two three\n
+123\n
+one hundred and twenty three
+\end{example}
+
+\begin{example}
+pa no\n
+one zero\n
+10\n
+ten
+\end{example}
+
+\begin{example}
+pa re ci vo mu xa ze bi so no\n
+one two three four five six seven eight nine zero\n
+1234567890\n
+one billion, two hundred and thirty-four million,\n
+\T	five hundred and sixty-seven thousand,\n
+\T	eight hundred and ninety.
+\end{example}
+
+Therefore, there are no separate cmavo for \q{ten},
+    \q{hundred}, etc. 
+
+There is a pattern to the digit cmavo (except for \q{no}, 0)
+    which is worth explaining. The cmavo from 1 to 5 end in the
+    vowels \q{a}, \q{e}, \q{i}, \q{o}, \q{u} respectively; and the
+    cmavo from 6 to 9 likewise end in the vowels \q{a}, \q{e},
+    \q{i}, and \q{o} respectively. None of the digit cmavo begin
+    with the same consonant, to make them easy to tell apart in
+    noisy environments.
+
+
+
+\sect{Signs and numerical punctuation}
+The following cmavo are discussed in this section:
+
+   ma'u    PA  positive sign
+    ni'u    PA  negative sign
+    pi  PA  decimal point
+    fi'u    PA  fraction slash
+    ra'e    PA  repeating decimal
+    ce'i    PA  percent sign
+    ki'o    PA  comma between digits
+
+A number can be given an explicit sign by the use of \q{ma'u}
+    and \q{ni'u}, which are the positive and negative signs as
+    distinct from the addition, subtraction, and negation
+    operators. For example:
+\begin{example}
+ni'u pa\n
+negative-sign 1\n
+-1
+\end{example}
+
+Grammatically, the signs are part of the number to which they
+    are attached. It is also possible to use \q{ma'u} and \q{ni'u}
+    by themselves as numbers; the meaning of these numbers is
+    explained in \sectref{18.8}. 
+
+Various numerical punctuation marks are likewise expressed
+    by cmavo, as illustrated in the following examples:
+\begin{example}
+ci pi pa vo pa mu\n
+three point one four one five\n
+3.1415
+\end{example}
+
+(In some cultures, a comma is used instead of a period in the
+    symbolic version of \exref{18.3.2}; \q{pi} is
+    still the Lojban representation for the decimal point.)
+\begin{example}
+re fi'u ze\n
+two fraction seven\n
+2/7
+\end{example}
+
+\exref{18.3.3} is the name of the number
+    two-sevenths; it is not the same as ``the result of 2 divided
+    by 7'' in Lojban, although numerically these two are equal. If
+    the denominator of the fraction is present but the numerator is
+    not, the numerator is taken to be 1, thus expressing the
+    reciprocal of the following number:
+\begin{example}
+fi'u ze\n
+fraction seven\n
+1/7
+\end{example}
+
+\begin{example}
+pi ci mu ra'e pa vo re bi mu ze\n
+point three five repeating one four two eight five seven\n
+.35142857142857...
+\end{example}
+
+Note that the \q{ra'e} marks unambiguously where the repeating
+    portion \q{142857} begins.
+\begin{example}
+ci mu ce'i\n
+three five percent\n
+35%
+\end{example}
+
+\begin{example}
+pa ki'o re ci vo ki'o mu xa ze\n
+one comma two three four comma five six seven\n
+1,234,567
+\end{example}
+
+(In some cultures, spaces are used in the symbolic
+    representation of \exref{18.3.7}; \q{ki'o} is
+    still the Lojban representation.) 
+
+It is also possible to have less than three digits between
+    successive \q{ki'o}s, in which case zeros are assumed to have
+    been elided:
+\begin{example}
+pa ki'o re ci ki'o vo\n
+one comma two three comma four\n
+1,023,004
+\end{example}
+
+In the same way, \q{ki'o} can be used after \q{pi} to divide
+    fractions into groups of three:
+\begin{example}
+pi ki'o re re\n
+point comma two two\n
+.022
+\end{example}
+
+\begin{example}
+pi pa ki'o pa re ki'o pa\n
+point one comma one two comma one\n
+.101012001
+\end{example}
+
+
+
+\sect{Special numbers}
+The following cmavo are discussed in this section:
+
+   ci'i    PA  infinity
+    ka'o    PA  imaginary i, sqrt(-1)
+    pai PA  pi (approx 3.14159...)
+    te'o    PA  exponential e (approx 2.71828...)
+    fi'u    PA  golden ratio, phi,
+            (1 + sqrt(5))/2 (approx. 1.61803...)
+
+The last cmavo is the same as the fraction sign cmavo: a
+    fraction sign with neither numerator nor denominator represents
+    the golden ratio. 
+
+Numbers can have any of these digit, punctuation, and
+    special-number cmavo of Sections 2, 3, and 4 in any
+    combination:
+\begin{example}
+ma'u ci'i\n
++<span class="c3">\textyen/span>
+\end{example}
+
+\begin{example}
+ci ka'o re\n
+3i2 (a complex number equivalent to \q{3 + 2i})
+\end{example}
+
+Note that \q{ka'o} is both a special number (meaning \q{i}) and
+    a number punctuation mark (separating the real and the
+    imaginary parts of a complex number).
+\begin{example}
+ci'i no\n
+infinity zero\n
+<span class="c3">\`{A}/span>
+<sub>0</sub> (a transfinite cardinal)
+\end{example}
+
+The special numbers \q{pai} and \q{te'o} are mathematically
+    important, which is why they are given their own cmavo:
+\begin{example}
+pai\n
+pi
+\end{example}
+
+\begin{example}
+te'o\n
+e
+\end{example}
+
+However, many combinations are as yet undefined:
+\begin{example}
+pa pi re pi ci\n
+1.2.3
+\end{example}
+
+\begin{example}
+pa ni'u re\n
+1 negative-sign 2
+\end{example}
+
+\exref{18.4.5} is not \q{1 minus 2}, which is
+    represented by a different cmavo sequence altogether. It is a
+    single number which has not been assigned a meaning. There are
+    many such numbers which have no well-defined meaning; they may
+    be used for experimental purposes or for future expansion of
+    the Lojban number system. 
+
+It is possible, of course, that some of these \q{oddities}
+    do have a meaningful use in some restricted area of
+    mathematics. A mathematician appropriating these structures for
+    specialized use needs to consider whether some other branch of
+    mathematics would use the structure differently.
+
+More information on numbers may be found in \hyperref[sec:18:8]{Sections 8} to \hyperref[sec:18:12]{12}.
+
+
+
+\sect{Simple infix expressions and equations}
+The following cmavo are discussed in this section:
+
+   du  GOhA    equals
+    su'i    VUhU    plus
+    vu'u    VUhU    minus
+    pi'i    VUhU    times
+    te'a    VUhU    raised to the power
+    ny. BY  letter \q{n}
+    vei VEI left parenthesis
+    ve'o    VEhO    right parenthesis
+
+Let us begin at the beginning: one plus one equals two. In
+    Lojban, that sentence translates to:
+\begin{example}
+li pa su'i pa du li re\n
+the-number one plus one equals the-number two.\n
+1 + 1 = 2
+\end{example}
+
+\exref{18.5.1}, a mekso sentence, is a regular
+    Lojban bridi that exploits mekso features. \q{du} is the
+    predicate meaning \q{$x_1$ is mathematically equal to $x_2$}. It is a
+    cmavo for conciseness, but it has the same grammatical uses as
+    any brivla. Outside mathematical contexts, \q{du} means ``$x_1$ is
+    identical with $x_2$'' or \q{$x_1$ is the same object as $x_2$}. 
+
+The cmavo \q{li} is the number article. It is required
+    whenever a sentence talks about numbers as numbers, as opposed
+    to using numbers to quantify things. For example:
+\begin{example}
+le ci prenu\n
+the three persons
+\end{example}
+
+{\noindent}requires no \q{li} article, because the \q{ci} is being used to
+    specify the number of \q{prenu}. However, the sentence
+\begin{example}
+levi sfani cu grake li ci\n
+this fly masses-in-grams the-number three\n
+This fly has a mass of 3 grams.
+\end{example}
+
+{\noindent}requires \q{li} because \q{ci} is being used as a sumti. Note
+    that this is the way in which measurements are stated in
+    Lojban: all the predicates for units of length, mass,
+    temperature, and so on have the measured object as the first
+    place and a number as the second place. Using \q{li} for \q{le}
+    in \exref{18.5.2} would produce
+\begin{example}
+li ci prenu\n
+the-number 3 is-a-person
+\end{example}
+
+{\noindent}which is grammatical but nonsensical: numbers are not persons. 
+
+The cmavo \q{su'i} belongs to selma'o VUhU, which is
+    composed of mathematical operators, and means \q{addition}. As
+    mentioned before, it is distinct from \q{ma'u} which means the
+    positive sign as an indication of a positive number:
+\begin{example}
+li ma'u pa su'i ni'u pa\n
+\T	du li no\n
+the-number positive-sign one plus negative-sign one\n
+\T	equals the-number zero\n
++1 + -1 = 0
+\end{example}
+
+Of course, it is legal to have complex mekso on both sides
+    of \q{du}:
+\begin{example}
+li mu su'i pa\n
+\T	du li ci su'i ci\n
+the-number five plus one\n
+\T	equals the-number three plus three\n
+5 + 1 = 3 + 3
+\end{example}
+
+Why don't we say \q{li mu su'i li pa} rather than just ``li mu
+    su'i pa''? The answer is that VUhU operators connect mekso
+    operands (numbers, in \exref{18.5.6}), not
+    general sumti. \q{li} is used to make the entire mekso into a
+    sumti, which then plays the roles applicable to other sumti: in\exref{18.5.6}, filling the places of a bridi.
+
+By default, Lojban mathematics is like simple calculator
+    mathematics: there is no notion of \q{operator precedence}.
+    Consider the following example, where \q{pi'i} means \q{times},
+    the multiplication operator:
+\begin{example}
+li ci su'i vo pi'i mu\n
+\T	du li reci\n
+the-number three plus four times five\n
+\T	equals the-number two-three\n
+3 + 4 $\times$5 = 23
+\end{example}
+
+Is the Lojban version of \exref{18.5.7}
+    true? No! \q{3 + 4 $\times$5} is indeed 23, because the usual
+    conventions of mathematics state that multiplication takes
+    precedence over addition; that is, the multiplication ``4
+    $\times$5'' is done first, giving 20, and only then the
+    addition \q{3 + 20}. But VUhU operators by default are done
+    left to right, like other Lojban grouping, and so a truthful
+    bridi would be:
+\begin{example}
+li ci su'i vo pi'i mu\n
+\T	du li cimu\n
+the-number three plus four times five\n
+\T	equals the-number three-five\n
+3 + 4 $\times$5 = 35
+\end{example}
+
+Here we calculate 3 + 4 first, giving 7, and then calculate 7
+    $\times$5 second, leading to the result 35. While possessing
+    the advantage of simplicity, this result violates the design
+    goal of matching the standards of mathematics. What can be
+    done? 
+
+There are three solutions, all of which will probably be
+    used to some degree. The first solution is to ignore the
+    problem. People will say \q{li ci su'i vo pi'i mu} and mean 23
+    by it, because the notion that multiplication takes precedence
+    over addition is too deeply ingrained to be eradicated by
+    Lojban parsing, which totally ignores semantics. This
+    convention essentially allows semantics to dominate syntax in
+    this one area.
+
+(Why not hard-wire the precedences into the grammar, as is
+    done in computer programming languages? Essentially because
+    there are too many operators, known and unknown, with levels of
+    precedence that vary according to usage. The programming
+    language 'C' has 13 levels of precedence, and its list of
+    operators is not even extensible. For Lojban this approach is
+    just not practical. In addition, hard-wired precedence could
+    not be overridden in mathematical systems such as spreadsheets
+    where the conventions are different.)
+
+The second solution is to use explicit means to specify the
+    precedence of operators. This approach is fully general, but
+    clumsy, and will be explained in \hyperref[sec:18:20]{Section
+    20}.
+
+The third solution is simple but not very general. When an
+    operator is prefixed with the cmavo \q{bi'e} (of selma'o BIhE),
+    it becomes automatically of higher precedence than other
+    operators not so prefixed. Thus,
+\begin{example}
+li ci su'i vo bi'e pi'i mu\n
+\T	du li reci\n
+the-number three plus four-times-five\n
+\T	equals the-number two-three\n
+3 + 4 $\times$5 = 23
+\end{example}
+
+{\noindent}is a truthful Lojban bridi. If more than one operator has a
+    \q{bi'e} prefix, grouping is to the right; multiple \q{bi'e}
+    prefixes on a single operator are not allowed. 
+
+In addition, of course, Lojban has the mathematical
+    parentheses \q{vei} and \q{ve'o}, which can be used just like
+    their written equivalents \q{(} and \q{)} to group expressions
+    in any way desired:
+\begin{example}
+li vei ny. su'i pa ve'o pi'i vei ny. su'i pa \optional{ve'o}\n
+\T	du li ny. [bi'e] te'a re su'i re bi'e pi'i ny. su'i pa\n
+the-number ( \q{n} plus one ) times ( \q{n} plus one )\n
+\T	equals the-number n-power-two plus two-times-\q{n} plus 1\n
+(n + 1)(n + 1) = n<sup>2</sup> + 2n + 1
+\end{example}
+
+There are several new usages in \exref{18.5.10}: \q{te'a} means \q{raised to the power}, and we also
+    see the use of the lerfu word \q{ny}, representing the letter
+    \q{n}. In mekso, letters stand for just what they do in
+    ordinary mathematics: variables. The parser will accept a
+    string of lerfu words (called a \q{lerfu string}) as the
+    equivalent of a single lerfu word, in agreement with
+    computer-science conventions; \q{abc} is a single variable, not
+    the equivalent of \q{a $\times$b $\times$c}. (Of course, a
+    local convention could state that the value of a variable like
+    \q{abc}, with a multi-lerfu name, was equal to the values of
+    the variables \q{a}, \q{b}, and \q{c} multiplied together.) 
+
+The explicit operator \q{pi'i} is required in the Lojban
+    verbal form whereas multiplication is implicit in the symbolic
+    form. Note that \q{ve'o} (the right parenthesis) is an elidable
+    terminator: the first use of it in \exref{18.5.10} is required, but the second use (marked by square
+    brackets) could be elided. Additionally, the first \q{bi'e}
+    (also marked by square brackets) is not necessary to get the
+    proper grouping, but it is included here for symmetry with the
+    other one.
+
+
+
+\sect{Forethought operators (Polish notation, functions)}
+The following cmavo are discussed in this section:
+
+   boi BOI numeral/lerfu string terminator
+    va'a    VUhU    negation/additive inverse
+    pe'o    PEhO    forethought flag
+    ku'e    KUhE    forethought terminator
+    py. BY  letter \q{p}
+    xy. BY  letter \q{x}
+    zy. BY  letter \q{z}
+    ma'o    MAhO    convert operand to operator
+    fy. BY  letter \q{f}
+
+The infix form explained so far is reasonable for many
+    purposes, but it is limited and rigid. It works smoothly only
+    where all operators have exactly two operands, and where
+    precedences can either be assumed from context or are limited
+    to just two levels, with some help from parentheses. 
+
+But there are many operators which do not have two operands,
+    or which have a variable number of operands. The preferred form
+    of expression in such cases is the use of ``forethought
+    operators'', also known as Polish notation. In this style of
+    writing mathematics, the operator comes first and the operands
+    afterwards:
+\begin{example}
+li su'i paboi reboi ci\optional{boi} du li xa\n
+the-number the-sum-of one two three equals the-number six\n
+sum(1,2,3) = 6
+\end{example}
+
+Note that the normally elidable number terminator \q{boi} is
+    required after \q{pa} and \q{re} because otherwise the reading
+    would be \q{pareci} = 123. It is not required after \q{ci} but
+    is inserted here in brackets for the sake of symmetry. The only
+    time \q{boi} is required is, as in \exref{18.6.1}, when there are two consecutive numbers or lerfu
+    strings. 
+
+Forethought mekso can use any number of operands, in \exref{18.6.1} three. How do we know how many
+    operands there are in ambiguous circumstances? The usual Lojban
+    solution is employed: an elidable terminator, namely \q{ku'e}.
+    Here is an example:
+\begin{example}
+li py. su'i va'a ny. ku'e su'i zy du li xy.\n
+the-number \q{p} plus negative-of( \q{n} ) plus \q{z}\n
+\T	equals the-number \q{x}\n
+p + -n + z = x
+\end{example}
+
+{\noindent}where we know that \q{va'a} is a forethought operator because
+    there is no operand preceding it. 
+
+\q{va'a} is the numerical negation operator, of selma'o
+    VUhU. In contrast, j \q{vu'u} is not used for numerical
+    negation, but only for subtraction, as it always has two or
+    more operands. Do not confuse \q{va'a} and \q{vu'u}, which are
+    operators, with \q{ni'u}, which is part of a number.
+
+ In \exref{18.6.2}, the operator \q{va'a} and
+    the terminator \q{ku'e} serve in effect as parentheses. (The regular
+    parentheses \q{vei} and \q{ve'o} are NOT used for this purpose.) If
+    the \q{ku'e} were omitted, the \q{su'i zy} would be swallowed up by
+    the \q{va'a} forethought operator, which would then appear to have
+    two operands, \q{ny} and \q{su'i zy.}, where the latter is also a
+    forethought expression.
+
+Forethought mekso is also useful for matching standard
+    functional notation. How do we represent \q{z = f(x)}? The
+    answer is:
+\begin{example}
+li zy du li ma'o fy.boi xy.\n
+the-number z equals the-number the-operator f x\n
+z = f(x)
+\end{example}
+
+Again, no parentheses are used. The construct \q{ma'o fy.boi}
+    is the equivalent of an operator, and appears in forethought
+    here (although it could also be used as a regular infix
+    operator). In mathematics, letters sometimes mean functions and
+    sometimes mean variables, with only the context to tell which.
+    Lojban chooses to accept the variable interpretation as the
+    default, and uses the special flag \q{ma'o} to mark a lerfu
+    string as an operator. The cmavo \q{xy.} and \q{zy.} are
+    variables, but \q{fy.} is an operator (a function) because
+    \q{ma'o} marks it as such. The \q{boi} is required because
+    otherwise the \q{xy.} would look like part of the operator
+    name. (The use of \q{ma'o} can be generalized from lerfu
+    strings to any mekso operand: see \hyperref[sec:18:21]{Section
+    21}.) 
+
+When using forethought mekso, the optional marker \q{pe'o}
+    may be placed in front of the operator. This usage can help
+    avoid confusion by providing clearly marked \q{pe'o} and
+    \q{ku'e} pairs to delimit the operand list. \exref{18.6.1} to hyperref[ex:18:6:3]{6.3},
+    respectively, with explicit \q{pe'o} and \q{ku'e}:
+\begin{example}
+li pe'o su'i paboi reboi ciboi ku'e du li xa
+\end{example}
+
+\begin{example}
+li py. su'i pe'o va'a ny. ku'e su'i zy du li xy.
+\end{example}
+
+\begin{example}
+li zy du li pe'o ma'o fy.boi xy. ku'e
+\end{example}
+
+Note: When using forethought mekso, be sure that the operands
+    really are operands: they cannot contain regular infix
+    expressions unless parenthesized with \q{vei} and \q{ve'o}. An
+    earlier version of the complex \exref{18.17.6} came to grief because I forgot this rule.
+
+
+
+\sect{Other useful selbri for mekso bridi}
+So far our examples have been isolated mekso (it is legal to
+    have a bare mekso as a sentence in Lojban) and equation bridi
+    involving \q{du}. What about inequalities such as \q{x $<$5}?
+    The answer is to use a bridi with an appropriate selbri,
+    thus:
+\begin{example}
+li xy. mleca li mu\n
+the-number x is-less-than the-number 5
+\end{example}
+
+Here is a partial list of selbri useful in mathematical
+    bridi:
+
+   du      $x_1$ is identical to $x_2$, $x_3$, $x_4$, ...
+    dunli       $x_1$ is equal/congruent to $x_2$ in/on
+            property/quality/dimension/quantity $x_3$
+    mleca       $x_1$ is less than $x_2$
+    zmadu       $x_1$ is greater than $x_2$
+    dubjavme'a  $x_1$ is less than or equal to $x_2$
+                \optional{du ja mleca, equal or less}
+    dubjavmau   $x_1$ is greater than or equal to $x_2$
+                [du ja zmadu, equal or greater]
+    tamdu'i     $x_1$ is similar to $x_2$
+                [tarmi dunli, shape-equal]
+    turdu'i     $x_1$ is isomorphic to $x_2$
+                [stura dunli, structure-equal]
+    cmima       $x_1$ is a member of set $x_2$
+    gripau      $x_1$ is a subset of set $x_2$
+                [girzu pagbu, set-part]
+    na'ujbi     $x_1$ is approximately equal to
+                [namcu jibni, number-near]
+    terci'e     $x_1$ is a component with function $x_2$
+            of system $x_3$
+
+Note the difference between \q{dunli} and \q{du}; \q{dunli} has
+    a third place that specifies the kind of equality that is
+    meant. \q{du} refers to actual identity, and can have any
+    number of places:
+\begin{example}
+py. du xy.boi zy.\n
+\q{p} is-identical-to \q{x} \q{z}\n
+p = x = z
+\end{example}
+
+Lojban bridi can have only one predicate, so the \q{du} is
+    not repeated.
+
+Any of these selbri may usefully be prefixed with \q{na},
+    the contradictory negation cmavo, to indicate that the relation
+    is false:
+\begin{example}
+li re su'i re na du li mu\n
+the-number 2 + 2 is-not equal-to the-number 5.\n
+2 + 2 <span class="c3">$\frac{1}{2}$/span> 5
+\end{example}
+
+As usual in Lojban, negated bridi say what is false, and do
+    not say anything about what might be true.
+
+
+
+\sect{Indefinite numbers}
+The following cmavo are discussed in this section:
+
+   ro  PA  all
+    so'a    PA  almost all
+    so'e    PA  most
+    so'i    PA  many
+    so'o    PA  several
+    so'u    PA  a few
+    no'o    PA  the typical number of
+    da'a    PA  all but (one) of
+
+piro    PA+PA   the whole of/all of
+    piso'a  PA+PA   almost the whole of
+    piso'e  PA+PA   most of
+    piso'i  PA+PA   much of
+    piso'o  PA+PA   a small part of
+    piso'u  PA+PA   a tiny part of
+    pino'o  PA+PA   the typical portion of
+
+rau PA  enough
+    du'e    PA  too many
+    mo'a    PA  too few
+
+pirau   PA+PA   enough of
+    pidu'e  PA+PA   too much of
+    pimo'a  PA+PA   too little of
+
+Not all the cmavo of PA represent numbers in the usual
+    mathematical sense. For example, the cmavo \q{ro} means \q{all}
+    or \q{each}. This number does not have a definite value in the
+    abstract: \q{li ro} is undefined. But when used to count or
+    quantify something, the parallel between \q{ro} and \q{pa} is
+    clearer:
+\begin{example}
+mi catlu pa prenu\n
+I look-at one person
+\end{example}
+
+\begin{example}
+mi catlu ro prenu\n
+I look-at all persons
+\end{example}
+
+\exref{18.8.1} might be true, whereas \exref{18.8.2} is almost certainly false. 
+
+The cmavo \q{so'a}, \q{so'e}, \q{so'i}, \q{so'o}, and
+    \q{so'u} represent a set of indefinite numbers less than
+    \q{ro}. As you go down an alphabetical list, the magnitude
+    decreases:
+\begin{example}
+mi catlu so'a prenu\n
+I look-at almost-all persons
+\end{example}
+
+\begin{example}
+mi catlu so'e prenu\n
+I look-at most persons
+\end{example}
+
+\begin{example}
+mi catlu so'i prenu\n
+I look-at many persons
+\end{example}
+
+\begin{example}
+mi catlu so'o prenu\n
+I look-at several persons
+\end{example}
+
+\begin{example}
+mi catlu so'u prenu\n
+I look-at a-few persons
+\end{example}
+
+The English equivalents are only rough: the cmavo provide space
+    for up to five indefinite numbers between \q{ro} and \q{no},
+    with a built-in ordering. In particular, \q{so'e} does not mean
+    \q{most} in the sense of \q{a majority} or \q{more than half}. 
+
+Each of these numbers, plus \q{ro}, may be prefixed with
+    \q{pi} (the decimal point) in order to make a fractional form
+    which represents part of a whole rather than some elements of a
+    totality. \q{piro} therefore means \q{the whole of}:
+\begin{example}
+mi citka piro lei nanba\n
+I eat the-whole-of the-mass-of bread
+\end{example}
+
+Similarly, \q{piso'a} means \q{almost the whole of}; and so on
+    down to \q{piso'u}, \q{a tiny part of}. These numbers are
+    particularly appropriate with masses, which are usually
+    measured rather than counted, as \exref{18.8.8} shows. 
+
+In addition to these cmavo, there is \q{no'o}, meaning ``the
+    typical value'', and \q{pino'o}, meaning ``the typical
+    portion'': Sometimes \q{no'o} can be translated ``the average
+    value'', but the average in question is not, in general, a
+    mathematical mean, median, or mode; these would be more
+    appropriately represented by operators.
+\begin{example}
+mi catlu no'o prenu\n
+I look-at a-typical-number-of persons
+\end{example}
+
+\begin{example}
+mi citka pino'o lei nanba\n
+I eat a-typical-amount-of the-mass-of bread.
+\end{example}
+
+\q{da'a} is a related cmavo meaning \q{all but}:
+\begin{example}
+mi catlu da'a re prenu\n
+I look-at all-but two persons
+\end{example}
+
+\begin{example}
+mi catlu da'a so'u prenu\n
+I look-at all-but a-few persons
+\end{example}
+
+\exref{18.8.12} is similar in meaning to \exref{18.8.3}. 
+
+If no number follows \q{da'a}, then \q{pa} is assumed;
+    \q{da'a} by itself means \q{all but one}, or in ordinal
+    contexts \q{all but the last}:
+\begin{example}
+ro ratcu ka'e citka da'a ratcu\n
+all rats can eat all-but-one rats.\n
+All rats can eat all other rats.
+\end{example}
+
+(The use of \q{da'a} means that \exref{18.8.13} does not require that all rats can eat themselves, but
+    does allow it. Each rat has one rat it cannot eat, but that one
+    might be some rat other than itself. Context often dictates
+    that \q{itself} is, indeed, the \q{other} rat.) 
+
+As mentioned in \sectref{18.3}, \q{ma'u} and
+    \q{ni'u} are also legal numbers, and they mean ``some positive
+    number'' and \q{some negative number} respectively.
+\begin{example}
+li ci vu'u re du li ma'u\n
+the-number 3 - 2 = some-positive-number
+\end{example}
+
+\begin{example}
+li ci vu'u vo du li ni'u\n
+the-number 3 - 4 = some-negative-number
+\end{example}
+
+\begin{example}
+mi ponse ma'u rupnu\n
+I possess a-positive-number-of currency-units.
+\end{example}
+
+All of the numbers discussed so far are objective, even if
+    indefinite. If there are exactly six superpowers
+    (\q{rairgugde}, \q{superlative-states}) in the world, then ``ro
+    rairgugde'' means the same as \q{xa rairgugde}. It is often
+    useful, however, to express subjective indefinite values. The
+    cmavo \q{rau} (enough), \q{du'e} (too many), and \q{mo'a} (too
+    few) are then appropriate:
+\begin{example}
+mi ponse rau rupnu\n
+I possess enough currency-units.
+\end{example}
+
+Like the \q{so'a}-series, \q{rau}, \q{du'e}, and \q{mo'a} can
+    be preceded by \q{pi}; for example, \q{pirau} means ``a
+    sufficient part of.'' 
+
+Another possibility is that of combining definite and
+    indefinite numbers into a single number. This usage implies
+    that the two kinds of numbers have the same value in the given
+    context:
+\begin{example}
+mi viska le rore gerku\n
+I saw the all-of/two dogs.\n
+I saw both dogs.
+\end{example}
+
+\begin{example}
+mi speni so'ici prenu\n
+I am-married-to many/three persons.\n
+I am married to three persons\n
+\T	(which is \q{many} in the circumstances).
+\end{example}
+
+\exref{18.8.19} assumes a mostly monogamous
+    culture by stating that three is \q{many}.
+
+
+
+\sect{Approximation and inexact numbers}
+The following cmavo are discussed in this section:
+
+   ji'i    PA  approximately
+    su'e    PA  at most
+    su'o    PA  at least
+    me'i    PA  less than
+    za'u    PA  more than
+
+The cmavo \q{ji'i} (of selma'o PA) is used in several ways to
+    indicate approximate or rounded numbers. If it appears at the
+    beginning of a number, the whole number is approximate:
+\begin{example}
+ji'i vo no\n
+approximation four zero\n
+approximately 40
+\end{example}
+
+If \q{ji'i} appears in the middle of a number, all the digits
+    following it are approximate:
+\begin{example}
+vo no ji'i mu no\n
+four zero approximation five zero\n
+roughly 4050\n
+\T	(where the \q{four thousand} is exact,\n
+\T	but the \q{fifty} is approximate)
+\end{example}
+
+If \q{ji'i} appears at the end of a number, it indicates that
+    the number has been rounded. In addition, it can then be
+    followed by a sign cmavo (\q{ma'u} or \q{ni'u}), which indicate
+    truncation towards positive or negative infinity respectively.
+\begin{example}
+re pi ze re ji'i\n
+two point seven two approximation\n
+2.72 (rounded)
+\end{example}
+
+\begin{example}
+re pi ze re ji'i ma'u\n
+two point seven two approximation positive-sign\n
+2.72 (rounded up)
+\end{example}
+
+\begin{example}
+re pi ze pa ji'i ni'u\n
+two point seven one approximation negative-sign\n
+2.71 (rounded down)
+\end{example}
+
+\exref{18.9.3} through hyperref\optional{ex:18:9:5}{9.5} are all approximations to \q{te'o}
+    (exponential e). \q{ji'i} can also appear by itself, in which
+    case it means ``approximately the typical value in this
+    context''. 
+
+The four cmavo \q{su'e}, \q{su'o}, \q{me'i}, and \q{za'u},
+    also of selma'o PA, express inexact numbers with upper or lower
+    bounds:
+\begin{example}
+mi catlu su'e re prenu\n
+I look-at at-most two persons
+\end{example}
+
+\begin{example}
+mi catlu su'o re prenu\n
+I look-at at-least two persons
+\end{example}
+
+\begin{example}
+mi catlu me'i re prenu\n
+I look-at less-than two persons
+\end{example}
+
+\begin{example}
+mi catlu za'u re prenu\n
+I look-at more-than two persons
+\end{example}
+
+Each of these is a subtly different claim: \exref{18.9.7} is true of two or any greater
+    number, whereas \exref{18.9.9} requires three
+    persons or more. Likewise, \exref{18.9.6}
+    refers to zero, one, or two; \exref{18.9.8} to
+    zero or one. (Of course, when the context allows numbers other
+    than non-negative integers, \q{me'i re} can be any number less
+    than 2, and likewise with the other cases.) The exact
+    quantifier, \q{exactly 2, neither more nor less} is just
+    \q{re}. Note that \q{su'ore} is the exact Lojban equivalent of
+    English plurals. 
+
+If no number follows one of these cmavo, \q{pa} is
+    understood: therefore,
+\begin{example}
+mi catlu su'o prenu\n
+I look-at at-least \optional{one} person
+\end{example}
+
+{\noindent}is a meaningful claim. 
+
+Like the numbers in \sectref{18.8}, all of
+    these cmavo may be preceded by \q{pi} to make the corresponding
+    quantifiers for part of a whole. For example, \q{pisu'o} means
+    \q{at least some part of}. The quantifiers \q{ro}, \q{su'o},
+    \q{piro}, and \q{pisu'o} are particularly important in Lojban,
+    as they are implicitly used in the descriptions introduced by
+    the cmavo of selma'o LA and LE, as explained in \chapref{6}. Descriptions in general are
+    outside the scope of this chapter.
+
+
+
+\sect{Non-decimal and compound bases}
+The following cmavo are discussed in this section:
+
+   ju'u    VUhU    to the base
+    dau PA  hex digit A = 10
+    fei PA  hex digit B = 11
+    gai PA  hex digit C = 12
+    jau PA  hex digit D = 13
+    rei PA  hex digit E = 14
+    vai PA  hex digit F = 15
+    pi'e    PA  compound base point
+
+In normal contexts, Lojban assumes that all numbers are
+    expressed in the decimal (base 10) system. However, other bases
+    are possible, and may be appropriate in particular
+    circumstances. 
+
+To specify a number in a particular base, the VUhU operator
+    \q{ju'u} is suitable:
+\begin{example}
+li pa no pa no ju'u re du li pa no\n
+the-number 1010 base 2 equals the-number 10
+\end{example}
+
+Here, the final \q{pa no} is assumed to be base 10, as usual;
+    so is the base specification. (The base may also be changed
+    permanently by a metalinguistic specification; no standard way
+    of doing so has as yet been worked out.) 
+
+Lojban has digits for representing bases up to 16, because
+    16 is a base often used in computer applications. In English,
+    it is customary to use the letters A-F as the base 16 digits
+    equivalent to the numbers ten through fifteen. In Lojban, this
+    ambiguity is avoided:
+\begin{example}
+li daufeigai ju'u paxa du li rezevobi\n
+the-number ABC base 16 equals the-number 2748
+\end{example}
+
+\begin{example}
+li jaureivai ju'u paxa du li cimuxaze\n
+the-number DEF base 16 equals the-number 3567
+\end{example}
+
+Note the pattern in the cmavo: the diphthongs \q{au}, \q{ei},
+    \q{ai} are used twice in the same order. The digits for A to D
+    use consonants different from those used in the decimal digit
+    cmavo; E and F unfortunately overlap 2 and 4 --- there was
+    simply not enough available cmavo space to make a full
+    differentiation possible. The cmavo are also in alphabetical
+    order. 
+
+The base point \q{pi} is used in non-decimal bases just as
+    in base 10:
+\begin{example}
+li vai pi bi ju'u paxa du li pamu pi mu\n
+the-number F.8 base 16 equals the-number 15.5
+\end{example}
+
+Since \q{ju'u} is an operator of selma'o VUhU, it is
+    grammatical to use any operand as the left argument.
+    Semantically, however, it is undefined to use anything but a
+    numeral string on the left. The reason to make \q{ju'u} an
+    operator is to allow reference to a base which is not a
+    constant. 
+
+There are some numerical values that require a \q{base} that
+    varies from digit to digit. For example, times represented in
+    hours, minutes, and seconds have, in effect, three \q{digits}:
+    the first is base 24, the second and third are base 60. To
+    express such numbers, the compound base separator \q{pi'e} is
+    used:
+\begin{example}
+ci pi'e rere pi'e vono\n
+3:22:40
+\end{example}
+
+Each digit sequence separated by instances of \q{pi'e} is
+    expressed in decimal notation, but the number as a whole is not
+    decimal and can only be added and subtracted by special rules:
+\begin{example}
+li ci pi'e rere pi'e vono su'i pi'e ci pi'e cici\n
+\T	du li ci pi'e rexa pi'e paci\n
+the-number 3:22:40 plus :3:33 equals the-number 3:26:13\n
+3:22:40 + 0:3:33 = 3:26:13
+\end{example}
+
+Of course, only context tells you that the first part of the
+    numbers in \exref{18.10.5} and \exref{18.10.6} is hours, the second minutes,
+    and the third seconds.
+
+The same mechanism using \q{pi'e} can be used to express
+    numbers which have a base larger than 16. For example, base-20
+    Mayan mathematics might use digits from \q{no} to \q{paso},
+    each separated by \q{pi'e}:
+\begin{example}
+li pa pi'e re pi'e ci ju'u reno du li vovoci\n
+the-number 1;2;3 base 20 equals the-number 443
+\end{example}
+
+Carefully note the difference between:
+\begin{example}
+pano ju'u reno\n
+the-digit-10 base 20
+\end{example}
+
+{\noindent}which is equal to ten, and:
+\begin{example}
+pa pi'e no ju'u reno\n
+1;0 base 20
+\end{example}
+
+{\noindent}which is equal to twenty. 
+
+Both \q{pi} and \q{pi'e} can be used to express large-base
+    decimal fractions:
+\begin{example}
+li pa pi'e vo pi ze ju'u reno du li re vo pi ci mu\n
+the-number 1;4.7 base 20 equals the-number 24.35
+\end{example}
+
+\q{pi'e} is also used where the base of each digit is vague, as
+    in the numbering of the examples in this chapter:
+\begin{example}
+dei jufra panopi'epapamoi\n
+This-utterance is-a-sentence-type-of 10;11th-thing.\n
+This is Sentence 10.11.
+\end{example}
+
+
+
+\sect{Special mekso selbri}
+The following cmavo are discussed in this section:
+
+   mei MOI cardinal selbri
+    moi MOI ordinal selbri
+    si'e    MOI portion selbri
+    cu'o    MOI probability selbri
+    va'e    MOI scale selbri
+
+me  ME  make sumti into selbri
+    me'u    MEhU    terminator for ME
+
+Lojban possesses a special category of selbri which are based
+    on mekso. The simplest kind of such selbri are made by
+    suffixing a member of selma'o MOI to a number. There are four
+    members of MOI, each of which serves to create number-based
+    selbri with specific place structures. 
+
+\q{-mei} creates cardinal selbri. The basic place structure
+    is:
+\begin{description}
+\item[] $x_1$ is a mass formed from the set $x_2$ of n members, one or more of which is/are $x_3$
+\end{description}
+
+A cardinal selbri interrelates a set with a given number of
+    members, the mass formed from that set, and the individuals
+    which make the set up. The mass argument is placed first as a
+    matter of convenience, not logical necessity. 
+
+Some examples:
+\begin{example}
+lei mi ratcu cu cimei\n
+those-I-describe-as-the-mass-of my rats are-a-threesome.\n
+My rats are three.\n
+I have three rats.
+\end{example}
+
+Here, the mass of my rats is said to have three components;
+    that is, I have three rats.
+
+Another example, with one element this time:
+\begin{example}
+mi poi pamei cu cusku dei\n
+I who am-an-individual express this-sentence.
+\end{example}
+
+In \exref{18.11.2}, \q{mi} refers to a
+    mass, \q{the mass consisting of me}. Personal pronouns are
+    vague between masses, sets, and individuals.
+
+However, when the number expressed before \q{-mei} is an
+    objective indefinite number of the kind explained in \sectref{18.8}, a slightly different place structure
+    is required:
+\begin{description}
+\item[] $x_1$ is a mass formed from a set $x_2$ of n members, one or more of which is/are $x_3$, measured relative to the set $x_4$.
+
+\end{description}
+
+An example:
+\begin{example}
+lei ratcu poi zvati le panka cu so'umei\n
+\T	fo lo'i ratcu\n
+the-mass-of rats which are-in the park are a-fewsome\n
+\T	with-respect-to the-set-of rats.\n
+The rats in the park are a small number\n
+\T	of all the rats there are.
+\end{example}
+
+In \exref{18.11.3}, the $x_2$ and $x_3$ places are
+    vacant, and the $x_4$ place is filled by \q{lo'i ratcu}, which
+    (because no quantifiers are explicitly given) means ``the whole
+    of the set of all those things which are rats'', or simply
+    \q{the set of all rats.}
+\begin{example}
+le'i ratcu poi zvati le panka cu se so'imei\n
+The-set-of rats which-are in the park is-a manysome.\n
+There are many rats in the park.
+\end{example}
+
+In \exref{18.11.4}, the conversion cmavo
+    \q{se} swaps the $x_1$ and the $x_2$ places, so that the new $x_1$ is
+    the set. The $x_4$ set is unspecified, so the implication is that
+    the rats are \q{many} with respect to some unspecified
+    comparison set.
+
+More explanations about the interrelationship of sets,
+    masses, and individuals can be found in \chapref{6}.
+
+\q{-moi} creates ordinal selbri. The place structure is:
+\begin{description}
+\item[] $x_1$ is the (n)th member of set $x_2$ when ordered by rule $x_3$
+
+\end{description}
+
+Some examples:
+\begin{example}
+ti pamoi le'i mi ratcu\n
+This-one is the first-of the rats associated-with me.\n
+This is my first rat.
+\end{example}
+
+\begin{example}
+ta romoi le'i mi ratcu\n
+That is-the-allth-of the rats associated-with me.\n
+That is my last rat.
+\end{example}
+
+\begin{example}
+mi raumoi le velskina porsi\n
+I am-enough-th-in the movie-audience sequence\n
+I am enough-th in the movie line.
+\end{example}
+
+\exref{18.11.7} means, in the appropriate
+    context, that my position in line is sufficiently far to the
+    front that I will get a seat for the movie. 
+
+\q{-si'e} creates portion selbri. The place structure
+    is:
+\begin{description}
+\item[] $x_1$ is an (n)th portion of mass $x_2$
+
+\end{description}
+
+Some examples:
+\begin{example}
+levi sanmi cu fi'ucisi'e lei mi djedi cidja\n
+This-here meal is-a-slash-three-portion-of my day-food.\n
+This meal is one-third of my daily food.
+\end{example}
+
+\q{-cu'o} creates probability selbri. The place structure is: 
+\begin{description}
+\item[] event $x_1$ has probability (n) of occurring under conditions $x_2$
+\end{description}
+
+The number must be between 0 and 1 inclusive. For example:
+\begin{example}
+le nu lo sicni cu sedja'o cu pimucu'o\n
+The event of a coin being a head-displayer\n
+\T	has probability .5.
+\end{example}
+
+\q{-va'e} creates a scale selbri. The place structure is: 
+\begin{description}
+\item[] $x_1$ is at scale position (n) on the scale $x_2$
+\end{description}
+
+If the scale is granular rather than continuous, a form like
+    \q{cifi'uxa} (3/6) may be used; in this case, 3/6 is not the
+    same as 1/2. Here is an example:
+\begin{example}
+le vi rozgu cu sofi'upanova'e xunre\n
+This rose is 8/10-scale red\n
+This rose is 8 out of 10 on the scale of redness.\n
+This rose is very red.
+\end{example}
+
+When the quantifier preceding any MOI cmavo includes the
+    subjective numbers \q{rau}, \q{du'e}, or \q{mo'a} (enough, too
+    many, too few) then an additional place is added for ``by
+    standard''. For example:
+\begin{example}
+le ratcu poi zvati le panka cu du'emei fo mi\n
+The rats which-are in the park are too-many\n
+\T	by-standard me.\n
+There are too many rats in the park for me.
+\end{example}
+
+The extra place (which for \q{-mei} is the $x_4$ place labeled by
+    \q{fo}) is provided rather than using a BAI tag such as
+    \q{ma'i} because a specification of the standard for judgment
+    is essential to the meaning of subjective words like
+    \q{enough}. 
+
+This place is not normally explicit when using one of the
+    subjective numbers directly as a number. Therefore, ``du'e
+    ratcu'' means \q{too many rats} without specifying any
+    standard.
+
+It is also grammatical to substitute a lerfu string for a
+    number:
+\begin{example}
+ta ny.moi le'i mi ratcu\n
+that is-nth-of the-set-of my rats\n
+That is my nth rat.
+\end{example}
+
+More complex mekso cannot be placed directly in front of MOI,
+    due to the resulting grammatical ambiguities. Instead, a
+    somewhat artificial form of expression is required. 
+
+The cmavo \q{me} (of selma'o ME) has the function of making
+    a sumti into a selbri. It is often used to make a name into a
+    predicate:
+\begin{example}
+ti me la nu,IORK. \optional{me'u}\n
+this-here pertains-to what-I-call \q{New York}.\n
+This is New York (or is New York-related).
+\end{example}
+
+A whole \q{me} construction can have a member of MOI added to
+    the end to create a complex mekso selbri:
+\begin{example}
+ta me li ny. su'i pa me'u moi le'i mi ratcu\n
+that is the-number n plus one-th-of the-set-of my rats.\n
+That is my (n+1)-th rat.
+\end{example}
+
+Here the mekso \q{ny. su'i pa} is made into a sumti (with
+    \q{li}) and then changed into a mekso selbri with \q{me} and
+    \q{me'u moi}. The elidable terminator \q{me'u} is required here
+    in order to keep the \q{pa} and the \q{moi} separate;
+    otherwise, the parser will combine them into the compound
+    \q{pamoi} and reject the sentence as ungrammatical.
+
+It is perfectly possible to use non-numerical sumti after
+    \q{me} and before a member of MOI, producing strange results
+    indeed:
+\begin{example}
+le nu mi nolraitru\n
+\T	cu me le'e snime bolci\n
+\T	be vi la xel. cu'o\n
+The event-of me being-a-nobly-superlative-ruler\n
+\T	has-the-stereotypical snow type-of-ball\n
+\T	at Hell probability.\n
+I have a snowball's chance in Hell of being king.
+\end{example}
+
+Note: the elidable terminator \q{boi} is not used between a
+    number and a member of MOI. As a result, the \q{me'u} in \exref{18.11.14} could also be replaced by a
+    \q{boi}, which would serve the same function of preventing the
+    \q{pa} and \q{moi} from joining into a compound.
+
+
+
+\sect{Number questions}
+The following cmavo is discussed in this section:
+
+   xo  PA  number question
+
+The cmavo \q{xo}, a member of selma'o PA, is used to ask
+    questions whose answers are numbers. Like most Lojban question
+    words, it fills the blank where the answer should go. (See \chapref{19} for more on Lojban
+    questions.)
+\begin{example}
+li re su'i re du li xo\n
+the-number 2 plus 2 equals the-number what?\n
+What is 2 + 2?
+\end{example}
+
+\begin{example}
+le xomoi prenu cu darxi do\n
+the what-number-th person hit you?\n
+Which person \optional{as in a police lineup} hit you?
+\end{example}
+
+\q{xo} can also be combined with other digits to ask questions
+    whose answers are already partly specified. This ability could
+    be very useful in writing tests of elementary arithmetical
+    knowledge:
+\begin{example}
+li remu pi'i xa du li paxono\n
+the-number 25 times 6 equals the-number 1?0
+\end{example}
+
+{\noindent}to which the correct reply would be \q{mu}, or 5. The ability
+    to utter bare numbers as grammatical Lojban sentences is
+    primarily intended for giving answers to \q{xo} questions.
+    (Another use, obviously, is for counting off physical objects
+    one by one.)
+
+
+
+\sect{Subscripts}
+The following cmavo is discussed in this section:
+
+   xi  XI  subscript
+
+Subscripting is a general Lojban feature, not used only in
+    mekso; there are many things that can logically be subscripted,
+    and grammatically a subscript is a free modifier, usable almost
+    anywhere. In particular, of course, mekso variables (lerfu
+    strings) can be subscripted:
+\begin{example}
+li xy.boixici du li xy.boixipa su'i xy.boixire\n
+the-number x-sub-3 equals the-number x-sub-1 plus x-sub-2\n
+x<sub>3</sub>  = x<sub>1</sub>  + x<sub>2</sub>
+\end{example}
+
+Subscripts always begin with the flag \q{xi} (of selma'o XI).
+    \q{xi} may be followed by a number, a lerfu string, or a
+    general mekso expression in parentheses:
+\begin{example}
+xy.boixino\n
+x<sub>0</sub>
+\end{example}
+
+\begin{example}
+xy.boixiny.\n
+x<sub>n</sub>
+\end{example}
+
+\begin{example}
+xy.boixi vei ny. su'i pa \optional{ve'o}\n
+x<sub>n+1}
+</sub>
+\end{example}
+
+<sub>Note that subscripts attached directly to lerfu words
+    (variables) generally need a \q{boi} terminating the variable.
+    Free modifiers, of which subscripts are one variety, generally
+    require the explicit presence of an otherwise elidable
+    terminator.</sub>
+
+<sub>There is no standard way of handling superscripts
+    (other than those used as exponents) or for subscripts or
+    superscripts that come before the main expression. If
+    necessary, further cmavo could be assigned to selma'o XI for
+    these purposes.</sub>
+
+<sub>The elidable terminator for a subscript is that for a
+    general number or lerfu string, namely \q{boi}. By convention,
+    a subscript following another subscript is taken to be a
+    sub-subscript:</sub>
+
+<sub>
+\begin{example}
+xy.boi xi by.boi xi vo\n
+x<sub>b</sub>4</sub>
+\end{example}
+
+See \exref{18.17.10} for the standard
+    method of specifying multiple subscripts on a single
+    object.
+
+More information on the uses of subscripts may be found in\chapref{19}.
+
+
+
+\sect{Infix operators revisited}
+The following cmavo are discussed in this section:
+
+   tu'o    PA  null operand
+    ge'a    VUhU    null operator
+    gei VUhU    exponential notation
+
+The infix operators presented so far have always had exactly
+    two operands, and for more or fewer operands forethought
+    notation has been required. However, it is possible to use an
+    operator in infix style even though it has more or fewer than
+    two operands, through the use of a pair of tricks: the null
+    operand \q{tu'o} and the null operator \q{ge'a}. The first is
+    suitable when there are too few operands, the second when there
+    are too many. For example, suppose we wanted to express the
+    numerical negation operator \q{va'a} in infix form. We would
+    use:
+\begin{example}
+li tu'o va'a ny. du\n
+\T	li no vu'u ny.\n
+the-number (null) additive-inverse n equals\n
+\T	the-number zero minus n\n
+-n = 0 - n
+\end{example}
+
+The \q{tu'o} fulfills the grammatical requirement for a left
+    operand for the infix use of \q{va'a}, even though semantically
+    none is needed or wanted. 
+
+Finding a suitable example of \q{ge'a} requires exhibiting a
+    ternary operator, and ternary operators are not common. The
+    operator \q{gei}, however, has both a binary and a ternary use.
+    As a binary operator, it provides a terse representation of
+    scientific (also called \q{exponential}) notation. The first
+    operand of \q{gei} is the exponent, and the second operand is
+    the mantissa or fraction:
+\begin{example}
+li cinonoki'oki'o\n
+\T	du li bi gei ci\n
+the-number three-zero-zero-comma-comma\n
+\T	equals the-number eight scientific three.\n
+300,000,000 = 3 $\times$10<sup>8</sup>
+\end{example}
+
+Why are the arguments to \q{gei} in reverse order from the
+    conventional symbolic notation? So that \q{gei} can be used in
+    forethought to allow easy specification of a large (or small)
+    imprecise number:
+\begin{example}
+gei reno\n
+(scientific) two-zero\n
+10<sup>20</sup>
+\end{example}
+
+Note, however, that although 10 is far and away the most common
+    exponent base, it is not the only possible one. The third
+    operand of \q{gei}, therefore, is the base, with 10 as the
+    default value. Most computers internally store so-called
+    \q{floating-point} numbers using 2 as the exponent base. (This
+    has nothing to do with the fact that computers also represent
+    all integers in base 2; the IBM 360 series used an exponent
+    base of 16 for floating point, although each component of the
+    number was expressed in base 2.) Here is a computer
+    floating-point number with a value of 40:
+\begin{example}
+papano bi'eju'u re\n
+\T	gei pipanopano bi'eju'u re ge'a re\n
+(one-one-zero base 2)\n
+\T	scientific (point-one-zero-one-zero base 2) with-base 2\n
+.1010<sub>2</sub> $\times$2<sup>110<sub>2</sub></sup>
+\end{example}
+
+
+
+\sect{Vectors and matrices}
+The following cmavo are discussed in this section:
+
+   jo'i    JOhI    start vector
+    te'u    TEhU    end vector
+    pi'a    VUhU    matrix row combiner
+    sa'i    VUhU    matrix column combiner
+
+A mathematical vector is a list of numbers, and a mathematical
+    matrix is a table of numbers. Lojban considers matrices to be
+    built up out of vectors, which are in turn built up out of
+    operands. 
+
+\q{jo'i}, the only cmavo of selma'o JOhI, is the vector
+    indicator: it has a syntax reminiscent of a forethought
+    operator, but has very high precedence. The components must be
+    simple operands rather than full expressions (unless
+    parenthesized). A vector can have any number of components;
+    \q{te'u} is the elidable terminator. An example:
+\begin{example}
+li jo'i paboi reboi te'u su'i jo'i ciboi voboi\n
+\T	du li jo'i voboi xaboi\n
+the-number array( one, two ) plus array( three, four)\n
+\T	equals the-number array( four, six)\n
+(1,2) + (3,4) = (4,6)
+\end{example}
+
+Vectors can be combined into matrices using either \q{pi'a},
+    the matrix row operator, or \q{sa'i}, the matrix column
+    operator. The first combines vectors representing rows of the
+    matrix, and the second combines vectors representing columns of
+    the matrix. Both of them allow any number of arguments:
+    additional arguments are tacked on with the null operator
+    \q{ge'a}. 
+
+Therefore, the \q{magic square} matrix
+\begin{description}
+\item[] 8 1 6 3 5 7 4 9 2
+\end{description}
+
+can be represented either as:
+\begin{example}
+jo'i biboi paboi xa pi'a jo'i ciboi muboi ze\n
+\T	ge'a jo'i voboi soboi re\n
+the-vector (8 1 6) matrix-row the-vector (3 5 7)\n
+\T	, the-vector (4 9 2)
+\end{example}
+
+{\noindent}or as
+\begin{example}
+jo'i biboi ciboi vo sa'i jo'i paboi muboi so\n
+\T	ge'a jo'i xaboi zeboi re\n
+the-vector (8 3 4) matrix-column the-vector (1 5 9)\n
+\T	, the-vector (6 7 2)
+\end{example}
+
+The regular mekso operators can be applied to vectors and to
+    matrices, since grammatically both of these are expressions. It
+    is usually necessary to parenthesize matrices when used with
+    operators in order to avoid incorrect groupings. There are no
+    VUhU operators for the matrix operators of inner or outer
+    products, but appropriate operators can be created using a
+    suitable symbolic lerfu word or string prefixed by \q{ma'o}. 
+
+Matrices of more than two dimensions can be built up using
+    either \q{pi'a} or \q{sa'i} with an appropriate subscript
+    numbering the dimension. When subscripted, there is no
+    difference between \q{pi'a} and \q{sa'i}.
+
+
+
+\sect{Reverse Polish notation}
+The following cmavo is discussed in this section:
+
+   fu'a    FUhA    reverse Polish flag
+
+So far, the Lojban notational conventions have mapped fairly
+    familiar kinds of mathematical discourse. The use of
+    forethought operators may have seemed odd when applied to
+    \q{+}, but when applied to \q{f(} they appear as the usual
+    functional notation. Now comes a sharp break. Reverse Polish
+    (RP) notation represents something completely different; even
+    mathematicians don't use it much. (The only common uses of RP,
+    in fact, are in some kinds of calculators and in the
+    implementation of some programming languages.) 
+
+In RP notation, the operator follows the operands. (Polish
+    notation, where the operator precedes its operands, is another
+    name for forethought mekso of the kind explained in \sectref{18.6}.) The number of operands per operator
+    is always fixed. No parentheses are required or permitted. In
+    Lojban, RP notation is always explicitly marked by a \q{fu'a}
+    at the beginning of the expression; there is no terminator.
+    Here is a simple example:
+\begin{example}
+li fu'a reboi ci su'i\n
+\T	du li mu\n
+the-number (RP!) two, three, plus\n
+\T	equals the-number five.
+\end{example}
+
+The operands are \q{re} and \q{ci}; the operator is
+    \q{su'i}.
+
+Here is a more complex example:
+\begin{example}
+li fu'a reboi ci pi'i\n
+\T	voboi mu pi'i su'i\n
+\T	du li rexa\n
+the-number (RP!) (two, three, times),\n
+\T	(four, five, times), plus\n
+\T	equals the-number two-six
+\end{example}
+
+Here the operands of the first \q{pi'i} are \q{re} and
+    \q{ci}; the operands of the second \q{pi'i} are \q{vo} and
+    \q{mu} (with \q{boi} inserted where needed), and the operands
+    of the \q{su'i} are \q{reboi ci pi'i}, or 6, and ``voboi mu
+    pi'i'', or 20. As you can see, it is easy to get lost in the
+    world of reverse Polish notation; on the other hand, it is
+    especially easy for a mechanical listener (who has a deep
+    mental stack and doesn't get lost) to comprehend.
+
+The operands of an RP operator can be any legal mekso
+    operand, including parenthesized mekso that can contain any
+    valid syntax, whether more RP or something more
+    conventional.
+
+In Lojban, RP operators are always parsed with exactly two
+    operands. What about operators which require only one operand,
+    or more than two operands? The null operand \q{tu'o} and the
+    null operator \q{ge'a} provide a simple solution. A one-operand
+    operator like \q{va'a} always appears in a reverse Polish
+    context as \q{tu'o va'a}. The \q{tu'o} provides the second
+    operand, which is semantically ignored but grammatically
+    necessary. Likewise, the three-operand version of \q{gei}
+    appears in reverse Polish as \q{ge'a gei}, where the \q{ge'a}
+    effectively merges the 2nd and 3rd operands into a single
+    operand. Here are some examples:
+\begin{example}
+li fu'a ciboi muboi vu'u\n
+\T	du li fu'a reboi tu'o va'a\n
+The-number (RP!) (three, five, minus)\n
+\T	equals the-number (RP!) two, null, negative-of.\n
+3 - 5 = -2
+\end{example}
+
+\begin{example}
+li cinoki'oki'o du\n
+\T	li fu'a biboi\n
+\T	ciboi panoboi ge'a gei\n
+the-number 30-comma-comma equals\n
+\T	the-number (RP!) 8,\n
+\T	(3, 10, null-op), exponential-notation\n
+30,000,000 = 3 $\times$10<sup>8</sup>
+\end{example}
+
+
+
+\sect{Logical and non-logical connectives within mekso}
+The following cmavo are discussed in this section:
+
+   .abu    BY  letter \q{a}
+    by  BY  letter \q{b}
+    cy  BY  letter \q{c}
+    fe'a    VUhU    nth root of (default square root)
+    lo'o    LOhO    terminator for LI
+
+As befits a logical language, Lojban has extensive provision
+    for logical connectives within both operators and operands.
+    Full details on logical and non-logical connectives are
+    provided in \chapref{14}. Operands are
+    connected in afterthought with selma'o A and in forethought
+    with selma'o GA, just like sumti. Operators are connected in
+    afterthought with selma'o JA and in forethought with selma'o
+    GUhA, just like tanru components. This parallelism is no
+    accident. 
+
+In addition, A+BO and A+KE constructs are allowed for
+    grouping logically connected operands, and \q{ke ... ke'e} is
+    allowed for grouping logically connected operators, although
+    there are no analogues of tanru among the operators.
+
+Despite the large number of rules required to support this
+    feature, it is of relatively minor importance in the mekso
+    scheme of things. \exref{18.17.1} exhibits
+    afterthought logical connection between operands:
+\begin{example}
+vei ci .a vo ve'o prenu cu klama le zarci\n
+( three or four ) people go-to the market.
+\end{example}
+
+\exref{18.17.2} is equivalent in meaning, but
+    uses forethought connection:
+\begin{example}
+vei ga ci gi vo ve'o prenu cu klama le zarci\n
+( either 3 or 4 ) people go-to the market.
+\end{example}
+
+Note that the mekso here are being used as quantifiers. Lojban
+    requires that any mekso other than a simple number be enclosed
+    in parentheses when used as a quantifier. This rule prevents
+    ambiguities that do not exist when using \q{li}. 
+
+By the way, \q{li} has an elidable terminator, \q{lo'o},
+    which is needed when a \q{li} sumti is followed by a logical
+    connective that could seem to be within the mekso. For
+    example:
+\begin{example}
+li re su'i re du\n
+\T	li vo lo'o .onai lo nalseldjuno namcu\n
+the-number two plus two equals\n
+\T	the-number four or else a non-known number.
+\end{example}
+
+Omitting the \q{lo'o} would cause the parser to assume that
+    another operand followed the \q{.onai} and reject \q{lo} as an
+    invalid operand.
+
+Simple examples of logical connection between operators are
+    hard to come by. A contrived example is:
+\begin{example}
+li re su'i je pi'i re du li vo\n
+the-number two plus and times two equals the-number four.\n
+2 + 2 = 4 and 2 $\times$2 = 4.
+\end{example}
+
+The forethought-connection form of \exref{18.17.4} is:
+\begin{example}
+li re ge su'i gi pi'i re\n
+\T	du li vo\n
+the-number two both plus and times two\n
+\T	equals the-number four.\n
+Both 2 + 2 = 4 and 2 $\times$2 = 4.
+\end{example}
+
+Here is a classic example of operand logical connection:
+\begin{example}
+go li .abu bi'epi'i vei xy. te'a re ve'o\n
+\T	su'i by. bi'epi'i xy. su'i cy.\n
+\T	du li no\n
+gi li xy. du li vei va'a by. ku'e\n
+\T	su'i ja vu'u fe'a\n
+\T	vei by. bi'ete'a re vu'u\n
+\T	vo bi'epi'i .abu bi'epi'i cy. ve'o \optional{ku'e} ve'o\n
+\T	fe'i re bi'epi'i .abu\n
+if-and-only-if the-number \q{a}-times-( \q{x} power two )\n
+\T	plus \q{b}-times-\q{x} plus \q{c}\n
+\T	equals the-number zero\n
+then the-number x equals the-number [ the-negation-of( b )\n
+\T	plus or minus the-root-of\n
+\T	( \q{b}-power-2 minus\n
+\T	four-times-\q{a}-times-\q{c} ) ]\n
+\T	divided-by two-times-\q{a}.\n
+Iff ax<sup>2</sup>  + bx + c = 0,\n
+\T	then x =-b $\pm$<span class="c3">\"{O}/span>
+(b<sup>2</sup>  - 4ac)\n
+\T	-----------------------\n
+\T	2a
+\end{example}
+
+Note the mixture of styles in \exref{18.17.6}: the negation of b and the square root are represented
+    by forethought and most of the operator precedence by prefixed
+    \q{bi'e}, but explicit parentheses had to be added to group the
+    numerator properly. In addition, the square root parentheses
+    cannot be removed here in favor of simple \q{fe'a} and \q{ku'e}
+    bracketing, because infix operators are present in the operand.
+    Getting \exref{18.17.6} to parse perfectly
+    using the current parser took several tries: a more relaxed
+    style would dispense with most of the \q{bi'e} cmavo and just
+    let the standard precedence rules be understood. 
+
+Non-logical connection with JOI and BIhI is also permitted
+    between operands and between operators. One use for this
+    construct is to connect operands with \q{bi'o} to create
+    intervals:
+\begin{example}
+li no ga'o bi'o ke'i pa\n
+the-number zero (inclusive) from-to (exclusive) one\n
+\optional{0,1)\n
+the numbers from zero to one, including zero\n
+\T	but not including one
+\end{example}
+
+Intervals defined by a midpoint and range rather than beginning
+    and end points can be expressed by \q{mi'i}:
+\begin{example}
+li pimu ga'o mi'i ke'i pimu\n
+the-number 0.5 plus-or-minus 0.5
+\end{example}
+
+{\noindent}which expresses the same interval as \exref{18.17.7}. Note that the \q{ga'o} and \q{ke'i} still refer to
+    the endpoints, although these are now implied rather than
+    expressed. Another way of expressing the same thing:
+\begin{example}
+li pimu su'i ni'upimu bi'o ma'upimu\n
+the-number 0.5 plus [-0.5 from-to +0.5}
+\end{example}
+
+Here we have the sum of a number and an interval, which
+    produces another interval centered on the number. As \exref{18.17.9} shows, non-logical (or logical)
+    connection of operands has higher precedence than any mekso
+    operator. 
+
+You can also combine two operands with \q{ce'o}, the
+    sequence connective of selma'o JOI, to make a compound
+    subscript:
+\begin{example}
+xy. xi vei by. ce'o dy. \optional{ve'o}\n
+\q{x} sub ( \q{b} sequence \q{d} )\n
+x<sub>b,d}
+</sub>
+\end{example}
+
+<h3><sub>18. Using Lojban resources within mekso</sub></h3>
+
+<sub>The following cmavo are discussed in this
+    section:</sub>
+
+<sub>   na'u    NAhU    selbri to operator
+    ni'e    NIhE    selbri to operand
+    mo'e    MOhE    sumti to operand
+    te'u    TEhU    terminator for all three
+</sub>
+
+<sub>One of the mekso design goals requires the ability to make
+    use of Lojban's vocabulary resources within mekso to extend the
+    built-in cmavo for operands and operators. There are three
+    relevant constructs: all three share the elidable terminator
+    \q{te'u} (which is also used to terminate vectors marked with
+    \q{jo'i}).</sub>
+
+<sub>The cmavo \q{na'u} makes a selbri into an operator. In
+    general, the first place of the selbri specifies the result of
+    the operator, and the other unfilled places specify the
+    operands:</sub>
+
+<sub></sub>
+
+<sub>
+\begin{example}
+li na'u tanjo te'u\n
+\T	vei pai fe'i re \optional{ve'o} du li ci'i\n
+the-number the-operator tangent\n
+\T	( pi / 2 ) = the-number infinity\n
+tan(pi/2) = <span class="c3">\textyen/span>
+</sub>
+\end{example}
+
+<sub>\q{tanjo} is the gismu for \q{$x_1$ is the tangent of $x_2$},
+    and the \q{na'u} here makes it into an operator which is then
+    used in forethought.</sub>
+
+<sub>The cmavo \q{ni'e} makes a selbri into an operand. The
+    $x_1$ place of the selbri generally represents a number, and
+    therefore is often a \q{ni} abstraction, since \q{ni}
+    abstractions represent numbers. The \q{ni'e} makes that number
+    available as a mekso operand. A common application is to make
+    equations relating pure dimensions:</sub>
+
+<sub></sub>
+
+<sub>
+\begin{example}
+li ni'e ni clani \optional{te'u} pi'i\n
+\T	ni'e ni ganra [te'u] pi'i\n
+\T	ni'e ni condi te'u\n
+\T	du li ni'e ni canlu\n
+the-number quantity-of length times\n
+\T	quantity-of width times\n
+\T	quantity-of depth\n
+\T	equals the-number quantity-of volume.\n
+Length $\times$Width $\times$Depth = Volume
+</sub>
+\end{example}
+
+<sub>The cmavo \q{mo'e} operates similarly to \q{ni'e}, but
+    makes a sumti (rather than a selbri) into an operand. This
+    construction is useful in stating equations involving
+    dimensioned numbers:</sub>
+
+<sub></sub>
+
+<sub>
+\begin{example}
+li mo'e re ratcu su'i mo'e re ractu\n
+\T	du li mo'e vo danlu\n
+the-number two rats plus two rabbits\n
+\T	equals the-number four animals\n
+2 rats + 2 rabbits = 4 animals.
+</sub>
+\end{example}
+
+<sub>Another use is in constructing Lojbanic versions of
+    so-called \q{folk quantifiers}, such as ``a pride of
+    lions'':</sub>
+
+<sub>
+\begin{example}
+mi viska vei mo'e lo'e lanzu ve'o cinfo\n
+I see ( the-typical family )-number-of lions.\n
+I see a pride of lions.
+</sub>
+\end{example}
+
+<h3><sub>19. Other uses of mekso</sub></h3>
+
+<sub>The following cmavo are discussed in this
+    section:</sub>
+
+<sub>   me'o    LI  the mekso
+    nu'a    NUhA    operator to selbri
+    mai MAI utterance ordinal
+    mo'o    MAI higher order utterance ordinal
+    roi ROI quantified tense
+</sub>
+
+<sub>So far we have seen mekso used as sumti (with \q{li}),
+    as quantifiers (often parenthesized), and in MOI and ME-MOI
+    selbri. There are a few other minor uses of mekso within
+    Lojban.</sub>
+
+<sub>The cmavo \q{me'o} has the same grammatical use as
+    \q{li} but slightly different semantics. \q{li} means ``the
+    number which is the value of the mekso ...'', whereas \q{me'o}
+    just means \q{the mekso ...} So it is true that:</sub>
+
+<sub>
+\begin{example}
+li re su'i re du li vo\n
+the-number two plus two equals the-number four\n
+2 + 2 = 4
+</sub>
+\end{example}
+
+<sub>but false that:</sub>
+
+<sub>
+\begin{example}
+me'o re su'i re du me'o vo\n
+the-mekso two plus two equals the-mekso four\n
+\q{2 + 2} = \q{4}
+</sub>
+\end{example}
+
+<sub>since the expressions \q{2 + 2} and \q{4} are not the
+    same. The relationship between \q{li} and \q{me'o} is related
+    to that between \q{la djan.}, the person named John, and ``zo
+    .djan.'', the name \q{John}.</sub>
+
+<sub>The cmavo \q{nu'a} is the inverse of \q{na'u}, and
+    allows a mekso operator to be used as a normal selbri, with the
+    place structure:</sub>
+\begin{description}
+\item[<sub></sub>] <sub>$x_1$ is the result of applying (operator) to $x_2$, $x_3$, ...</sub>
+\end{description}
+
+<sub>f or as many places as may be required. For example:</sub>
+
+<sub>
+\begin{example}
+li ni'umu cu nu'a va'a li ma'umu\n
+the-number -5 is-the-negation-of the-number +5
+</sub>
+\end{example}
+
+<sub>uses \q{nu'a} to make the operator \q{va'a} into a
+    two-place bridi.</sub>
+
+<sub>Used together, \q{nu'a} and \q{na'u} make it possible
+    to ask questions about mekso operators, even though there is no
+    specific cmavo for an operator question, nor is it grammatical
+    to utter an operator in isolation. Consider \exref{18.19.4}, to which \exref{18.19.5} is one correct answer:</sub>
+
+<sub>
+\begin{example}
+li re na'u mo re du li vo\n
+the-number two what-operator? two equals the-number four\n
+2 ? 2 = 4
+\end{example}
+
+\begin{example}
+nu'a su'i\n
+plus
+</sub>
+\end{example}
+
+<sub>In \exref{18.19.4}, \q{na'u mo} is an
+    operator question, because \q{mo} is the selbri question cmavo
+    and \q{na'u} makes the selbri into an operator. \exref{18.19.5} makes the true answer \q{su'i}
+    into a selbri (which is a legal utterance) with the inverse
+    cmavo \q{nu'a}. Mechanically speaking, inserting \exref{18.19.5} into \exref{18.19.4} produces:</sub>
+
+<sub>
+\begin{example}
+li re na'u nu'a su'i re du li vo\n
+the-number two (the-operator the-selbri plus)\n
+\T	two equals the-number four
+</sub>
+\end{example}
+
+<sub>where the \q{na'u nu'a} cancels out, leaving a truthful
+    bridi.</sub>
+
+<sub>Numerical free modifiers, corresponding to English
+    \q{firstly}, \q{secondly}, and so on, can be created by
+    suffixing a member of selma'o MAI to a digit string or a lerfu
+    string. (Digit strings are compound cmavo beginning with a
+    cmavo of selma'o PA, and containing only cmavo of PA or BY;
+    lerfu strings begin with a cmavo of selma'o BY, and likewise
+    contain only PA or BY cmavo.) Here are some examples:</sub>
+
+<sub>
+\begin{example}
+pamai\n
+firstly
+\end{example}
+
+\begin{example}
+remai\n
+secondly
+\end{example}
+
+\begin{example}
+romai\n
+all-ly\n
+lastly
+\end{example}
+
+\begin{example}
+ny.mai\n
+nth-ly
+\end{example}
+
+\begin{example}
+pasomo'o\n
+nineteenthly (higher order)\n \sectref{18.19}
+</sub>
+\end{example}
+
+<sub>The difference between \q{mai} and \q{mo'o} is that
+    \q{mo'o} enumerates larger subdivisions of a text. Each
+    \q{mo'o} subdivision can then be divided into pieces and
+    internally numbered with \q{mai}. If this chapter were
+    translated into Lojban, it would number each section with
+    \q{mo'o}.</sub>
+
+<sub>A numerical tense can be created by suffixing a digit
+    string with \q{roi}. This usage generates tenses corresponding
+    to English \q{once}, \q{twice}, and so on. This topic belongs
+    to a detailed discussion of Lojban tenses, and is explained
+    further in \chapref{10}.</sub>
+
+<sub>Note: the elidable terminator \q{boi} is not used
+    between a number and a member of MAI or ROI.</sub>
+
+<h3><sub>20. Explicit operator precedence</sub></h3>
+
+<sub>As mentioned earlier, Lojban does provide a way for the
+    precedences of operators to be explicitly declared, although
+    current parsers do not understand these declarations.</sub>
+
+<sub>The declaration is made in the form of a metalinguistic
+    comment using \q{ti'o}, a member of selma'o SEI. \q{sei}, the
+    other member of SEI, is used to insert metalinguistic comments
+    on a bridi which give information about the discourse which the
+    bridi comprises. The format of a \q{ti'o} declaration has not
+    been formally established, but presumably would take the form
+    of mentioning a mekso operator and then giving it either an
+    absolute numerical precedence on some pre-established scale, or
+    else specifying relative precedences between new operators and
+    existing operators.</sub>
+
+<sub>In future, we hope to create an improved machine parser
+    that can understand declarations of the precedences of simple
+    operators belonging to selma'o VUhU. Originally, all operators
+    would have the same precedence. Declarations would have the
+    effect of raising the specified cmavo of VUhU to higher
+    precedence levels. Complex operators formed with \q{na'u},
+    \q{ni'e}, or \q{ma'o} would remain at the standard low
+    precedence; declarations with respect to them are for future
+    implementation efforts. It is probable that such a parser would
+    have a set of \q{commonly assumed precedences} built into it
+    (selectable by a special \q{ti'o} declaration) that would match
+    mathematical intuition: times higher than plus, and so
+    on.</sub>
+
+<h3><sub>21. Miscellany</sub></h3>
+
+<sub>A few other points:</sub>
+
+<sub>\q{se} can be used to convert an operator as if it were
+    a selbri, so that its arguments are exchanged. For
+    example:</sub>
+
+<sub>
+\begin{example}
+li ci se vu'u vo\n
+\T	du li pa\n
+the-number three (inverse) minus four\n
+\T	equals the-number one.\n
+3 subtracted from 4 equals 1.
+</sub>
+\end{example}
+
+<sub>The other converters of selma'o SE can also be used on
+    operators with more than two operands, and they can be
+    compounded to create (probably unintelligible) operators as
+    needed.</sub>
+
+<sub>Members of selma'o NAhE are also legal on an operator
+    to produce a scalar negation of it. The implication is that
+    some other operator would apply to make the bridi
+    true:</sub>
+
+<sub>
+\begin{example}
+li ci na'e su'i vo du li pare\n
+the-number 3 non-plus 4 equals the-number 12
+</sub>
+\end{example}
+
+<sub>
+\begin{example}
+li ci to'e vu'u re du li mu\n
+the-number 3 opposite-of-minus 2 equals the-number 5
+</sub>
+\end{example}
+
+<sub>The sense in which \q{plus} is the opposite of
+    \q{minus} is not a mathematical but rather a linguistic one;
+    negated operators are defined only loosely.</sub>
+
+<sub>\q{la'e} and \q{lu'e} can be used on operands with the
+    usual semantics to get the referent of or a symbol for an
+    operand. Likewise, a member of selma'o NAhE followed by \q{bo}
+    serves to scalar-negate an operand, implying that some other
+    operand would make the bridi true:</sub>
+
+<sub>
+\begin{example}
+li re su'i re du li na'ebo mu\n
+the-number 2 plus 2 equals the-number non-5.\n
+2 + 2 = something other than 5.
+</sub>
+\end{example}
+
+<sub>The digits 0-9 have rafsi, and therefore can be used in
+    making lujvo. Additionally, all the rafsi have CVC form and can
+    stand alone or together as names:</sub>
+
+<sub>
+\begin{example}
+la zel. poi gunta\n
+\T	la tebes. pu nanmu\n
+those-named \q{Seven} who attack\n
+\T	that-named \q{Thebes} \optional{past} are-men\n
+The Seven Against Thebes were men.
+</sub>
+\end{example}
+
+<sub>Of course, there is no guarantee that the name \q{zel.}
+    is connected with the number rafsi: an alternative which cannot
+    be misconstrued is:</sub>
+
+<sub>
+\begin{example}
+la zemei poi gunta\n
+\T	la tebes. pu nanmu\n
+those-named-the Sevensome who attack\n
+\T	Thebes \optional{past} are-men.
+</sub>
+\end{example}
+
+<sub>Certain other members of PA also have assigned rafsi:
+    \q{so'a}, \q{so'e}, \q{so'i}, \q{so'o}, \q{so'u}, \q{da'a},
+    \q{ro}, \q{su'e}, \q{su'o}, \q{pi}, and \q{ce'i}. Furthermore,
+    although the cmavo \q{fi'u} does not have a rafsi as such, it
+    is closely related to the gismu \q{frinu}, meaning
+    \q{fraction}; therefore, in a context of numeric rafsi, you can
+    use any of the rafsi for \q{frinu} to indicate a fraction
+    slash.</sub>
+
+<sub>A similar convention is used for the cmavo \q{cu'o} of
+    selma'o MOI, which is closely related to \q{cunso}
+    (probability); use a rafsi for \q{cunso} in order to create
+    lujvo based on \q{cu'o}. The cmavo \q{mei} and \q{moi} of MOI
+    have their own rafsi, two each in fact: \q{mem}/\q{mei} and
+    \q{mom}/\q{moi} respectively.</sub>
+
+<sub>The grammar of mekso as described so far imposes a
+    rigid distinction between operators and operands. Some flavors
+    of mathematics (lambda calculus, algebra of functions) blur
+    this distinction, and Lojban must have a method of doing the
+    same. An operator can be changed into an operand with
+    \q{ni'enu'a}, which transforms the operator into a matching
+    selbri and then the selbri into an operand.</sub>
+
+<sub>To change an operand into an operator, we use the cmavo
+    \q{ma'o}, already introduced as a means of changing a lerfu
+    string such as \q{fy.} into an operator. In fact, \q{ma'o} can
+    be followed by any mekso operand, using the elidable terminator
+    \q{te'u} if necessary.</sub>
+
+<sub>There is a potential semantic ambiguity in ``ma'o fy.
+    [te'u]'' if \q{fy.} is already in use as a variable: it comes
+    to mean \q{the function whose value is always 'f}'. However,
+    mathematicians do not normally use the same lerfu words or
+    strings as both functions and variables, so this case should
+    not arise in practice.</sub>
+
+<h3><sub>22. Four score and seven: a mekso problem</sub></h3>
+
+<sub>Abraham Lincoln's Gettysburg Address begins with the
+    words \q{Four score and seven years ago}. This section exhibits
+    several different ways of saying the number ``four score and
+    seven''. (A \q{score}, for those not familiar with the term, is
+    20; it is analogous to a \q{dozen} for 12.) The trivial
+    way:</sub>
+
+<sub>
+\begin{example}
+bize\n
+eight seven\n
+87
+</sub>
+\end{example}
+
+<sub>\exref{18.22.1} is mathematically
+    correct, but sacrifices the spirit of the English words, which
+    are intended to be complex and formal.</sub>
+
+<sub>
+\begin{example}
+vo pi'i reno su'i ze\n
+four times twenty plus seven\n
+4 $\times$20 + 7
+</sub>
+\end{example}
+
+<sub>\exref{18.22.2} is also mathematically
+    correct, but still misses something. \q{Score} is not a word
+    for 20 in the same way that \q{ten} is a word for 10: it
+    contains the implication of 20 objects. The original may be
+    taken as short for \q{Four score years and seven years ago}.
+    Thinking of a score as a twentysome rather than as 20 leads
+    to:</sub>
+
+<sub>
+\begin{example}
+mo'e voboi renomei su'i ze\n
+the-number-of four twentysomes plus seven
+</sub>
+\end{example}
+
+<sub>In \exref{18.22.3}, \q{voboi renomei}
+    is a sumti signifying four things each of which are groups of
+    twenty; the \q{mo'e} and \q{te'u} then make this sumti into a
+    number in order to allow it to be the operand of
+    \q{su'i}.</sub>
+
+<sub>Another approach is to think of \q{score} as setting a
+    representation base. There are remnants of base-20 arithmetic
+    in some languages, notably French, in which 87 is
+    \q{quatre-vingt-sept}, literally \q{four-twenties-seven}. (This
+    fact makes the Gettysburg Address hard to translate into
+    French!) If \q{score} is the representation base, then we
+    have:</sub>
+
+<sub>
+\begin{example}
+vo pi'e ze ju'u reno\n
+four ; seven base 20\n
+47<sub>20</sub>
+</sub>
+\end{example}
+
+Overall, \exref{18.22.3} probably captures
+    the flavor of the English best. \exref{18.22.1} and \exref{18.22.2} are too simple,
+    and \exref{18.22.4} is too tricky.
+    Nevertheless, all four examples are good Lojban. Pedagogically,
+    these examples illustrate the richness of lojbau mekso:
+    anything that can be said at all, can probably be said in more
+    than one way.
+
+
+
+\sect{mekso selma'o summary}
+Except as noted, each selma'o has only one cmavo.
+
+   BOI elidable terminator for numerals
+        and lerfu strings
+    BY  lerfu for variables and functions
+        (see \chapref{17})
+    FUhA    reverse-Polish flag
+    GOhA    includes \q{du} (mathematical equality)
+        and other non-mekso cmavo
+    JOhI    array flag
+    KUhE    elidable terminator for forethought mekso
+    LI  mekso articles (li and me'o)
+    MAhO    make operand into operator
+    MOI creates mekso selbri
+        (moi, mei, si'e, and cu'o, see \sectref{18.11})
+    MOhE    make sumti into operand
+    NAhU    make selbri into operator
+    NIhE    make selbri into operand
+    NUhA    make operator into selbri
+    PA  numbers (see \sectref{18.25})
+    PEhO    optional forethought mekso marker
+    TEhU    elidable terminator for
+        NAhU, NIhE, MOhE, MAhO, and JOhI
+    VEI left parenthesis
+    VEhO    right parenthesis
+    VUhU    operators (see \sectref{18.24})
+    XI  subscript flag
+
+<h3>
+24. Complete table of VUhU cmavo, with operand
+    structures</h3>
+
+The operand structures specify what various operands
+    (labeled a, b, c, ...) mean. The implied context is
+    forethought, since only forethought operators can have a
+    variable number of operands; however, the same rules apply to
+    infix and RP uses of VUhU.
+\begin{description}
+\item[su'i] plus (((a + b) + c) + ...) pi'i times (((a $\times$b) $\times$c) $\times$...) vu'u minus (((a - b) - c) - ...) fe'i divided by (((a / b) / c) / ...) ju'u number base numeral string \q{a} interpreted in the base b pa'i ratio the ratio of a to b, a:b fa'i reciprocal of/multiplicative inverse 1 / a gei scientific notation b $\times$(c [default 10] to the a power) ge'a null operator (no operands) de'o logarithm log \textit{a} to base \textit{b} (default 10 or \textit{e} as appropriate) te'a to the power/exponential a to the b power fe'a nth root of/inverse power b'th root of a (default square root: b = 2) cu'a absolute value/norm | a | ne'o factorial a! pi'a matrix row vector combiner (all operands are row vectors) sa'i matrix column vector combiner (all operands are column vectors) ri'o integral integral of a with respect to b over range c sa'o derivative derivative of a with respect to b of degree c (default 1) fu'u non-specific operator (variable) si'i sigma summation summation of a using variable b over range c va'a negation of/additive inverse - a re'a matrix transpose/dual a*
+
+\end{description}
+
+<h3>
+25. Complete table of PA cmavo: digits, punctuation, and
+    other numbers.</h3>
+
+Decimal digits:
+\begin{description}
+\item[] no, pa, re, ci, vo, mu, xa, ze, bi, so 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 rafsi: non, pav, rel, cib, von, mum, xav, zel, biv, soz
+\end{description}
+
+Hexadecimal digits: 
+\begin{description}
+\item[] dau, fei, gai, jau, rei, vai A/10, B/11, C/12, D/13, E/14, F/15
+\end{description}
+
+Special numbers: 
+\begin{description}
+\item[] pai, ka'o, te'o, ci'i pi, imaginary i, exponential e, infinity
+\end{description}
+
+Number punctuation: 
+\begin{description}
+\item[] pi, ce'i, fi'u decimal point, percentage, fraction (not division) rafsi: piz, cez, fi'u (from frinu; see \sectref{18.20})
+\item[] pi'e, ma'u, ni'u mixed-base point, plus sign (not addition), minus sign (not subtraction)
+\item[] ki'o, ra'e thousands comma, repeating-decimal indicator
+\item[] ji'i, ka'o approximation sign, complex number separator
+\end{description}
+
+Indefinite numbers: 
+\begin{description}
+\item[] ro, so'a, so'e, so'i, so'o, so'u, da'a all, almost all, most, many, several, few, all but rafsi: rol, soj, sor or so'i, sos, sot, daz
+\item[] su'e, su'o at most, at least rafsi: su'e, su'o
+\item[] me'i, za'u less than, more than
+\item[] no'o the typical number
+
+\end{description}
+
+Subjective numbers:
+\begin{description}
+\item[] rau, du'e, mo'a enough, too many, too few
+
+\end{description}
+
+Miscellaneous:
+\begin{description}
+\item[] xo, tu'o number question, null operand
+
+\end{description}
+
+<h3>
+26. Table of MOI cmavo, with associated rafsi and place
+    structures</h3>
+
+   mei $x_1$ is a mass formed from a set $x_2$
+        of n members, one or more of which is/are $x_3$,
+        [measured relative to the set $x_4$/by standard $x_4$]
+    rafsi: mem, mei
+
+moi $x_1$ is the (n)th member of set $x_2$
+        when ordered by rule $x_3$ [by standard $x_4$]
+    rafsi: mom, moi
+
+si'e    $x_1$ is an (n)th portion of mass $x_2$
+        [by standard $x_3$]
+    rafsi: none
+
+cu'o    event $x_1$ has probability (n) of occurring
+        under conditions $x_2$ [by standard $x_3$]
+    rafsi: cu'o (borrowed from cunso; see \sectref{18.20})

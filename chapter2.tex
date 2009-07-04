@@ -1,0 +1,776 @@
+\chap{A Quick Tour of Lojban Grammar, With Diagrams}
+\sect{The concept of the bridi}
+This chapter gives diagrammed examples of basic Lojban sentence structures. The most general pattern is covered first, followed by successive variations on the basic components of the Lojban sentence. There are many more capabilities not covered in this chapter, but covered in detail in later chapters, so this chapter is a \q{quick tour} of the material later covered more slowly throughout the book. It also introduces most of the Lojban words used to discuss Lojban grammar.
+
+Let us consider John and Sam and three statements about them:
+\begin{example}
+John is the father of Sam.
+\end{example}
+
+\begin{example}
+John hits Sam.
+\end{example}
+
+\begin{example}
+John is taller than Sam.
+\end{example}
+
+These examples all describe relationships between John and Sam. However, in English, we use the noun \q{father} to describe a static relationship in \exref{2.1.1}, the verb \q{hits} to describe an active relationship in \exref{2.1.2}, and the adjective \q{taller} to describe an attributive relationship in \exref{2.1.3}. In Lojban we make no such grammatical distinctions; these three sentences, when expressed in Lojban, are structurally identical. The same part of speech is used to represent the relationship. In formal logic this whole structure is called a \q{predication}; in Lojban it is called a \q{bridi}, and the central part of speech is the \q{selbri}. Logicians refer to the things thus related as arguments, while Lojbanists call them \q{sumti}. These Lojban terms will be used for the rest of the book. 
+
+\begin{diagram}
+%\vspace{0.5\parindent}\begin{center}
+\begin{tikzpicture}[level distance=15mm,level 1/.style={sibling distance=30mm}]
+\node{bridi (predicate)}[edge from parent]
+	child {
+		node {John}
+		child {
+			node{sumti}
+		}
+	}
+	child {
+		node {is the father of}
+		child {
+			node{selbri}
+		}
+	}
+	child {
+		node {Sam}
+		child {
+			node{sumti (argument)}
+		}
+	};
+\end{tikzpicture}
+%\end{center}\vspace{0.5\parindent}
+\end{diagram}
+
+In a relationship, there are a definite number of things being related. In English, for example, \q{give} has three places: the donor, the recipient and the gift. For example:
+\begin{example}
+John gives Sam the book.
+\end{example}
+
+{\noindent}and
+\begin{example}
+Sam gives John the book.
+\end{example}
+
+{\noindent}mean two different things because the relative positions of \q{John} and \q{Sam} have been switched. Further,
+\begin{example}
+The book gives John Sam.
+\end{example}
+
+{\noindent}seems strange to us merely because the places are being filled by unorthodox arguments. The relationship expressed by \q{give} has not changed. 
+
+In Lojban, each selbri has a specified number and type of arguments, known collectively as its \q{place structure}. The simplest kind of selbri consists of a single root word, called a \q{gismu}, and the definition in a dictionary gives the place structure explicitly. The primary task of constructing a Lojban sentence, after choosing the relationship itself, is deciding what you will use to fill in the sumti places.
+
+This book uses the Lojban terms \q{bridi}, \q{sumti}, and \q{selbri}, because it is best to come to understand them independently of the English associations of the corresponding words, which are only roughly similar in meaning anyhow.
+
+The Lojban examples in this chapter (but not in the rest of the book) use a blue background behind each \sumti{sumti}, and a green background behind each \selbri{selbri}, to help you to tell them apart.
+
+
+
+\sect{Pronunciation}
+Detailed pronunciation and spelling rules are given in \chapref{3}, but what follows will keep the reader from going too far astray while digesting this chapter.
+
+Lojban has six recognized vowels: \q{a}, \q{e}, \q{i}, \q{o}, \q{u} and \q{y}. The first five are roughly pronounced as \q{a} as in \q{father}, \q{e} as in \q{let}, \q{i} as in \q{machine}, \q{o} as in \q{dome} and \q{u} as in \q{flute}. \q{y} is pronounced as the sound called \q{schwa}, that is, as the unstressed \q{a} as in \q{about} or \q{around}.
+
+Twelve consonants in Lojban are pronounced more or less as their counterparts are in English: \q{b}, \q{d}, \q{f}, \q{k}, \q{l}, \q{m}, \q{n}, \q{p}, \q{r}, \q{t}, \q{v} and \q{z}. The letter \q{c}, on the other hand is pronounced as the \q{sh} in \q{hush}, while \q{j} is its voiced counterpart, the sound of the \q{s} in \q{pleasure}. \q{g} is always pronounced as it is in \q{gift}, never as in \q{giant}. \q{s} is as in \q{sell}, never as in \q{rose}. The sound of \q{x} is not found in English in normal words. It is found as \q{ch} in Scottish \q{loch}, as \q{j} in Spanish \q{junta}, and as \q{ch} in German \q{Bach}; it also appears in the English interjection \q{yecchh!}. It gets easier to say as you practice it. The letter \q{r} can be trilled, but doesn't have to be.
+
+The Lojban diphthongs \q{ai}, \q{ei}, \q{oi}, and \q{au} are pronounced much as in the English words \q{sigh}, \q{say}, \q{boy}, and \q{how}. Other Lojban diphthongs begin with an \q{i} pronounced like English \q{y} (for example, \q{io} is pronounced \q{yo}) or else with a \q{u} pronounced like English \q{w} (for example, \q{ua} is pronounced \q{wa}).
+
+Lojban also has three \q{semi-letters}: the period, the comma and the apostrophe. The period represents a glottal stop or a pause; it is a required stoppage of the flow of air in the speech stream. The apostrophe sounds just like the English letter \q{h}. Unlike a regular consonant, it is not found at the beginning or end of a word, nor is it found adjacent to a consonant; it is only found between two vowels. The comma has no sound associated with it, and is used to separate syllables that might ordinarily run together. It is not used in this chapter.
+
+Stress falls on the next to the last syllable of all words, unless that vowel is \q{y}, which is never stressed; in such words the third-to-last syllable is stressed. If a word only has one syllable, then that syllable is not stressed.
+
+All Lojban words are pronounced as they are spelled: there are no silent letters.
+
+
+
+\sect{Words that can act as sumti}
+Here is a short list of single words used as sumti. This list provides examples only, not the entire set of such words, which may be found in \chapref{7}.
+\begin{description}
+\item[mi] I/me, we/us
+\item[do] you
+\item[ti] this, these
+\item[ta] that, those
+\item[tu] that far away, those far away
+\item[zo'e] unspecified value (used when a sumti is unimportant or obvious.)
+\end{description}
+
+Lojban sumti are not specific as to number (singular or plural), nor gender (masculine/feminine/neutral). Such distinctions can be optionally added by methods that are beyond the scope of this chapter.
+
+The cmavo \q{ti}, \q{ta}, and \q{tu} refer to whatever the speaker is pointing at, and should not be used to refer to things that cannot in principle be pointed at.
+
+Names may also be used as sumti, provided they are preceded with the word \q{la}:
+\begin{description}
+\item[la meris.] the one/ones named Mary
+\item[la djan.] the one/ones named John
+\end{description}
+
+Other Lojban spelling versions are possible for names from other languages, and there are restrictions on which letters may appear in Lojban names: see \chapref{6} for more information.
+
+
+
+\sect{Some words used to indicate selbri relations}
+Here is a short list of some words used as Lojban selbri in this chapter: 
+\begin{description}
+\item[vecnu] $x_1$ (seller) sells $x_2$ (goods) to $x_3$ (buyer) for $x_4$ (price)
+\item[tavla] $x_1$ (talker) talks to $x_2$ (audience) about $x_3$ (topic) in language $x_4$
+\item[sutra] $x_1$ (agent) is fast at doing $x_2$ (action)
+\item[blari'o] $x_1$ (object/light source) is blue-green
+\item[melbi] $x_1$ (object/idea) is beautiful to $x_2$ (observer) by standard $x_3$
+\item[cutci] $x_1$ is a shoe/boot for $x_2$ (foot) made of $x_3$ (material)
+\item[bajra] $x_1$ runs on $x_2$ (surface) using $x_3$ (limbs) in manner $x_4$ (gait)
+\item[klama] $x_1$ goes/comes to $x_2$ (destination) from $x_3$ (origin point) via $x_4$ (route) using $x_5$ (means of transportation)
+\item[pluka] $x_1$ pleases/is pleasing to $x_2$ (experiencer) under conditions $x_3$
+\item[gerku] $x_1$ is a dog of breed $x_2$
+\item[kurji] $x_1$ takes care of $x_2$
+\item[kanro] $x_1$ is healthy by standard $x_2$
+\item[stali] $x_1$ stays/remains with $x_2$
+\item[zarci] $x_1$ is a market/store/shop selling $x_2$ (products) operated by $x_3$ (storekeeper)
+\end{description}
+
+Each selbri (relation) has a specific rule that defines the role of each sumti in the bridi, based on its position. In the table above, that order was expressed by labeling the sumti positions as $x_1$, $x_2$, $x_3$, and $x_4$. Like the table in \sectref{2.3}, this table is far from complete: in fact, no complete table can exist, because Lojban allows new words to be created (in specified ways) whenever a speaker or writer finds the existing supply of words inadequate. This notion is a basic difference between Lojban (and some other languages such as German and Chinese) and English; in English, most people are very leery of using words that ``aren't in the dictionary''. Lojbanists are encouraged to invent new words; doing so is a major way of participating in the development of the language. \chapref{4} explains how to make new words, and \chapref{12} explains how to give them appropriate meanings.
+
+
+
+\sect{Some simple Lojban bridi}
+Let's look at a simple Lojban bridi. The place structure of the gismu \q{tavla} is
+\begin{example}
+$x_1$ talks to $x_2$ about $x_3$ in language $x_4$
+\end{example}
+
+{\noindent}where the \q{x}es with following numbers represent the various arguments that could be inserted at the given positions in the English sentence. For example:
+\begin{example}
+John talks to Sam about engineering in Lojban.
+\end{example}
+
+{\noindent}has \q{John} in the $x_1$ place, \q{Sam} in the $x_2$ place, \q{engineering} in the $x_3$ place, and \q{Lojban} in the $x_4$ place, and could be paraphrased:
+\begin{example}
+Talking is going on,\n
+\T	with speaker John\n
+\T	and listener Sam\n
+\T	and subject matter engineering\n
+\T	and language Lojban.
+\end{example}
+
+The Lojban bridi corresponding to \exref{2.5.1} will have the form
+\begin{example}
+\sumti{$x_1$} \optional{cu} \selbri{tavla} \sumti{$x_2$} \sumti{$x_3$} \sumti{$x_4$}
+\end{example}
+
+The word \q{cu} serves as a separator between any preceding sumti and the selbri. It can often be omitted, as in the following examples.
+\begin{example}
+\sumti{mi} \selbri{tavla} \sumti{do} \sumti{zo'e} \sumti{zo'e}\n
+I talk to you about something in some language.
+\end{example}
+
+\begin{example}
+\sumti{do} \selbri{tavla} \sumti{mi} \sumti{ta} \sumti{zo'e}\n
+You talk to me about that thing in a language.
+\end{example}
+
+\begin{example}
+\sumti{mi} \selbri{tavla} \sumti{zo'e} \sumti{tu} \sumti{ti}\n
+I talk to someone about that thing yonder in this language.
+\end{example}
+
+(\exref{2.5.7} is a bit unusual, as there is no easy way to point to a language; one might point to a copy of this book, and hope the meaning gets across!) When there are one or more occurrences of the cmavo \q{zo'e} at the end of a bridi, they may be omitted, a process called \q{ellipsis}. \exref{2.5.5} and \exref{2.5.6} may be expressed thus:
+\begin{example}
+\sumti{mi} \selbri{tavla} \sumti{do}\n
+I talk to you (about something in some language).
+\end{example}
+
+\begin{example}
+\sumti{do} \selbri{tavla} \sumti{mi} \sumti{ta} \n
+You talk to me about that thing (in some language).
+\end{example}
+
+Note that \exref{2.5.7} is not subject to ellipsis by this direct method, as the \q{zo'e} in it is not at the end of the bridi.
+
+
+
+\sect{Variant bridi structure}
+Consider the sentence
+\begin{example}
+\sumti{mi} \optional{cu} \selbri{vecnu} \sumti{ti} \sumti{ta} \sumti{zo'e}\n
+seller-$x_1$ sells goods-sold-$x_2$ buyer-$x_3$ price-$x_4$\n
+I sell this to that for some price.\n
+I sell this-thing/these-things to that-buyer/those-buyers.\n
+(The price is obvious or unimportant.)
+\end{example}
+
+\exref{2.6.1} has one sumti (the $x_1$) before the selbri. It is also possible to put more than one sumti before the selbri, without changing the order of sumti:
+\begin{example}
+\sumti{mi} \sumti{ti} \optional{cu} \selbri{vecnu} \sumti{ta}\n
+seller-$x_1$ goods-sold-$x_2$ sells buyer-$x_3$\n
+I this sell to that.\n
+(translates as stilted or poetic English)\n
+I this thing do sell to that buyer.
+\end{example}
+
+\begin{example}
+\sumti{mi} \sumti{ti} \sumti{ta} \optional{cu} \selbri{vecnu}\n
+seller-$x_1$ goods-sold-$x_2$ buyer-$x_3$ sells\n
+I this to-that sell.\n
+(translates as stilted or poetic English)\n
+I this thing to that buyer do sell.
+\end{example}
+
+\exref{2.6.1} through \exref{2.6.3} mean the same thing. Usually, placing more than one sumti before the selbri is done for style or for emphasis on the sumti that are out-of-place from their normal position. (Native speakers of languages other than English may prefer such orders.) If there are no sumti before the selbri, then it is understood that the $x_1$ sumti value is equivalent to \q{zo'e}; i.e. unimportant or obvious, and therefore not given. Any sumti after the selbri start counting from $x_2$.
+\begin{example}
+\sumti{ta} \optional{cu} \selbri{melbi}\n
+object/idea-$x_1$ is-beautiful (to someone by some standard)\n
+That/those is/are beautiful.\n
+That is beautiful.\n
+Those are beautiful.
+\end{example}
+
+{\noindent}when the $x_1$ is omitted, becomes:
+\begin{example}
+\selbri{melbi}\n
+unspecified-$x_1$ is-beautiful (to someone by some standard)\n
+Beautiful!\n
+It's beautiful!
+\end{example}
+
+Omitting the $x_1$ adds emphasis to the selbri relation, which has become first in the sentence. This kind of sentence is termed an observative, because it is often used when someone first observes or takes note of the relationship, and wishes to quickly communicate it to someone else. Commonly understood English observatives include \q{Smoke!} upon seeing smoke or smelling the odor, or \q{Car!} to a person crossing the street who might be in danger. Any Lojban selbri can be used as an observative if no sumti appear before the selbri.
+
+The word \q{cu} does not occur in an observative; \q{cu} is a separator, and there must be a sumti before the selbri that needs to be kept separate for \q{cu} to be used. With no sumti preceding the selbri, \q{cu} is not permitted. Short words like \q{cu} which serve grammatical functions are called \q{cmavo} in Lojban.
+
+
+
+\sect{Varying the order of sumti}
+For one reason or another you may want to change the order, placing one particular sumti at the front of the bridi. The cmavo \q{se}, when placed before the last word of the selbri, will switch the meanings of the first and second sumti places. So
+\begin{example}
+\sumti{mi} \selbri{tavla} \sumti{do} \sumti{ti}\n
+I talk to you about this.
+\end{example}
+
+{\noindent}has the same meaning as
+\begin{example}
+\sumti{do} \selbri{se tavla} \sumti{mi} \sumti{ti}\n
+You are talked to by me about this.
+\end{example}
+
+The cmavo \q{te}, when used in the same location, switches the meanings of the first and the third sumti places.
+\begin{example}
+\sumti{mi} \selbri{tavla} \sumti{do} \sumti{ti}\n
+I talk to you about this.
+\end{example}
+
+{\noindent}has the same meaning as
+\begin{example}
+\sumti{ti} \selbri{te tavla} \sumti{do} \sumti{mi}\n
+This is talked about to you by me.
+\end{example}
+
+Note that only the first and third sumti have switched places; the second sumti has remained in the second place.
+
+The cmavo \q{ve} and \q{xe} switch the first and fourth sumti places, and the first and fifth sumti places, respectively. These changes in the order of places are known as \q{conversions}, and the \q{se}, \q{te}, \q{ve}, and \q{xe} cmavo are said to convert the selbri.
+
+More than one of these operators may be used on a given selbri at one time, and in such a case they are evaluated from left to right. However, in practice they are used one at a time, as there are better tools for complex manipulation of the sumti places. See \chapref{5} for details.
+
+The effect is similar to what in English is called the \q{passive voice}. In Lojban, the converted selbri has a new place structure that is renumbered to reflect the place reversal, thus having effects when such a conversion is used in combination with other constructs such as \q{le selbri \optional{ku}} (see \sectref{2.10}).
+
+
+
+\sect{The basic structure of longer utterances}
+People don't always say just one sentence. Lojban has a specific structure for talk or writing that is longer than one sentence. The entirety of a given speech event or written text is called an utterance. The sentences (usually, but not always, bridi) in an utterance are separated by the cmavo \q{ni'o} and \q{.i}. These correspond to a brief pause (or nothing at all) in spoken English, and the various punctuation marks like period, question mark, and exclamation mark in written English. These separators prevent the sumti at the beginning of the next sentence from being mistaken for a trailing sumti of the previous sentence.
+
+The cmavo \q{ni'o} separates paragraphs (covering different topics of discussion). In a long text or utterance, the topical structure of the text may be indicated by multiple \q{ni'o}s, with perhaps \q{ni'oni'oni'o} used to indicate a chapter, \q{ni'oni'o} to indicate a section, and a single \q{ni'o} to indicate a subtopic corresponding to a single English paragraph.
+
+The cmavo \q{.i} separates sentences. It is sometimes compounded with words that modify the exact meaning (the semantics) of the sentence in the context of the utterance. (The cmavo \q{xu}, discussed in \sectref{2.15}, is one such word --- it turns the sentence from a statement to a question about truth.) When more than one person is talking, a new speaker will usually omit the \q{.i} even though she/he may be continuing on the same topic.
+
+It is still O.K. for a new speaker to say the \q{.i} before continuing; indeed, it is encouraged for maximum clarity (since it is possible that the second speaker might merely be adding words onto the end of the first speaker's sentence). A good translation for \q{.i} is the \q{and} used in run-on sentences when people are talking informally: ``I did this, and then I did that, and \ldots, and \ldots''.
+
+
+
+\sect{tanru}
+When two gismu are adjacent, the first one modifies the second, and the selbri takes its place structure from the rightmost word. Such combinations of gismu are called \q{tanru}. For example,
+\begin{example}
+sutra tavla
+\end{example}
+
+{\noindent}has the place structure
+\begin{example}
+$x_1$ is a fast type-of talker to $x_2$ about $x_3$ in language $x_4$\n
+$x_1$ talks fast to $x_2$ about $x_3$ in language $x_4$
+\end{example}
+
+When three or more gismu are in a row, the first modifies the second, and that combined meaning modifies the third, and that combined meaning modifies the fourth, and so on. For example
+\begin{example}
+sutra tavla cutci
+\end{example}
+
+{\noindent}has the place structure
+\begin{example}
+$s_1$ is a fast-talker type of shoe worn by $s_2$ of material $s_3$
+\end{example}
+
+That is, it is a shoe that is worn by a fast talker rather than a shoe that is fast and is also worn by a talker.
+
+Note especially the use of \q{type-of} as a mechanism for connecting the English translations of the two or more gismu; this convention helps the learner understand each tanru in its context. Creative interpretations are also possible, however:
+\begin{example}
+bajra cutci\n
+runner shoe
+\end{example}
+
+{\noindent}most probably refers to shoes suitable for runners, but might be interpreted in some imaginative instances as ``shoes that run (by themselves?)''. In general, however, the meaning of a tanru is determined by the literal meaning of its components, and not by any connotations or figurative meanings. Thus
+\begin{example}
+sutra tavla\n
+fast-talker
+\end{example}
+
+{\noindent}would not necessarily imply any trickery or deception, unlike the English idiom, and a
+\begin{example}
+jikca toldi\n
+social butterfly
+\end{example}
+
+{\noindent}must always be an insect with large brightly-colored wings, of the family \textit{Lepidoptera}. The place structure of a tanru is always that of the final component of the tanru. Thus, the following has the place structure of \q{klama}:
+\begin{example}
+\sumti{mi} \optional{cu} \selbri{sutra klama} \sumti{la meris.}\n
+I quickly-go to Mary.
+\end{example}
+
+With the conversion \q{se klama} as the final component of the tanru, the place structure of the entire selbri is that of ``se klama'': the $x_1$ place is the destination, and the $x_2$ place is the one who goes:
+\begin{example}
+\sumti{mi} \optional{cu} \selbri{sutra se klama} \sumti{la meris.}\n
+I quickly am-gone-to by Mary.
+\end{example}
+
+The following example shows that there is more to conversion than merely switching places, though:
+\begin{example}
+\sumti{la tam.} \optional{cu} \selbri{melbi tavla} \sumti{la meris.}\n
+Tom beautifully-talks to Mary.\n
+Tom is a beautiful-talker to Mary.
+\end{example}
+
+{\noindent}has the place structure of \q{tavla}, but note the two distinct interpretations.  Now, using conversion, we can modify the place structure order:
+\begin{example}
+\sumti{la meris.} \optional{cu} \selbri{melbi se tavla} \sumti{la tam.}\n
+Mary is beautifully-talked-to by Tom.\n
+Mary is a beautiful-audience for Tom.
+\end{example}
+
+{\noindent}and we see that the modification has been changed so as to focus on Mary's role in the bridi relationship, leading to a different set of possible interpretations. Note that there is no place structure change if the modifying term is converted, and so less drastic variation in possible meanings:
+\begin{example}
+\sumti{la tam.} \optional{cu} \selbri{tavla melbi} \sumti{la meris.}\n
+Tom is talkerly-beautiful to Mary.
+\end{example}
+
+\begin{example}
+\sumti{la tam.} \optional{cu} \selbri{se tavla melbi} \sumti{la meris.}\n
+Tom is audiencely-beautiful to Mary.
+\end{example}
+
+{\noindent}and we see that the manner in which Tom is seen as beautiful by Mary changes, but Tom is still the one perceived as beautiful, and Mary, the observer of beauty.
+
+
+
+\sect{Description sumti}
+Often we wish to talk about things other than the speaker, the listener and things we can point to. Let's say I want to talk about a talker other than \q{mi}. What I want to talk about would naturally fit into the first place of \q{tavla}. Lojban, it turns out, has an operator that pulls this first place out of a selbri and converts it to a sumti called a \q{description sumti}. The description sumti \q{le tavla ku} means ``the talker'', and may be used wherever any sumti may be used.
+
+For example,
+\begin{example}
+\sumti{mi} \selbri{tavla} \sumti{do} \sumti{le tavla ku}
+\end{example}
+
+{\noindent}means the same as
+\begin{example}
+I talk to you about the talker
+\end{example}
+
+{\noindent}where \q{the talker} is presumably someone other than me, though not necessarily. Similarly \q{le sutra tavla ku} is ``the fast talker'', and \q{le sutra te tavla ku} is ``the fast subject of talk'' or ``the subject of fast talk''. Which of these related meanings is understood will depend on the context in which the expression is used. The most plausible interpretation within the context will generally be assumed by a listener to be the intended one.
+
+In many cases the word \q{ku} may be omitted. In particular, it is never necessary in a description at the end of a sentence, so:
+\begin{example}
+\sumti{mi} \selbri{tavla} \sumti{do} \sumti{le tavla}\n
+I talk-to you about-the talker
+\end{example}
+
+{\noindent}means exactly the same thing as \exref{2.10.1}. There is a problem when we want to say ``The fast one is talking.'' The \q{obvious} translation \q{le sutra tavla} turns out to mean \q{the fast talker}, and has no selbri at all. To solve this problem we can use the word \q{cu}, which so far has always been optional, in front of the selbri.
+
+The word \q{cu} has no meaning, and exists only to mark the beginning of the selbri within the bridi, separating it from a previous sumti. It comes before any other part of the selbri, including other cmavo like \q{se} or \q{te}. Thus:
+\begin{example}
+\sumti{le sutra tavla}\n
+The fast talker
+\end{example}
+
+\begin{example}
+\sumti{le sutra} cu \selbri{tavla}\n
+The fast one is talking.
+\end{example}
+
+\begin{example}
+\sumti{le sutra se tavla}\n
+The fast talked-to one
+\end{example}
+
+\begin{example}
+\sumti{le sutra} cu \selbri{se tavla}\n
+The fast one is talked to.
+\end{example}
+
+Consider the following more complex example, with two description sumti.
+\begin{example}
+\sumti{mi} \optional{cu} \selbri{tavla} \sumti{le vecnu \optional{ku}} \sumti{le blari'o \optional{ku}}\n
+I       talk-to the seller    about the blue-green-thing.
+\end{example}
+
+The sumti \q{le vecnu} contains the selbri \q{vecnu}, which has the \q{seller} in the $x_1$ place, and uses it in this sentence to describe a particular \q{seller} that the speaker has in mind (one that he or she probably expects the listener will also know about). Similarly, the speaker has a particular blue-green thing in mind, which is described using \q{le} to mark \q{blari'o}, a selbri whose first sumti is something blue-green.
+
+It is safe to omit both occurrences of \q{ku} in \exref{2.10.8}, and it is also safe to omit the \q{cu}.
+
+
+
+\sect{Examples of brivla}
+The simplest form of selbri is an individual word. A word which may by itself express a selbri relation is called a \q{brivla}. The three types of brivla are gismu (root words), lujvo (compounds), and fu'ivla (borrowings from other languages). All have identical grammatical uses. So far, most of our selbri have been gismu or tanru built from gismu.
+\begin{example}[gismu]
+\sumti{mi} \optional{cu} \selbri{klama} \sumti{ti} \sumti{zo'e} \sumti{zo'e} \sumti{ta}\n
+Go-er goes destination origin route means.\n
+I go here (to this) using that means (from somewhere via some route).
+\end{example}
+
+\begin{example}[lujvo]
+\sumti{ta} \optional{cu} \selbri{blari'o}\n
+That    is-blue-green.
+\end{example}
+
+\begin{example}[fu'ivla]
+\sumti{ti} \optional{cu} \selbri{djarspageti}\n
+This     is-spaghetti.
+\end{example}
+
+Some cmavo may also serve as selbri, acting as variables that stand for another selbri. The most commonly used of these is \q{go'i}, which represents the main bridi of the previous Lojban sentence, with any new sumti or other sentence features being expressed replacing the previously expressed ones. Thus, in this context:
+\begin{example}
+\sumti{ta}  \optional{cu} \selbri{go'i}\n
+That     too/same-as-last selbri.\n
+That (is spaghetti), too.
+\end{example}
+
+
+
+\sect{The sumti \q{di'u}
+and \q{la'e di'u}
+}
+In English, I might say ``The dog is beautiful'', and you might reply ``This pleases me.'' How do you know what \q{this} refers to? Lojban uses different expressions to convey the possible meanings of the English:
+\begin{example}
+\sumti{le gerku \optional{ku}} cu \selbri{melbi}\n
+The dog is beautiful.
+\end{example}
+
+The following three sentences all might translate as ``This pleases me.''
+\begin{example}
+\sumti{ti} \optional{cu} \selbri{pluka} \sumti{mi}\n
+This (the dog) pleases me.
+\end{example}
+
+\begin{example}
+\sumti{di'u} \optional{cu} \selbri{pluka} \sumti{mi}\n
+This (the last sentence) pleases me (perhaps because it is grammatical or sounds nice).
+\end{example}
+
+\begin{example}
+\sumti{la'e di'u} \optional{cu} \selbri{pluka} \sumti{mi}\n
+This (the meaning of the last sentence; i.e. that the dog is beautiful) pleases me.
+\end{example}
+
+\exref{2.12.4} uses one sumti to point to or refer to another by inference. It is common to write \q{la'edi'u} as a single word; it is used more often than \q{di'u} by itself.
+
+
+
+\sect{Possession}
+\q{Possession} refers to the concept of specifying an object by saying who it belongs to (or with). A full explanation of Lojban possession is given in \chapref{8}. A simple means of expressing possession, however, is to place a sumti representing the possessor of an object within the description sumti that refers to the object: specifically, between the \q{le} and the selbri of the description:
+\begin{example}
+\sumti{le mi gerku} cu \selbri{sutra}\n
+The of-me dog is fast.\n
+My dog is fast.
+\end{example}
+
+In Lojban, possession doesn't necessarily mean ownership: one may \q{possess} a chair simply by sitting on it, even though it actually belongs to someone else. English uses possession casually in the same way, but also uses it to refer to actual ownership or even more intimate relationships: ``my arm'' doesn't mean ``some arm I own'' but rather ``the arm that is part of my body''. Lojban has methods of specifying all these different kinds of possession precisely and easily.
+
+
+
+\sect{Vocatives and commands}
+You may call someone's attention to the fact that you are
+  addressing them by using \q{doi} followed by their name. The
+  sentence
+\begin{example}
+doi djan.
+\end{example}
+
+\noindent{means} ``Oh, John, I'm talking to you''. It also has the effect of setting the value of \q{do}; \q{do} now refers to \q{John} until it is changed in some way in the conversation. Note that \exref{2.14.1} is not a bridi, but it is a legitimate Lojban sentence nevertheless; it is known as a \q{vocative phrase}. Other cmavo can be used instead of \q{doi} in a vocative phrase, with a different significance. For example, the cmavo \q{coi} means ``hello'' and \q{co'o} means ``good-bye''. Either word may stand alone, they may follow one another, or either may be followed by a pause and a name. (Vocative phrases with \q{doi} do not need a pause before the name.)
+\begin{example}
+coi. djan.\n
+Hello, John.
+\end{example}
+
+\begin{example}
+co'o. djan.\n
+Good-bye, John.
+\end{example}
+
+Commands are expressed in Lojban by a simple variation of the main bridi structure. If you say
+\begin{example}
+\sumti{do} \selbri{tavla}\n
+You are-talking.
+\end{example}
+
+{\noindent}you are simply making a statement of fact. In order to issue a command in Lojban, substitute the word \q{ko} for \q{do}. The bridi
+\begin{example}
+\sumti{ko} \selbri{tavla}
+\end{example}
+
+{\noindent}instructs the listener to do whatever is necessary to make \exref{2.14.4} true; it means ``Talk!'' Other examples:
+\begin{example}
+\sumti{ko} \selbri{sutra}\n
+Be fast!
+\end{example}
+
+The \q{ko} need not be in the $x_1$ place, but rather can occur anywhere a sumti is allowed, leading to possible Lojban commands that are very unlike English commands:
+\begin{example}
+\sumti{mi} \selbri{tavla} \sumti{ko}\n
+Be talked to by me\n
+Let me talk to you.
+\end{example}
+
+The cmavo \q{ko} can fill any appropriate sumti place, and can be used as often as is appropriate for the selbri:
+\begin{example}
+\sumti{ko} \selbri{kurji} \sumti{ko}
+\end{example}
+
+{\noindent}and
+\begin{example}
+\sumti{ko} \sumti{ko} \selbri{kurji}
+\end{example}
+
+{\noindent}both mean ``You take care of you'' and ``Be taken care of by you'', or to put it colloquially, ``Take care of yourself''.
+
+
+
+\sect{Questions}
+There are many kinds of questions in Lojban: full explanations appear in \chapref{19} and in various other chapters throughout the book. In this chapter, we will introduce three kinds: sumti questions, selbri questions, and yes/no questions.
+
+The cmavo \q{ma} is used to create a sumti question: it indicates that the speaker wishes to know the sumti which should be placed at the location of the \q{ma} to make the bridi true. It can be translated as \q{Who?} or \q{What?} in most cases, but also serves for \q{When?}, \q{Where?}, and \q{Why?} when used in sumti places that express time, location, or cause. For example:
+\begin{example}
+\sumti{ma} \selbri{tavla} \sumti{do} \sumti{mi}\n
+Who? talks to-you about-me.\n
+Who is talking to you about me?
+\end{example}
+
+The listener can reply by simply stating a sumti:
+\begin{example}
+\selbri{la djan.}\n
+John (is talking to you about me).
+\end{example}
+
+Like \q{ko}, \q{ma} can occur in any position where a sumti is allowed, not just in the first position:
+\begin{example}
+\sumti{do} \optional{cu} \selbri{tavla} \sumti{ma}\n
+You talk to what/whom?
+\end{example}
+
+A \q{ma} can also appear in multiple sumti positions in one sentence, in effect asking several questions at once.
+\begin{example}
+\sumti{ma} \optional{cu} \selbri{tavla} \sumti{ma}\n
+What/Who talks to what/whom?
+\end{example}
+
+The two separate \q{ma} positions ask two separate questions, and can therefore be answered with different values in each sumti place. The cmavo \q{mo} is the selbri analogue of \q{ma}. It asks the respondent to provide a selbri that would be a true relation if inserted in place of the \q{mo}:
+\begin{example}
+\sumti{do} \optional{cu} \selbri{mo}\n
+You are-what/do-what?
+\end{example}
+
+A \q{mo} may be used anywhere a brivla or other selbri might. Keep this in mind for later examples. Unfortunately, by itself, \q{mo} is a very non-specific question. The response to the question in \exref{2.15.5} could be:
+\begin{example}
+\sumti{mi} \optional{cu} \selbri{melbi}\n
+I am beautiful.
+\end{example}
+
+{\noindent}or:
+\begin{example}
+\sumti{mi} \optional{cu} \selbri{tavla}\n
+I talk.
+\end{example}
+
+Clearly, \q{mo} requires some cooperation between the speaker and the respondent to ensure that the right question is being answered. If context doesn't make the question specific enough, the speaker must ask the question more specifically using a more complex construction such as a tanru (see \sectref{2.9}). It is perfectly permissible for the respondent to fill in other unspecified places in responding to a \q{mo} question. Thus, the respondent in \exref{2.15.7} could have also specified an audience, a topic, and/or a language in the response.
+
+Finally, we must consider questions that can be answered \q{Yes} or \q{No}, such as
+\begin{example}
+Are you talking to me?
+\end{example}
+
+Like all yes-or-no questions in English, \exref{2.15.8} may be reformulated as
+\begin{example}
+Is it true that you are talking
+to me?
+\end{example}
+
+In Lojban we have a word that asks precisely that question in precisely the same way. The cmavo \q{xu}, when placed in front of a bridi, asks whether that bridi is true as stated. So
+\begin{example}
+xu \sumti{do} \selbri{tavla} \sumti{mi}\n
+Is-it-true-that you are-talking to-me?
+\end{example}
+
+{\noindent}is the Lojban translation of \exref{2.15.8}. The answer \q{Yes} may be given by simply restating the bridi without the \q{xu} question word. Lojban has a shorthand for doing this with the word \q{go'i}, mentioned in \sectref{2.11}. Instead of a negative answer, the bridi may be restated in such a way as to make it true. If this can be done by substituting sumti, it may be done with \q{go'i} as well. For example:
+\begin{example}
+xu \sumti{do} \selbri{kanro}\n
+Are you healthy?
+\end{example}
+
+{\noindent}can be answered with
+\begin{example}
+\sumti{mi} \selbri{kanro}\n
+I am healthy.
+\end{example}
+
+{\noindent}or
+\begin{example}
+\selbri{go'i}\n
+I am healthy.
+\end{example}
+
+{\noindent}or (Note that \q{do} to the questioner is \q{mi} to the respondent.)
+\begin{example}
+\sumti{le tavla} \selbri{cu kanro}\n
+The talker is healthy.
+\end{example}
+
+{\noindent}or
+\begin{example}
+\sumti{le tavla} cu \selbri{go'i}\n
+The talker is healthy.
+\end{example}
+
+A general negative answer may be given by \q{na go'i}. \q{na} may be placed before any selbri (but after the \q{cu}). It is equivalent to stating \q{It is not true that ...} before the bridi. It does not imply that anything else is true or untrue, only that that specific bridi is not true. More details on negative statements are available in \chapref{15}.
+
+
+
+\sect{Indicators}
+Different cultures express emotions and attitudes with a variety of intonations and gestures that are not usually included in written language. Some of these are available in some languages as interjections (i.e. Aha!, Oh no!, Ouch!, Aahh!, etc.), but they vary greatly from culture to culture.
+
+Lojban has a group of cmavo known as ``attitudinal indicators'' which specifically covers this type of commentary on spoken statements. They are both written and spoken, but require no specific intonation or gestures. Grammatically they are very simple: one or more attitudinals at the beginning of a bridi apply to the entire bridi; anywhere else in the bridi they apply to the word immediately to the left. For example:
+\begin{example}
+.ie \sumti{mi} \optional{cu} \selbri{klama}\n
+Agreement! I go.\n
+Yep! I'll go.
+\end{example}
+
+\begin{example}
+.ei \sumti{mi} \optional{cu} \selbri{klama}\n
+Obligation! I go.\n
+I should go.
+\end{example}
+
+\begin{example}
+\sumti{mi} \optional{cu} \selbri{klama} \sumti{le melbi .ui \optional{ku}}\n
+I go to the beautiful-thing (and I am happy because it is the beautiful thing I'm going to).
+\end{example}
+
+Not all indicators indicate attitudes. Discursives, another group of cmavo with the same grammatical rules as attitudinal indicators, allow free expression of certain kinds of commentary about the main utterances. Using discursives allows a clear separation of these so-called \q{metalinguistic} features from the underlying statements and logical structure. By comparison, the English words \q{but} and \q{also}, which discursively indicate contrast or an added weight of example, are logically equivalent to \q{and}, which does not have a discursive content. The average English-speaker does not think about, and may not even realize, the paradoxical idea that \q{but} basically means \q{and}.
+\begin{example}
+\sumti{mi} \optional{cu} \selbri{klama} .i \sumti{do} \optional{cu} \selbri{stali}\n
+I go. You stay.
+\end{example}
+
+\begin{example}
+\sumti{mi} \optional{cu} \selbri{klama} .i ji'a \sumti{do} \optional{cu} \selbri{stali}\n
+I go. In addition, you stay. (added weight)
+\end{example}
+
+\begin{example}
+\sumti{mi} \optional{cu} \selbri{klama} .i ku'i \sumti{do} \optional{cu} \selbri{stali}\n
+I go.  However, you stay.  (contrast)
+\end{example}
+
+Another group of indicators are called \q{evidentials}. Evidentials show the speaker's relationship to the statement, specifically how the speaker came to make the statement. These include \q{za'a} (I directly observe the relationship), \q{pe'i} (I believe that the relationship holds), \q{ru'a} (I postulate the relationship), and others. Many American Indian languages use this kind of words.
+\begin{example}
+pe'i \sumti{do} \optional{cu} \selbri{melbi}\n
+I opine!  You are beautiful.
+\end{example}
+
+\begin{example}
+za'a \sumti{do} \optional{cu} \selbri{melbi}\n
+I directly observe!  You are beautiful.
+\end{example}
+
+
+
+\sect{Tenses}
+In English, every verb is tagged for the grammatical category called tense: past, present, or future. The sentence
+\begin{example}
+John went to the store
+\end{example}
+
+{\noindent}necessarily happens at some time in the past, whereas
+\begin{example}
+John is going to the store
+\end{example}
+
+{\noindent}is necessarily happening right now. The Lojban sentence
+\begin{example}
+\sumti{la djan.} \optional{cu} \selbri{klama} \sumti{le zarci}\n
+John goes/went/will go to-the store
+\end{example}
+
+{\noindent}serves as a translation of either \exref{2.17.1} or \exref{2.17.2}, and of many other possible English sentences as well. It is not marked for tense, and can refer to an event in the past, the present or the future. This rule does not mean that Lojban has no way of representing the time of an event. A close translation of \exref{2.17.1} would be:
+\begin{example}
+\sumti{la djan.} \selbri{pu klama} \sumti{le zarci}\n
+John \translation{past} goes to-the store
+\end{example}
+
+{\noindent}where the tag \q{pu} forces the sentence to refer to a time in the past. Similarly,
+\begin{example}
+\sumti{la djan.} \selbri{ca klama} \sumti{le zarci}\n
+John \translation{present} goes to-the store
+\end{example}
+
+{\noindent}necessarily refers to the present, because of the tag \q{ca}. Tags used in this way always appear at the very beginning of the selbri, just after the \q{cu}, and they may make a \q{cu} unnecessary, since tags cannot be absorbed into tanru. Such tags serve as an equivalent to English tenses and adverbs. In Lojban, tense information is completely optional. If unspecified, the appropriate tense is picked up from context. Lojban also extends the notion of \q{tense} to refer not only to time but to space. The following example uses the tag \q{vu} to specify that the event it describes happens far away from the speaker:
+\begin{example}
+\sumti{do} \optional{cu} \selbri{vu vecnu} \sumti{zo'e}\n
+You yonder sell something-unspecified.
+\end{example}
+
+In addition, tense tags (either for time or space) can be prefixed to the selbri of a description, producing a tensed sumti:
+\begin{example}
+\sumti{le pu bajra \optional{ku}} cu \selbri{tavla}\n
+The earlier/former/past runner talked/talks.
+\end{example}
+
+(Since Lojban tense is optional, we don't know when he or she talks.) Tensed sumti with space tags correspond roughly to the English use of \q{this} or \q{that} as adjectives, as in the following example, which uses the tag \q{vi} meaning \q{nearby}:
+\begin{example}
+\sumti{le vi bajra \optional{ku}} cu \selbri{tavla}\n
+The nearby runner talks.\n
+This runner talks.
+\end{example}
+
+Do not confuse the use of \q{vi} in \exref{2.17.8} with the cmavo \q{ti}, which also means \q{this}, but in the sense of \q{this thing}.
+
+Furthermore, a tense tag can appear both on the selbri and within a description, as in the following example (where \q{ba} is the tag for future time):
+\begin{example}
+\sumti{le vi tavla \optional{ku}} cu \selbri{ba klama}\n
+The here talker     [future] goes.\n
+The talker who is here will go\n
+This talker will go.
+\end{example}
+
+
+
+\sect{Lojban grammatical terms}
+Here is a review of the Lojban grammatical terms used in this chapter, plus some others used throughout this book. Only terms that are themselves Lojban words are included: there are of course many expressions like \q{indicator} in \chapref{16} that are not explained here. See the Index for further help with these.
+\begin{description}
+\item[bridi] predication; the basic unit of Lojban expression; the main kind of Lojban sentence; a claim that some objects stand in some relationship, or that some single object has some property.
+\item[sumti] argument; words identifying something which stands in a specified relationship to something else, or which has a specified property. See \chapref{6}.
+\item[selbri] logical predicate; the core of a bridi; the word or words specifying the relationship between the objects referred to by the sumti. See \chapref{5}.
+\item[cmavo] one of the Lojban parts of speech; a short word; a structural word; a word used for its grammatical function.
+\item[brivla] one of the Lojban parts of speech; a content word; a predicate word; can function as a selbri; is a gismu, a lujvo, or a fu'ivla. See \chapref{4}.
+\item[gismu] a root word; a kind of brivla; has associated rafsi. See \chapref{4}.
+\item[lujvo] a compound word; a kind of brivla; may or may not appear in a dictionary; does not have associated rafsi. See \chapref{4}and \chapref{12}.
+\item[fu'ivla] a borrowed word; a kind of brivla; may or may not appear in a dictionary; copied in a modified form from some non-Lojban language; usually refers to some aspect of culture or the natural world; does not have associated rafsi. See \chapref{4}.
+\item[rafsi] a word fragment; one or more is associated with each gismu; can be assembled according to rules in order to make lujvo; not a valid word by itself. See \chapref{4}.
+\item[tanru] a group of two or more brivla, possibly with associated cmavo, that form a selbri; always divisible into two parts, with the first part modifying the meaning of the second part (which is taken to be basic). See \chapref{5}.
+\item[selma'o] a group of cmavo that have the same grammatical use (can appear interchangeably in sentences, as far as the grammar is concerned) but differ in meaning or other usage. See \chapref{20}.
+\end{description}
+

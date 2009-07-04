@@ -1,0 +1,598 @@
+\chap{The Hills Are Alive With the Sounds of Lojban}
+\sect{Orthography}
+Lojban is designed so that any properly spoken Lojban utterance can be uniquely transcribed in writing, and any properly written Lojban can be spoken so as to be uniquely reproduced by another person. As a consequence, the standard Lojban orthography must assign to each distinct sound, or phoneme, a unique letter or symbol. Each letter or symbol has only one sound or, more accurately, a limited range of sounds that are permitted pronunciations for that phoneme. Some symbols indicate stress (speech emphasis) and pause, which are also essential to Lojban word recognition. In addition, everything that is represented in other languages by punctuation (when written) or by tone of voice (when spoken) is represented in Lojban by words. These two properties together are known technically as \q{audio-visual isomorphism}.
+
+Lojban uses a variant of the Latin (Roman) alphabet, consisting of the following letters and symbols:
+\begin{description}
+\item[Alphabet] ' , . a b c d e f g i j k l m n o p r s t u v x y z
+\end{description}
+
+{\noindent}omitting the letters \q{h}, \q{q}, and \q{w}. 
+
+The alphabetic order given above is that of the ASCII coded character set, widely used in computers. By making Lojban alphabetical order the same as ASCII, computerized sorting and searching of Lojban text is facilitated.
+
+Capital letters are used only to represent non-standard stress, which can appear only in the representation of Lojbanized names. Thus the English name \q{Josephine}, as normally pronounced, is Lojbanized as \q{DJOsefin.}, pronounced \ipa{ˈdʒo sɛ finʔ}. (See \sectref{3.2} for an explanation of the symbols within square brackets.) Technically, it is sufficient to capitalize the vowel letter, in this case \q{O}, but it is easier on the reader to capitalize the whole syllable.
+
+Without the capitalization, the ordinary rules of Lojban stress would cause the \q{se} syllable to be stressed. Lojbanized names are meant to represent the pronunciation of names from other languages with as little distortion as may be; as such, they are exempt from many of the regular rules of Lojban phonology, as will appear in the rest of this chapter.
+
+
+
+\sect{Basic Phonetics}
+Lojban pronunciations are defined using the International Phonetic Alphabet, or IPA, a standard method of transcribing pronunciations. By convention, IPA transcriptions are always within square brackets: for example, the word \q{cat} is pronounced (in General American pronunciation) \ipa{kæt}. \sectref{3.10} contains a brief explanation of the IPA characters used in this chapter, with their nearest analogues in English, and will be especially useful to those not familiar with the technical terms used in describing speech sounds.
+
+The standard pronunciations and permitted variants of the Lojban letters are listed in the table below. The descriptions have deliberately been made a bit ambiguous to cover variations in pronunciation by speakers of different native languages and dialects. In all cases except \q{r} the first IPA symbol shown represents the preferred pronunciation; for \q{r}, all of the variations (and any other rhotic sound) are equally acceptable.
+
+\begin{ruledtable}{l p{3cm} l}
+\thead{Letter} & \thead{IPA} & \thead{Description} \\
+\midrule
+' & \ipa{h} & an unvoiced glottal spirant \\
+, & \ipa{-} & the syllable separator \\
+. & \ipa{ʔ} & a glottal stop or a pause \\
+a & \ipa{a}, \ipa{ɑ} & an open vowel \\
+b & \ipa{b} & a voiced bilabial stop \\
+c & \ipa{ʃ}, \ipa{ʂ} & an unvoiced postalveolar fricative \\
+d & \ipa{d} & a voiced dental/alveolar stop \\
+e & \ipa{ɛ}, \ipa{e} & a front mid vowel \\
+f & \ipa{f}, \ipa{ɸ} & an unvoiced labial fricative \\
+g & \ipa{ɡ} & a voiced velar stop \\
+i & \ipa{i} & a front close vowel \\
+j & \ipa{ʒ}, \ipa{ʐ} & a voiced postalveolar fricative \\
+k & \ipa{k} & an unvoiced velar stop \\
+l & \ipa{l}, \ipa{\textsyllabic{l}} & a voiced lateral approximant (may be syllabic) \\
+m & \ipa{m}, \ipa{\textsyllabic{m}} & a voiced bilabial nasal (may be syllabic) \\
+n & \ipa{n}, \ipa{\textsyllabic{n}}, \ipa{ŋ}, \ipa{\textsyllabic{ŋ}} & a voiced dental or velar nasal (may be syllabic) \\
+o & \ipa{o}, \ipa{ɔ} & a back mid vowel \\
+p & \ipa{p} & an unvoiced bilabial stop \\
+r & \ipa{r}, \ipa{ɹ}, \ipa{ɾ}, \ipa{ʀ}, \ipa{\textsyllabic{r}}, \ipa{\textsyllabic{ɹ}}, \ipa{\textsyllabic{ɾ}}, \ipa{\textsyllabic{ʀ}} & a rhotic sound \\
+s & \ipa{s} & an unvoiced alveolar sibilant \\
+t & \ipa{t} & an unvoiced dental/alveolar stop \\
+u & \ipa{u} & a back close vowel \\
+v & \ipa{v}, \ipa{β} & a voiced labial fricative \\
+x & \ipa{x} & an unvoiced velar fricative \\
+y & \ipa{ə} & a central mid vowel \\
+z & \ipa{z} & a voiced alveolar sibilant
+\end{ruledtable}
+
+The Lojban sounds must be clearly pronounced so that they are not mistaken for each other. Voicing and placement of the tongue are the key factors in correct pronunciation, but other subtle differences will develop between consonants in a Lojban-speaking community. At this point these are the only mandatory rules on the range of sounds. 
+
+Note in particular that Lojban vowels can be pronounced with either rounded or unrounded lips; typically \q{o} and \q{u} are rounded and the others are not, as in English, but this is not a requirement; some people round \q{y} as well. Lojban consonants can be aspirated or unaspirated. Palatalizing of consonants, as found in Russian and other languages, is not generally acceptable in pronunciation, though a following \q{i} may cause it.
+
+The sounds represented by the letters \q{c}, \q{g}, \q{j}, \q{s}, and \q{x} require special attention for speakers of English, either because they are ambiguous in the orthography of English (\q{c}, \q{g}, \q{s}), or because they are strikingly different in Lojban (\q{c}, \q{j}, \q{x}). The English \q{c} represents three different sounds, \ipa{k} in \q{cat} and \ipa{s} in \q{cent}, as well as the \ipa{ʃ} of \q{ocean}. Similarly, English \q{g} can represent \ipa{ɡ} as in \q{go}, \ipa{dʒ} as in \q{gentle}, and \ipa{ʒ} as in \q{garage} (in some pronunciations). English \q{s} can be either \ipa{s} as in \q{cats}, \ipa{z} as in \q{cards}, \ipa{ʃ} as in \q{tension}, or \ipa{ʒ} as in \q{measure}. The sound of Lojban \q{x} doesn't appear in most English dialects at all.
+
+There are two common English sounds that are found in Lojban but are not not Lojban consonants: the \q{ch} of \q{church} and the \q{j} of \q{judge}. In Lojban, these are considered two consonant sounds spoken together without an intervening vowel sound, and so are represented in Lojban by the two separate consonants: \q{tc} (IPA \ipa{tʃ}) and \q{dj} (IPA \ipa{dʒ}). In general, whether a complex sound is considered one sound or two depends on the language: Russian views \q{ts} as a single sound, whereas English, French, and Lojban consider it to be a consonant cluster.
+
+
+
+\sect{The Special Lojban Characters}
+The apostrophe, period, and comma need special attention. They are all used as indicators of a division between syllables, but each has a different pronunciation, and each is used for different reasons:
+
+The apostrophe represents a phoneme similar to a short, breathy English \q{h}, (IPA \ipa{h}). The letter \q{h} is not used to represent this sound for two reasons: primarily in order to simplify explanations of the morphology, but also because the sound is very common, and the apostrophe is a visually lightweight representation of it. The apostrophe sound is a consonant in nature, but is not treated as either a consonant or a vowel for purposes of Lojban morphology (word-formation), which is explained in \chapref{4}. In addition, the apostrophe visually parallels the comma and the period, which are also used (in different ways) to separate syllables.
+
+The apostrophe is included in Lojban only to enable a smooth separation between vowels, while joining the vowels within a single word. In fact, one way to think of the apostrophe is as representing an unvoiced vowel glide.
+
+As a permitted variant, any unvoiced fricative other than those already used in Lojban may be used to render the apostrophe: IPA \ipa{T} is one possibility. The convenience of the listener should be regarded as paramount in deciding to use a substitute for \ipa{h}.
+
+The period represents a mandatory pause, with no specified length; a glottal stop (IPA \ipa{ʔ}) is considered a pause of shortest length. A pause (or glottal stop) may appear between any two words, and in certain cases -- explained in detail in \chapref{4} --- must occur. In particular, a word beginning with a vowel is always preceded by a pause, and a word ending in a consonant is always followed by a pause.
+
+Technically, the period is an optional reminder to the reader of a mandatory pause that is dictated by the rules of the language; because these rules are unambiguous, a missing period can be inferred from otherwise correct text. Periods are included only as an aid to the reader.
+
+A period also may be found apparently embedded in a word. When this occurs, such a written string is not one word but two, written together to indicate that the writer intends a unitary meaning for the compound. It is not really necessary to use a space between words if a period appears.
+
+The comma is used to indicate a syllable break within a word, generally one that is not obvious to the reader. Such a comma is written to separate syllables, but indicates that there must be no pause between them, in contrast to the period. Between two vowels, a comma indicates that some type of glide may be necessary to avoid a pause that would split the two syllables into separate words. It is always legal to use the apostrophe (IPA \ipa{h}) sound in pronouncing a comma. However, a comma cannot be pronounced as a pause or glottal stop between the two letters separated by the comma, because that pronunciation would split the word into two words.
+
+Otherwise, a comma is usually only used to clarify the presence of syllabic \q{l}, \q{m}, \q{n}, or \q{r} (discussed later). Commas are never required: no two Lojban words differ solely because of the presence or placement of a comma.
+
+Here is a somewhat artificial example of the difference in pronunciation between periods, commas and apostrophes. In the English song about Old MacDonald's Farm, the vowel string which is pronounced \q{ee-i-ee-i-o} in English could be Lojbanized with periods as:
+\begin{example}
+.i.ai.i.ai.o\n
+\ipa{ʔi ʔaj ʔi ʔaj ʔo}\n
+Ee! Eye! Ee! Eye! Oh!
+\end{example}
+
+However, this would sound clipped, staccato, and unmusical compared to the English. Furthermore, although \exref{3.3.1} is a string of meaningful Lojban words, as a sentence it makes very little sense. (Note the use of periods embedded within the written word.)
+
+If commas were used instead of periods, we could represent the English string as a Lojbanized name, ending in a consonant:
+\begin{example}
+.i,ai,i,ai,on.\n
+\ipa{ʔi jaj ji jaj jonʔ}
+\end{example}
+
+The commas represent new syllable breaks, but prohibit the use of pauses or glottal stop. The pronunciation shown is just one possibility, but closely parallels the intended English pronunciation.
+
+However, the use of commas in this way is risky to unambiguous interpretation, since the glides might be heard by some listeners as diphthongs, producing something like
+\begin{example}
+.i,iai,ii,iai,ion.
+\end{example}
+
+{\noindent}which is technically a different Lojban name. Since the intent with Lojbanized names is to allow them to be pronounced more like their native counterparts, the comma is allowed to represent vowel glides or some non-Lojbanic sound. Such an exception affects only spelling accuracy and the ability of a reader to replicate the desired pronunciation exactly; it will not affect the recognition of word boundaries. 
+
+Still, it is better if Lojbanized names are always distinct. Therefore, the apostrophe is preferred in regular Lojbanized names that are not attempting to simulate a non-Lojban pronunciation perfectly. (Perfection, in any event, is not really achievable, because some sounds simply lack reasonable Lojbanic counterparts.)
+
+If apostrophes were used instead of commas in \exref{3.3.2}, it would appear as:
+\begin{example}
+.i'ai'i'ai'on.\n
+\ipa{ʔi hai hi hai honʔ}
+\end{example}
+
+{\noindent}which preserves the rhythm and length, if not the exact sounds, of the original English.
+
+
+
+\sect{Diphthongs and Syllabic Consonants}
+There exist 16 diphthongs in the Lojban language. A diphthong is a vowel sound that consists of two elements, a short vowel sound and a glide, either a labial (IPA \ipa{w}) or palatal (IPA \ipa{j}) glide, that either precedes (an on-glide) or follows (an off-glide) the main vowel. Diphthongs always constitute a single syllable.
+
+For Lojban purposes, a vowel sound is a relatively long speech-sound that forms the nucleus of a syllable. Consonant sounds are relatively brief and normally require an accompanying vowel sound in order to be audible. Consonants may occur at the beginning or end of a syllable, around the vowel, and there may be several consonants in a cluster in either position. Each separate vowel sound constitutes a distinct syllable; consonant sounds do not affect the determination of syllables.
+
+The six Lojban vowels are \q{a}, \q{e}, \q{i}, \q{o}, \q{u}, and \q{y}. The first five vowels appear freely in all kinds of Lojban words. The vowel \q{y} has a limited distribution: it appears only in Lojbanized names, in the Lojban names of the letters of the alphabet, as a glue vowel in compound words, and standing alone as a space-filler word (like English \q{uh} or \q{er}).
+
+The Lojban diphthongs are shown in the table below. (Variant pronunciations have been omitted, but are much as one would expect based on the variant pronunciations of the separate vowel letters: \q{ai} may be pronounced \ipa{ɑj}, for example.)
+
+\begin{ruledtable}{l l l}
+\thead{Letters} & \thead{IPA} & \thead{Description} \\
+\midrule
+ai & \ipa{aj} & an open vowel with palatal off-glide \\
+ei & \ipa{ɛj} & a front mid vowel with palatal off-glide \\
+oi & \ipa{oj} & a back mid vowel with palatal off-glide \\
+au & \ipa{aw} & an open vowel with labial off-glide \\
+ia & \ipa{ja} & an open vowel with palatal on-glide \\
+ie & \ipa{jɛ} & a front mid vowel with palatal on-glide \\
+ii & \ipa{ji} & a front close vowel with palatal on-glide \\
+io & \ipa{jo} & a back mid vowel with palatal on-glide \\
+iu & \ipa{ju} & a back close vowel with palatal on-glide \\
+ua & \ipa{wa} & an open vowel with labial on-glide \\
+ue & \ipa{wɛ} & a front mid vowel with labial on-glide \\
+ui & \ipa{wi} & a front close vowel with labial on-glide \\
+uo & \ipa{wo} & a back mid vowel with labial on-glide \\
+uu & \ipa{wu} & a back close vowel with labial on-glide \\
+iy & \ipa{jæ} & a central mid vowel with palatal on-glide \\
+uy & \ipa{wæ} & a central mid vowel with labial on-glide
+\end{ruledtable}
+
+(Approximate English equivalents of most of these diphthongs exist: see \sectref{3.11} for examples.) 
+
+The first four diphthongs above (\q{ai}, \q{ei}, \q{oi}, and \q{au}, the ones with off-glides) are freely used in most types of Lojban words; the ten following ones are used only as stand-alone words and in Lojbanized names and borrowings; and the last two (\q{iy} and \q{uy}) are used only in Lojbanized names.
+
+The syllabic consonants of Lojban, \ipa{\textsyllabic{l}}, \ipa{\textsyllabic{m}}, \ipa{\textsyllabic{n}}, and \ipa{\textsyllabic{r}}, are variants of the non-syllabic \ipa{l}, \ipa{m}, \ipa{n}, and \ipa{r} respectively. They normally have only a limited distribution, appearing in Lojban names and borrowings, although in principle any \q{l}, \q{m}, \q{n}, or \q{r} may be pronounced syllabically. If a syllabic consonant appears next to a \q{l}, \q{m}, \q{n}, or \q{r} that is not syllabic, it may not be clear which is which:
+\begin{example}
+brlgan.\n
+\ipa{b\textsyllabic{r}l ɡan}\n
+or \ipa{br\textsyllabic{l} ɡan}
+\end{example}
+
+{\noindent}is a hypothetical Lojbanized name with more than one valid pronunciation; however it is pronounced, it remains the same word. 
+
+Syllabic consonants are treated as consonants rather than vowels from the standpoint of Lojban morphology. Thus Lojbanized names, which are generally required to end in a consonant, are allowed to end with a syllabic consonant. An example is \q{rl.}, which is an approximation of the English name \q{Earl}, and has two syllabic consonants.
+
+Syllables with syllabic consonants and no vowel are never stressed or counted when determining which syllables to stress (see \sectref{3.9}).
+
+
+
+\sect{Vowel Pairs}
+Lojban vowels also occur in pairs, where each vowel sound is in a separate syllable. These two vowel sounds are connected (and separated) by an apostrophe. Lojban vowel pairs should be pronounced continuously with the \ipa{h} sound between (and not by a glottal stop or pause, which would split the two vowels into separate words).
+
+All vowel combinations are permitted in two-syllable pairs with the apostrophe separating them; this includes those which constitute diphthongs when the apostrophe is not included.
+
+The Lojban vowel pairs are:
+
+\begin{paddedtable}{l l l l l l}
+a'a & a'e & a'i & a'o & a'u & a'y \\
+e'a & e'e & e'i & e'o & e'u & e'y \\
+i'a & i'e & i'i & i'o & i'u & i'y \\
+o'a & o'e & o'i & o'o & o'u & o'y \\
+u'a & u'e & u'i & u'o & u'u & u'y \\
+y'a & y'e & y'i & y'o & y'u & y'y
+\end{paddedtable}
+
+Vowel pairs involving \q{y} appear only in Lojbanized names. They could appear in cmavo (structure words), but only \q{.y'y.} is so used --- it is the Lojban name of the apostrophe letter (see \chapref{17}). 
+
+When more than two vowels occur together in Lojban, the normal pronunciation pairs vowels from the left into syllables, as in the Lojbanized name:
+\begin{example}
+meiin.\n
+mei,in.
+\end{example}
+
+\exref{3.5.1} contains the diphthong \q{ei} followed by the vowel \q{i}. In order to indicate a different grouping, the comma must always be used, leading to:
+\begin{example}
+me,iin.
+\end{example}
+
+{\noindent}which contains the vowel \q{e} followed by the diphthong \q{ii}. In rough English representation, \exref{3.5.1} is \q{May Een}, whereas \exref{3.5.2} is \q{Meh Yeen}.
+
+
+
+\sect{Consonant Clusters}
+A consonant sound is a relatively brief speech-sound that precedes or follows a vowel sound in a syllable; its presence either preceding or following does not add to the count of syllables, nor is a consonant required in either position for any syllable. Lojban has seventeen consonants: for the purposes of this section, the apostrophe is not counted as a consonant.
+
+An important distinction dividing Lojban consonants is that of voicing. The following table shows the unvoiced consonants and the corresponding voiced ones:
+
+\begin{ruledtable}{c c}
+\thead{Unvoiced} & \thead{Voiced} \\
+\midrule
+p & b \\
+t & d \\
+k & g \\
+f & v \\
+c & j \\
+s & z \\
+x & - 
+\end{ruledtable}
+
+The consonant \q{x} has no voiced counterpart in Lojban. The remaining consonants, \q{l}, \q{m}, \q{n}, and \q{r}, are typically pronounced with voice, but can be pronounced unvoiced.
+
+Consonant sounds occur in languages as single consonants, or as doubled, or as clustered combinations. Single consonant sounds are isolated by word boundaries or by intervening vowel sounds from other consonant sounds. Doubled consonant sounds are either lengthened like \ipa{s} in English \q{hiss}, or repeated like \ipa{k} in English \q{backcourt}. Consonant clusters consist of two or more single or doubled consonant sounds in a group, each of which is different from its immediate neighbor. In Lojban, doubled consonants are excluded altogether, and clusters are limited to two or three members, except in Lojbanized names.
+
+Consonants can occur in three positions in words: initial (at the beginning), medial (in the middle), and final (at the end). In many languages, the sound of a consonant varies depending upon its position in the word. In Lojban, as much as possible, the sound of a consonant is unrelated to its position. In particular, the common American English trait of changing a \q{t} between vowels into a \q{d} or even a flap (IPA \ipa{ɾ}) is unacceptable in Lojban.
+
+Lojban imposes no restrictions on the appearance of single consonants in any valid consonant position; however, no consonant (including syllabic consonants) occurs final in a word except in Lojbanized names.
+
+Pairs of consonants can also appear freely, with the following restrictions:
+
+\begin{enumerate}
+\item It is forbidden for both consonants to be the same, as this would violate the rule against double consonants.
+\item It is forbidden for one consonant to be voiced and the other unvoiced. The consonants \q{l}, \q{m}, \q{n}, and \q{r} are exempt from this restriction. As a result, \q{bf} is forbidden, and so is \q{sd}, but both \q{fl} and \q{vl}, and both \q{ls} and \q{lz}, are permitted.
+\item It is forbidden for both consonants to be drawn from the set \q{c}, \q{j}, \q{s}, \q{z}.
+\item The specific pairs \q{cx}, \q{kx}, \q{xc}, \q{xk}, and \q{mz} are forbidden.
+\end{enumerate}
+
+These rules apply to all kinds of words, even Lojbanized names. If a name would normally contain a forbidden consonant pair, a \q{y} can be inserted to break up the pair:
+\begin{example}
+djeimyz.\n
+\ipa{dʒɛj məzʔ}\n
+James
+\end{example}
+
+The regular English pronunciation of \q{James}, which is \ipa{dʒɛjmz}, would Lojbanize as \q{djeimz.}, which contains a forbidden consonant pair.
+
+
+
+\sect{Initial Consonant Pairs}
+The set of consonant pairs that may appear at the beginning of a word (excluding Lojbanized names) is far more restricted than the fairly large group of permissible consonant pairs described in \sectref{3.6}. Even so, it is more than English allows, although hopefully not more than English-speakers (and others) can learn to pronounce.
+
+There are just 48 such permissible initial consonant pairs, as follows:
+\begin{description}
+\item[Pairs] bl br cf ck cl cm cn cp cr ct dj dr dz fl fr gl gr jb jd jg jm jv kl kr ml mr pl pr sf sk sl sm sn sp sr st tc tr ts vl vr xl xr zb zd zg zm zv
+\end{description}
+
+Lest this list seem almost random, a pairing of voiced and unvoiced equivalent vowels will show significant patterns which may help in learning:
+
+\begin{paddedtable}{l l l l l l l l}
+pl & pr &  &  & fl & fr \\
+bl & br &  &  & vl & vr \\
+\\
+cp & cf & ct & ck & cm & cn & cl & cr \\
+jb & jv & jd & jg & jm \\
+sp & sf & st & sk & sm & sn & sl & sr \\
+zb & zv & zd & zg & zm \\
+\\
+tc & tr & ts &  & kl & kr \\
+dj & dr & dz &  & gl & gr \\
+\\
+ml & mr &  &  & xl & xr
+\end{paddedtable}
+
+Note that if both consonants of an initial pair are voiced, the unvoiced equivalent is also permissible, and the voiced pair can be pronounced simply by voicing the unvoiced pair. (The converse is not true: \q{cn} is a permissible initial pair, but \q{jn} is not.) 
+
+Consonant triples can occur medially in Lojban words. They are subject to the following rules:
+\begin{enumerate}
+\item The first two consonants must constitute a permissible consonant pair;
+\item The last two consonants must constitute a permissible initial consonant pair;
+\item The triples \q{ndj}, \q{ndz}, \q{ntc}, and \q{nts} are forbidden.
+\end{enumerate}
+
+Lojbanized names can begin or end with any permissible consonant pair, not just the 48 initial consonant pairs listed above, and can have consonant triples in any location, as long as the pairs making up those triples are permissible. In addition, names can contain consonant clusters with more than three consonants, again requiring that each pair within the cluster is valid.
+
+
+
+\sect{Buffering of Consonant Clusters}
+Many languages do not have consonant clusters at all, and even those languages that do have them often allow only a subset of the full Lojban set. As a result, the Lojban design allows the use of a buffer sound between consonant combinations which a speaker finds unpronounceable. This sound may be any non-Lojbanic vowel which is clearly separable by the listener from the Lojban vowels. Some possibilities are IPA \ipa{I}, \ipa{ö}, \ipa{U}, or even \ipa{Y}, but there probably is no universally acceptable buffer sound. When using a consonant buffer, the sound should be made as short as possible. Two examples showing such buffering (we will use \ipa{I} in this chapter) are:
+\begin{example}
+vrusi\n
+\ipa{ˈvru si}\n
+or \ipa{vI ˈru si}
+\end{example}
+
+\begin{example}
+.AMsterdam.\n
+\ipa{ʔam ster damʔ}\n
+or \ipa{ˈʔa mI sI tɛ rI da mIʔ}
+\end{example}
+
+When a buffer vowel is used, it splits each buffered consonant into its own syllable. However, the buffering syllables are never stressed, and are not counted in determining stress. They are, in effect, not really syllables to a Lojban listener, and thus their impact is ignored. 
+
+Here are more examples of unbuffered and buffered pronunciations:
+\begin{example}
+klama\n
+\ipa{ˈkla ma}\n
+\ipa{kI ˈla ma}
+\end{example}
+
+\begin{example}
+xapcke\n
+\ipa{ˈxap ʃkɛ}\n
+\ipa{ˈxa pI ʃkɛ}\n
+\ipa{ˈxa pI ʃI kɛ}
+\end{example}
+
+In \exref{3.8.4}, we see that buffering vowels can be used in just some, rather than all, of the possible places: the second pronunciation buffers the \q{pc} consonant pair but not the \q{ck}. The third pronunciation buffers both.
+\begin{example}
+ponyni'u\n
+\ipa{po næ ˈni hu}
+\end{example}
+
+\exref{3.8.5} cannot contain any buffering vowel. It is important not to confuse the vowel \q{y}, which is pronounced \ipa{ə}, with the buffer, which has a variety of possible pronunciations and is never written. Consider the contrast between
+\begin{example}
+bongynanba\n
+\ipa{boŋ ɡæ ˈnan ba}
+\end{example}
+
+{\noindent}an unlikely Lojban compound word meaning \q{bone bread} (note the use of \ipa{ŋ} as a representative of \q{n} before \q{g}) and
+\begin{example}
+bongnanba\n
+\ipa{boŋ ˈgnan ba}
+\end{example}
+
+{\noindent}a possible borrowing from another language (Lojban borrowings can only take a limited form). If \exref{3.8.7} were pronounced with buffering, as
+\begin{example}
+\ipa{boŋ ɡI ˈnan ba}
+\end{example}
+
+{\noindent}it would be very similar to \exref{3.8.6}. Only a clear distinction between \q{y} and any buffering vowel would keep the two words distinct. 
+
+Since buffering is done for the benefit of the speaker in order to aid pronounceability, there is no guarantee that the listener will not mistake a buffer vowel for one of the six regular Lojban vowels. The buffer vowel should be as laxly pronounced as possible, as central as possible, and as short as possible. Furthermore, it is worthwhile for speakers who use buffers to pronounce their regular vowels a bit longer than usual, to avoid confusion with buffer vowels. The speakers of many languages will have trouble correctly hearing any of the suggested buffer vowels otherwise. By this guideline, \exref{3.8.8} would be pronounced
+\begin{example}
+\ipa{boːŋ ɡI ˈnaːn baː}
+\end{example}
+
+{\noindent}with lengthened vowels.
+
+
+
+\sect{Syllabication and Stress}
+A Lojban word has one syllable for each of its vowels, diphthongs, and syllabic consonants (referred to simply as \q{vowels} for the purposes of this section.) Syllabication rules determine which of the consonants separating two vowels belong to the preceding vowel and which to the following vowel. These rules are conventional only; the phonetic facts of the matter about how utterances are syllabified in any language are always very complex.
+
+A single consonant always belongs to the following vowel. A consonant pair is normally divided between the two vowels; however, if the pair constitute a valid initial consonant pair, they are normally both assigned to the following vowel. A consonant triple is divided between the first and second consonants. Apostrophes and commas, of course, also represent syllable breaks. Syllabic consonants usually appear alone in their syllables.
+
+It is permissible to vary from these rules in Lojbanized names. For example, there are no definitive rules for the syllabication of names with consonant clusters longer than three consonants. The comma is used to indicate variant syllabication or to explicitly mark normal syllabication.
+
+Here are some examples of Lojban syllabication:
+\begin{example}
+pujenaicajeba\n
+pu,je,nai,ca,je,ba
+\end{example}
+
+This word has no consonant pairs and is therefore syllabified before each medial consonant.
+\begin{example}
+ninmu\n
+nin,mu
+\end{example}
+
+This word is split at a consonant pair.
+\begin{example}
+fitpri\n
+fit,pri
+\end{example}
+
+This word is split at a consonant triple, between the first two consonants of the triple.
+\begin{example}
+sairgoi\n
+sair,goi\n
+sai,r,goi
+\end{example}
+
+This word contains the consonant pair \q{rg}; the \q{r} may be pronounced syllabically or not.
+\begin{example}
+klezba\n
+klez,ba\n
+kle,zba
+\end{example}
+
+This word contains the permissible initial pair \q{zb}, and so may be syllabicated either between \q{z} and \q{b} or before \q{zb}.
+
+Stress is a relatively louder pronunciation of one syllable in a word or group of words. Since every syllable has a vowel sound (or diphthong or syllabic consonant) as its nucleus, and the stress is on the vowel sound itself, the terms ``stressed syllable'' and \q{stressed vowel} are largely interchangeable concepts.
+
+Most Lojban words are stressed on the next-to-the-last, or penultimate, syllable. In counting syllables, however, syllables whose vowel is \q{y} or which contain a syllabic consonant (\q{l}, \q{m}, \q{n}, or \q{r}) are never counted. (The Lojban term for penultimate stress is ``da'amoi terbasna''.) Similarly, syllables created solely by adding a buffer vowel, such as \ipa{I}, are not counted.
+
+There are actually three levels of stress --- primary, secondary, and weak. Weak stress is the lowest level, so it really means no stress at all. Weak stress is required for syllables containing \q{y}, a syllabic consonant, or a buffer vowel.
+
+Primary stress is required on the penultimate syllable of Lojban content words (called \q{brivla}). Lojbanized names may be stressed on any syllable, but if a syllable other than the penultimate is stressed, the syllable (or at least its vowel) must be capitalized in writing. Lojban structural words (called \q{cmavo}) may be stressed on any syllable or none at all. However, primary stress may not be used in a syllable just preceding a brivla, unless a pause divides them; otherwise, the two words may run together.
+
+Secondary stress is the optional and non-distinctive emphasis used for other syllables besides those required to have either weak or primary stress. There are few rules governing secondary stress, which typically will follow a speaker's native language habits or preferences. Secondary stress can be used for contrast, or for emphasis of a point. Secondary stress can be emphasized at any level up to primary stress, although the speaker must not allow a false primary stress in brivla, since errors in word resolution could result.
+
+The following are Lojban words with stress explicitly shown:
+\begin{example}
+dikyjvo\n
+DI,ky,ʒvo
+\end{example}
+
+(In a fully-buffered dialect, the pronunciation would be: \ipa{ˈdi kæ ʒI vo}.) Note that the syllable \q{ky} is not counted in determining stress. The vowel \q{y} is never stressed in a normal Lojban context.
+\begin{example}
+.armstrong.\n
+.ARM,strong.
+\end{example}
+
+This is a Lojbanized version of the name \q{Armstrong}. The final \q{g} must be explicitly pronounced. With full buffering, the name would be pronounced:
+\begin{example}
+\ipa{ˈʔa rI mI sI tI ro nI ɡIʔ}
+\end{example}
+
+However, there is no need to insert a buffer in every possible place just because it is inserted in one place: partial buffering is also acceptable. In every case, however, the stress remains in the same place: on the first syllable.
+
+The English pronunciation of \q{Armstrong}, as spelled in English, is not correct by Lojban standards; the letters \q{ng} in English represent a velar nasal (IPA \ipa{ŋ}) which is a single consonant. In Lojban, \q{ng} represents two separate consonants that must both be pronounced; you may not use \ipa{ŋ} to pronounce Lojban \q{ng}, although \ipa{ŋɡ} is acceptable. English speakers are likely to have to pronounce the ending with a buffer, as one of the following:
+\begin{example}
+\ipa{ˈʔarm stron ɡIʔ}\n
+or \ipa{ˈʔarm stroŋ ɡIʔ}\n
+or even \ipa{ˈʔarm stro nIɡʔ}
+\end{example}
+
+The normal English pronunciation of the name \q{Armstrong} could be Lojbanized as:
+\begin{example}
+.ARMstron.
+\end{example}
+
+{\noindent}since Lojban \q{n} is allowed to be pronounced as the velar nasal \ipa{ŋ}. 
+
+Here is another example showing the use of \q{y}:
+\begin{example}
+bisydja\n
+BI,sy,dja\n
+BI,syd,ja
+\end{example}
+
+This word is a compound word, or lujvo, built from the two affixes \q{bis} and \q{dja}. When they are joined, an impermissible consonant pair results: \q{sd}. In accordance with the algorithm for making lujvo, explained in \chapref{4}, a \q{y} is inserted to separate the impermissible consonant pair; the \q{y} is not counted as a syllable for purposes of stress determination.
+\begin{example}
+da'udja\n
+da'UD,ja\n
+da'U,dja
+\end{example}
+
+These two syllabications sound the same to a Lojban listener --- the association of unbuffered consonants in syllables is of no import in recognizing the word.
+\begin{example}
+e'u bridi\n
+e'u BRI,di\n
+E'u BRI,di\n
+e'U.BRI,di
+\end{example}
+
+In \exref{3.9.13}, \q{e'u} is a cmavo and \q{bridi} is a brivla. Either of the first two pronunciations is permitted: no primary stress on either syllable of \q{e'u}, or primary stress on the first syllable. The third pronunciation, which places primary stress on the second syllable of the cmavo, requires that --- since the following word is a brivla --- the two words must be separated by a pause. Consider the following two cases:
+\begin{example}
+le re nobli prenu\n
+le re NObli PREnu
+\end{example}
+
+\begin{example}
+le re no bliprenu\n
+le re no bliPREnu
+\end{example}
+
+If the cmavo \q{no} in \exref{3.9.15} were to be stressed, the phrase would sound exactly like the given pronunciation of \exref{3.9.14}, which is unacceptable in Lojban: a single pronunciation cannot represent both.
+
+
+
+\sect{IPA For English Speakers}
+There are many dialects of English, thus making it difficult to define the standardized symbols of the IPA in terms useful to every reader. All the symbols used in this chapter are repeated here, in more or less alphabetical order, with examples drawn from General American. In addition, some attention is given to the Received Pronunciation of (British) English. These two dialects are referred to as GA and RP respectively. Speakers of other dialects should consult a book on phonetics or their local television sets.
+\begin{description}
+\item[\ipa{ˈ}] An IPA indicator of primary stress; the syllable which follows \ipa{ˈ} receives primary stress.
+\item[\ipa{ʔ}] An allowed variant of Lojban \q{.}. This sound is not usually considered part of English. It is the catch in your throat that sometimes occurs prior to the beginning of a word (and sometimes a syllable) which starts with a vowel. In some dialects, like Cockney and some kinds of American English, it is used between vowels instead of \q{t}: \q{bottle} \ipa{boʔ\textsyllabic{l}}. The English interjection \q{uh-oh!} almost always has it between the syllables.
+\item[\ipa{ː}] A symbol indicating that the previous vowel is to be spoken for a longer time than usual. Lojban vowels can be pronounced long in order to make a greater contrast with buffer vowels.
+\item[\ipa{a}] The preferred pronunciation of Lojban \q{a}. This sound doesn't occur in GA, but sounds somewhat like the \q{ar} of \q{park}, as spoken in RP or New England American. It is pronounced further forward in the mouth than \ipa{ɑ}.
+\item[\ipa{ɑ}] An allowed variant of Lojban \q{a}. The \q{a} of GA \q{father}. The sound \ipa{a} is preferred because GA speakers often relax an unstressed \ipa{ɑ} into a schwa \ipa{ə}, as in the usual pronunciations of \q{about} and \q{sofa}. Because schwa is a distinct vowel in Lojban, English speakers must either learn to avoid this shift or to use \ipa{a} instead: the Lojban word for \q{sofa} is \q{sfofa}, pronounced \ipa{sfofa} or \ipa{sfofɑ} but never \ipa{sfofə} which would be the non-word \q{sfofy}.
+\item[\ipa{æ}] Not a Lojban sound. The \q{a} of English \q{cat}.
+\item[\ipa{b}] The preferred pronunciation of Lojban \q{b}. As in English \q{boy}, \q{sober}, or \q{job}.
+\item[\ipa{β}] An allowed variant of Lojban \q{v}. Not an English sound; the Spanish \q{b} or \q{v} between vowels. This sound should not be used for Lojban \q{b}.
+\item[\ipa{d}] The preferred pronunciation of Lojban \q{d}. As in English \q{dog}, \q{soda}, or \q{mad}.
+\item[\ipa{ɛ}] The preferred pronunciation of Lojban \q{e}. The \q{e} of English \q{met}.
+\item[\ipa{e}] An allowed variant of Lojban \q{e}. This sound is not found in English, but is the Spanish \q{e}, or the tense \q{e} of Italian. The vowel of English \q{say} is similar except for the off-glide: you can learn to make this sound by holding your tongue steady while saying the first part of the English vowel.
+\item[\ipa{ə}] The preferred pronunciation of Lojban \q{y}. As in the \q{a} of English \q{sofa} or \q{about}. Schwa is generally unstressed in Lojban, as it is in English. It is a totally relaxed sound made with the tongue in the middle of the mouth.
+\item[\ipa{f}] The preferred pronunciation of Lojban \q{f}. As in \q{fee}, \q{loafer}, or \q{chef}.
+\item[\ipa{ɸ}] An allowed variant of Lojban \q{f}. Not an English sound; the Japanese \q{f} sound.
+\item[\ipa{ɡ}] The preferred pronunciation of Lojban \q{g}. As in English \q{go}, \q{eagle}, or \q{dog}.
+\item[\ipa{h}] The preferred pronunciation of the Lojban apostrophe sound. As in English \q{aha} or \q{oh, hello}.
+\item[\ipa{i}] The preferred pronunciation of Lojban \q{i}. Essentially like the English vowel of \q{pizza} or \q{machine}, although the English vowel is sometimes pronounced with an off-glide, which should not be present in Lojban.
+\item[\ipa{I}] A possible Lojban buffer vowel. The \q{i} of English \q{bit}.
+\item[\ipa{ö}] A possible Lojban buffer vowel. The \q{u} of \q{just} in some varieties of GA, those which make the word sound more or less like \q{jist}. Also Russian \q{y} as in \q{byt}' (to be); like a schwa \ipa{ə}, but higher in the mouth.
+\item[\ipa{j}] Used in Lojban diphthongs beginning or ending with \q{i}. Like the \q{y} in English \q{yard} or \q{say}.
+\item[\ipa{k}] The preferred pronunciation of Lojban \q{k}. As in English \q{kill}, \q{token}, or \q{flak}.
+\item[\ipa{l}] The preferred pronunciation of Lojban \q{l}. As in English \q{low}, \q{nylon}, or \q{excel}.
+\item[\ipa{\textsyllabic{l}}] The syllabic version of Lojban \q{l}, as in English \q{bottle} or \q{middle}.
+\item[\ipa{m}] The preferred pronunciation of Lojban \q{m}. As in English \q{me}, \q{humor}, or \q{ham}.
+\item[\ipa{\textsyllabic{m}}] The syllabic version of Lojban \q{m}. As in English \q{catch 'em} or \q{bottom}.
+\item[\ipa{n}] The preferred pronunciation of Lojban \q{n}. As in English \q{no}, \q{honor}, or \q{son}.
+\item[\ipa{\textsyllabic{n}}] The syllabic version of Lojban \q{n}. As in English \q{button}.
+\item[\ipa{ŋ}] An allowed variant of Lojban \q{n}, especially in Lojbanized names and before \q{g} or \q{k}. As in English \q{sing} or \q{singer} (but not \q{finger} or \q{danger}).
+\item[\ipa{\textsyllabic{ŋ}}] An allowed variant of Lojban syllabic \q{n}, especially in Lojbanized names.
+\item[\ipa{o}] The preferred pronunciation of Lojban \q{o}. As in the French \q{haute (cuisine)} or Spanish \q{como}. There is no exact English equivalent of this sound. The nearest GA equivalent is the \q{o} of \q{dough} or \q{joke}, but it is essential that the off-glide (a \ipa{w}-like sound) at the end of the vowel is not pronounced when speaking Lojban. The RP sound in these words is \ipa{ə} in IPA terms, and has no \ipa{o} in it at all; unless you can speak with a Scots, Irish, or American accent, you may have trouble with this sound.
+\item[\ipa{ʔ}] An allowed variant of Lojban \q{o}, especially before \q{r}. This sound is a shortened form of the \q{aw} in GA \q{dawn} (for those people who don't pronounce \q{dawn} and \q{Don} alike; if you do, you may have trouble with this sound). In RP, but not GA, it is the \q{o} of \q{hot}.
+\item[\ipa{p}] The preferred pronunciation of Lojban \q{p}. As in English \q{pay}, \q{super}, or \q{up}.
+\item[\ipa{r}] One version of Lojban \q{r}. Not an English sound. The Spanish \q{rr} and the Scots \q{r}, a tongue-tip trill.
+\item[\ipa{ɹ}] One version of Lojban \q{r}. As in GA \q{right}, \q{baron}, or \q{car}. Not found in RP.
+\item[\ipa{ɾ}] One version of Lojban \q{r}. In GA, appears as a variant of \q{t} or \q{d} in the words \q{metal} and \q{medal} respectively. A tongue-tip flap. \ipa{ʀ} One version of Lojban \q{r}. Not an English sound. The French or German \q{r} in \q{reine} or \q{rot} respectively. A uvular trill.
+\item[\ipa{\textsyllabic{r}}, \ipa{ɹ}, \ipa{\textsyllabic{ɾ}}, \ipa{\textsyllabic{ʀ}}] These are syllabic versions of the above. \ipa{ɹ} appears in the GA (but not RP) pronunciation of \q{bird}.
+\item[\ipa{s}] The preferred pronunciation of Lojban \q{s}. As in English \q{so}, \q{basin}, or \q{yes}.
+\item[\ipa{ʃ}] The preferred pronunciation of Lojban \q{c}. The \q{sh} of English \q{ship}, \q{ashen}, or \q{dish}.
+\item[\ipa{ʂ}] An allowed variant of Lojban \q{s}. Not an English sound. The Hindi retroflex \q{s} with underdot, or Klingon \q{S}.
+\item[\ipa{t}] The preferred pronunciation of Lojban \q{t}. As in English \q{tea}, \q{later}, or \q{not}. It is important to avoid the GA habit of pronouncing the \q{t} between vowels as \ipa{d} or \ipa{ɾ}.
+\item[\ipa{T}] Not normally a Lojban sound, but a possible variant of Lojban \q{}'. The \q{th} of English \q{thin} (but not \q{then}).
+\item[\ipa{v}] The preferred pronunciation of Lojban \q{v}. As in English \q{voice}, \q{savor}, or \q{live}.
+\item[\ipa{w}] Used in Lojban diphthongs beginning or ending with \q{u}. Like the \q{w} in English \q{wet} \ipa{wɛt} or \q{cow} \ipa{kɑw}.
+\item[\ipa{x}] The preferred pronunciation of Lojban \q{x}. Not normally an English sound, but used in some pronunciations of \q{loch} and \q{Bach}; \q{gh} in Scots \q{might} and \q{night}. The German \q{Ach-Laut}. To pronounce \ipa{x}, force air through your throat without vibrating your vocal chords; there should be lots of scrape.
+\item[\ipa{Y}] A possible Lojban buffer vowel. Not an English sound: the \q{\"{u}' of German ``h\"{u}sch}.
+\item[\ipa{z}] The preferred pronunciation of Lojban \q{z}. As in English \q{zoo}, \q{hazard}, or \q{fizz}.
+\item[\ipa{ʒ}] The preferred pronunciation of Lojban \q{j}. The \q{si} of English \q{vision}, or the consonant at the end of GA \q{garage}.
+\item[\ipa{ʐ}] An allowed variant of Lojban \q{z}. Not an English sound. The voiced version of \ipa{ʂ}.
+\end{description}
+
+
+
+\sect{English Analogues For Lojban Diphthongs}
+Here is a list of English words that contain diphthongs that are similar to the Lojban diphthongs. This list does not constitute an official pronunciation guide; it is intended as a help to English-speakers.
+\begin{ruledtable}{l l}
+\thead{Lojban} & \thead{English} \\
+\midrule
+ai & \q{pie} \\
+ei & \q{pay} \\
+oi & \q{boy} \\
+au & \q{cow} \\
+\midrule
+ia & \q{yard} \\
+ie & \q{yes} \\
+ii & \q{ye} \\
+io & \q{yodel} (in GA only) \\
+iu & \q{unicorn} or \q{few} \\
+\midrule
+ua & \q{suave} \\
+ue & \q{wet} \\
+ui & \q{we} \\
+uo & \q{woe} (in GA only) \\
+uu & \q{woo} \\
+\midrule
+iy & \q{million} (the \q{io} part, that is) \\
+uy & \q{was} (when unstressed)
+\end{ruledtable}
+
+
+
+\sect{Oddball Orthographies}
+The following notes describe ways in which Lojban has been written or could be written that differ from the standard orthography explained in the rest of this chapter. Nobody needs to read this section except people with an interest in the obscure. Technicalities are used without explanation or further apology.
+
+There exists an alternative orthography for Lojban, which is designed to be as compatible as possible (but no more so) with the authority used in pre-Lojban versions of Loglan. The consonants undergo no change, except that \q{x} is replaced by \q{h}. The individual vowels likewise remain unchanged. However, the vowel pairs and diphthongs are changed as follows:
+
+\begin{itemize}
+\item \q{ai}, \q{ei}, \q{oi}, \q{au} become \q{ai}, \q{ei}, \q{oi}, \q{ao}.
+\item \q{ia} through \q{iu} and \q{ua} through \q{uu} remain unchanged.
+\item \q{a'i}, \q{e'i}, \q{o'i} and \q{a'o} become \q{a,i}, \q{e,i}, \q{o,i} and \q{a,o}.
+\item \q{i'a} through \q{i'u} and \q{u'a} through \q{u'u} are changed to \q{ia} through \q{iu} and \q{ua} through \q{uu} in lujvo and cmavo other than attitudinals, but become \q{i,a} through \q{i,u} and \q{u,a} through \q{u,u} in names, fu'ivla, and attitudinal cmavo.
+\item All other vowel pairs simply drop the apostrophe.
+\end{itemize}
+
+The result of these rules is to eliminate the apostrophe altogether, replacing it with comma where necessary, and otherwise with nothing. In addition, names and the cmavo \q{.i} are capitalized, and irregular stress is marked with an apostrophe (now no longer used for a sound) following the stressed syllable.
+
+Three points must be emphasized about this alternative orthography:
+
+\begin{itemize}
+\item It is not standard, and has not been used.
+\item It does not represent any changes to the standard Lojban phonology; it is simply a representation of the same phonology using a different written form.
+\item It was designed to aid in a planned rapprochement between the Logical Language Group and The Loglan Institute, a group headed by James Cooke Brown. The rapprochement never took place.
+\end{itemize}
+
+There also exists a Cyrillic orthography for Lojban which was designed when the introductory Lojban brochure was translated into Russian. It uses the letters \q{a}, \q{be}, \q{ve}, \q{ge}, \q{de}, \q{e}, \q{zhe}, \q{ze}, \q{i}, \q{ka}, \q{el}, \q{em}, \q{en}, \q{o}, \q{pe}, \q{er}, \q{es}, \q{te}, \q{u}, \q{ef}, \q{kha}, and \q{sha} in the obvious ways. The Latin letter \q{y} is mapped onto the hard sign, as in Bulgarian. The apostrophe, comma, and period are unchanged. Diphthongs are written as vowel pairs, as in the Roman representation. 
+
+Finally, an orthography using the Tengwar of F\'{e}anor, a fictional orthography invented by J. R. R. Tolkien and described in the Appendixes to \textit{The Lord Of The Rings}, has been devised for Lojban. The following mapping, which closely resembles that used for Westron, will be meaningful only to those who have read those appendixes. In brief, the tincot\'{e}ma and parmat\'{e}ma are used in the conventional ways; the calmat\'{e}ma represents palatal consonants, and the quesset\'{e}ma represents velar consonants.
+
+\begin{paddedtable}{l l l l}
+t & tinco & p & parma \\
+- & calma & k & quesse \\
+d & ando & b & umbar \\
+- & anga & g & ungwe \\
+- & thule & f & formen \\
+c & harma & x & hwesta \\
+- & anto & v & ampa \\
+j & anca & - & unque \\
+n & numen & m & malta \\
+- & noldo & - & nwalme \\
+r & ore & u & vala \\
+i & anna & - & vilya
+\end{paddedtable}
+
+The letters \q{vala} and \q{anna} are used for \q{u} and \q{i} only when those letters are used to represent glides. Of the additional letters, \q{r}, \q{l}, \q{s}, and \q{z} are written with \q{r\'{o}men}, \q{lambe}, \q{silme}, and \q{\'{a}re/esse} respectively; the inverted forms are used as free variants.
+
+Lojban, like Quenya, is a vowel-last language, so tehtar are read as following the tengwar on which they are placed. The conventional tehtar are used for the five regular vowels, and the under-dot for \q{y}. The Lojban apostrophe is represented by \q{halla}. There is no equivalent of the Lojban comma or period.

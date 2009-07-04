@@ -1,0 +1,151 @@
+\documentclass[a4paper,twoside]{book}
+\usepackage[
+	urlbordercolor = {1 1 1},
+	linkbordercolor = {1 1 1},
+	citebordercolor = {1 1 1},
+	urlcolor = blue,
+	colorlinks = true,
+	citecolor = black,
+	linkcolor = black]{hyperref}
+\usepackage{graphicx}
+\usepackage{pslatex}
+\usepackage{tikz}
+\usepackage{ulem}
+\usepackage{framed}
+\usepackage{color}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage{ifthen}
+\usepackage{verbatim}
+\usepackage[utf8]{inputenc}
+\usepackage{tipa}
+\usepackage{longtable,booktabs,multirow}
+\title{The Complete Lojban Language}
+\author{John Cowan}
+
+\makeatletter
+\let\savedauthor=\@author
+\let\savedtitle=\@title
+\makeatother
+
+\newcommand{\chap}[1]{\chapter{#1}\label{chap:\thechapter}
+\begin{center}\phantomsection\label{img:\thechapter}\includegraphics[scale=0.5]{chapter\thechapter.png}\end{center}}
+\newcommand{\sect}[1]{\section{#1}\label{sec:\thesection}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LO]{{\textsc{\scriptsize{\textbf{Chapter \thechapter}}\hspace*{1ex}\leftmark}}}
+\fancyhead[RE]{{\textsc{\scriptsize{\savedtitle\hspace*{1ex}\textbf{\savedauthor}}}}}
+\fancyfoot[LE,RO]{\footnotesize\textbf\thepage}
+
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[LE,RO]{\footnotesize\textbf\thepage}}
+
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}{}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
+\newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
+\newcommand{\fulllineheight}[2]{\textcolor{#1}{\superscript{$\cdot$}}#2\textcolor{#1}{\subscript{,}}}
+%\newcommand{\fulllineheight}[1]{#1}
+
+\newcommand{\metaheader}[1]{\par\noindent{\textbf{#1}}}
+\newcommand{\metasubheader}[1]{\ifthenelse{\equal{#1}{}}{}{{\small\\\hspace*{0.5\parindent}\textbf{#1}:\hfill\\[-12pt]}}}
+
+\newcounter{example}[section]
+\newenvironment{example}[1][]
+	{\refstepcounter{example} \begin{leftbar}\phantomsection
+		\label{ex:\theexample} \metaheader{Example \theexample}
+		\metasubheader{#1}\n}
+	{\end{leftbar}}
+\renewcommand{\theexample}{\thesection.\arabic{example}}
+\newcommand{\exref}[1]{\hyperref[ex:#1]{Example #1}}
+
+\newcounter{diagram}[chapter]
+\newenvironment{diagram}
+	{\refstepcounter{diagram}\begin{leftbar}
+		\phantomsection\label{dia:\thediagram}\metaheader{Diagram \thediagram}\begin{center}}
+	{\end{center}\end{leftbar}}
+\renewcommand{\thediagram}{\thechapter.\arabic{diagram}}
+\newcommand{\diaref}[1]{\hyperref[dia:#1]{Diagram #1}}
+
+\newcounter{definition}[chapter]
+\renewenvironment{description}[1][]
+	{\refstepcounter{definition}\begin{leftbar}
+		\phantomsection\label{def:\thedefinition}\metaheader{Definition \thedefinition}\metasubheader{#1}
+		\vspace*{-6pt}\begin{list}{}{
+			\settowidth{\labelwidth}{\rule{3em}{0em}}
+			\setlength{\labelsep}{\parindent}
+			\setlength{\leftmargin}{\labelwidth}
+			\addtolength{\leftmargin}{\labelsep}
+			\addtolength{\leftmargin}{\parindent}
+			\setlength{\rightmargin}{0pt}
+			\setlength{\parsep}{0px}
+			\setlength{\itemsep}{0.01cm}
+			\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}
+	{\end{list}\vspace*{-6pt}\end{leftbar}}
+\renewcommand{\thedefinition}{\thechapter.\arabic{definition}}
+\newcommand{\defref}[1]{\hyperref[def:#1]{Definition #1}}
+
+
+\newenvironment{paddedtable}[1]{\begin{longtable}{#1}}{\\\end{longtable}}
+\newenvironment{ruledtable}[1]{\begin{paddedtable}{#1}\toprule}{\\\bottomrule\end{paddedtable}\vspace{-12px}}
+\newcommand{\thead}[1]{\hspace{\stretch{1}}\textbf{#1}\hspace{\stretch{1}}}
+
+\newcommand{\chapref}[1]{\hyperref[chap:#1]{Chapter #1}}
+\newcommand{\sectref}[1]{\hyperref[sec:#1]{Section #1}}
+\newcommand{\exline}{\par\noindent\extab}
+\newcommand{\extab}{\hspace*{\parindent}}
+
+\newcommand{\n}{\par\noindent\extab\ignorespaces}
+\newcommand{\T}{\hspace*{\parindent}}
+\newcommand{\ra}{$\Rightarrow$ }
+\newcommand{\e}[1]{$ \times 10^#1$}
+
+\definecolor{selbri}{rgb}{.9,0.9,0.975}
+\definecolor{sumti}{rgb}{0.9,0.975,0.9}
+\setlength{\fboxrule}{0.05ex}
+\setlength{\fboxsep}{0.0cm}
+\newcommand{\selbri}[1]{\fcolorbox{sumti}{sumti}{\fulllineheight{sumti}{#1}}}
+\newcommand{\sumti}[1]{\fcolorbox{selbri}{selbri}{\fulllineheight{selbri}{#1}}}
+
+\newcommand{\q}[1]{\textit{#1}}
+\newcommand{\optional}[1]{$\langle$\textit{#1}$\rangle$}
+\newcommand{\translation}[1]{$\langle#1\rangle$}
+\newcommand{\ipa}[1]{/#1/}
+\newcommand{\cv}[1]{\textsf{#1}}
+
+\DeclareUnicodeCharacter{0294}{\textglotstop}
+\DeclareUnicodeCharacter{0251}{\textscripta}
+\DeclareUnicodeCharacter{0283}{\textesh}
+\DeclareUnicodeCharacter{0282}{\textrtails}
+\DeclareUnicodeCharacter{025B}{\textepsilon}
+\DeclareUnicodeCharacter{0278}{\textphi}
+\DeclareUnicodeCharacter{0261}{\textscriptg}
+\DeclareUnicodeCharacter{0292}{\textyogh}
+\DeclareUnicodeCharacter{0290}{\textrtailz}
+\DeclareUnicodeCharacter{014B}{\textipa{N}}
+\DeclareUnicodeCharacter{0279}{\textturnr}
+\DeclareUnicodeCharacter{027E}{\textfishhookr}
+\DeclareUnicodeCharacter{0280}{\textscr}
+\DeclareUnicodeCharacter{03B2}{\textbeta}
+\DeclareUnicodeCharacter{0259}{\textschwa}
+\DeclareUnicodeCharacter{0254}{\textopeno}
+\DeclareUnicodeCharacter{00F6}{\"{o}}
+\DeclareUnicodeCharacter{00E6}{\ae}
+\DeclareUnicodeCharacter{02D0}{\textlengthmark}
+\DeclareUnicodeCharacter{02C8}{\textprimstress}
+
+\linespread{1.03}
+
+\begin{document}
+\pagenumbering{roman}
+\tableofcontents\newpage
+\pagenumbering{arabic}
+\input{chapter1.tex}
+\input{chapter2.tex}
+\input{chapter3.tex}
+\input{chapter4.tex}
+\input{chapter5.tex}
+\end{document}
