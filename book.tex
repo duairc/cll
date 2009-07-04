@@ -29,7 +29,7 @@
 \makeatother
 
 \newcommand{\chap}[1]{\chapter{#1}\label{chap:\thechapter}
-\begin{center}\phantomsection\label{img:\thechapter}\includegraphics[scale=0.5]{chapter\thechapter.png}\end{center}}
+\begin{center}\phantomsection\label{img:\thechapter}\includegraphics[scale=0.5]{images/chapter\thechapter.png}\end{center}}
 \newcommand{\sect}[1]{\section{#1}\label{sec:\thesection}}
 
 \pagestyle{fancy}
@@ -143,9 +143,9 @@
 \pagenumbering{roman}
 \tableofcontents\newpage
 \pagenumbering{arabic}
-\input{chapter1.tex}
-\input{chapter2.tex}
-\input{chapter3.tex}
-\input{chapter4.tex}
-\input{chapter5.tex}
+\input{chapters/chapter1.tex}
+\input{chapters/chapter2.tex}
+\input{chapters/chapter3.tex}
+\input{chapters/chapter4.tex}
+\input{chapters/chapter5.tex}
 \end{document}
