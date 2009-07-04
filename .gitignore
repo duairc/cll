@@ -1,0 +1,7 @@
+*
+!*.rb
+!*.tex
+!*.png
+!*.pdf
+!README.*
+!.gitignore
