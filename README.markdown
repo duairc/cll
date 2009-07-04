@@ -15,4 +15,4 @@ vice-versa).
 The process of converting the HTML version of the book into LaTeX is 
 very much still a work in progress, only a few chapters are complete.
 
-[Download](http://github.com/duairc/cll/blob/master/book.pdf)
+[Download](http://github.com/duairc/cll/raw/master/book.pdf)
