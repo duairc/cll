@@ -1,6 +1,5 @@
 class Array;def mi;i=0;map!{|t|x=yield(i,t);i+=1;x};end;end
-def write;$chapters.each_index{|i|c=$chapters[i];File.open("chapters/chapter#{i 
-+ 1}.tex", 'w'){|f|f.write c}};nil;end
+def write;$chapters.each_index{|i|c=$chapters[i];File.open("chapters/chapter#{i+1}.tex", 'w'){|f|f.write c}};nil;end
 def read;$chapters=(1..21).map{|i|File.read("chapters/chapter#{i}.tex")};end
 def preview;$saved=read;write;end
 def revert;$chapters=$saved;write;end
